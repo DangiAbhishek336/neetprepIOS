@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "623494990675",
+    "project_id": "neetprep-essential",
+    "storage_bucket": "neetprep-essential.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623494990675:android:d2ae1ba7f231b81baf2fa6",
+        "android_client_info": {
+          "package_name": "com.neetprep.ios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623494990675-647as0481bl6s5k1urpar9du32820r8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "4b83c603f8e7a11abe67d488e8ce8abb3980c8d5"
+          }
+        },
+        {
+          "client_id": "623494990675-6uuti0deqfsg0ukitv7p3sr7vl0uprjs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "d236ada79877b6b16237e47051b926c8b581a1ae"
+          }
+        },
+        {
+          "client_id": "623494990675-7rrol6auhibt93b2j9ck9d7lbqejthr1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "623494990675-88vsael7i1si5v13trtkhmm813dpurtu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "eb45df2481321a7a56d282987164c5d5733b1985"
+          }
+        },
+        {
+          "client_id": "623494990675-agho287dfckei3pnmnlei6pjq0giciqe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "f1ba443d61c814b5c1d8dd779a9a8e4c6ffff4ba"
+          }
+        },
+        {
+          "client_id": "623494990675-d5aoh6kkpq9mafhvjni9ab746lvdn5su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "dff04c5f9a43671f64f1a595e4fbcb7dae0ad107"
+          }
+        },
+        {
+          "client_id": "623494990675-eub3bf9pfijaj3nb73ukvimt83306blf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "dc7ec8a1dd7b92a67afb295315fcb871803945bf"
+          }
+        },
+        {
+          "client_id": "623494990675-qdvidrii7cijel29uni4eelm7qss36qi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "d1d3f21a23ead67fa0a297d5f5f3985c1083eae8"
+          }
+        },
+        {
+          "client_id": "623494990675-t1bqj1vpfppjscglja0k00e9n86kbt56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "fcfa4044c73874ea2350ddb00d17c3b884ca0162"
+          }
+        },
+        {
+          "client_id": "623494990675-u28d4cmfl33g32hfn1cruhp5n3a8tci6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "da8e33c813e2822bad801b5ca1cc90b34527dbed"
+          }
+        },
+        {
+          "client_id": "623494990675-vq8helbu320pgojplun8s5fjbfmek6no.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neetprep.ios",
+            "certificate_hash": "6e5087661721175301cb59471d07387e8d64de21"
+          }
+        },
+        {
+          "client_id": "623494990675-ajo8a15hrgpvg90l4mftfjl68i21t0am.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1JrKSciEFsIDXorv8DMHLWxv_K3PgXN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623494990675-3n8ejpeft86m7o0sgtgbnmpmkfv36pqv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "623494990675-gpm53iokejaicuc2qguav5b0l49eu83b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.neetprep.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

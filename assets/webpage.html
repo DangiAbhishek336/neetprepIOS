@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local Page</title>
+    <script>
+        let imageUrl = ""; // Global variable to store the image URL
+
+        function otpVerified() {
+            window.flutter_inappwebview.callHandler('otpVerified', true);
+        }
+
+        function uploadDocs() {
+            window.flutter_inappwebview.callHandler('uploadDocs').then(function(result) {
+                // Parse the result from Flutter
+                const parsedResult = JSON.parse(JSON.stringify(result));
+
+                // Extract the file URL
+                imageUrl = parsedResult.file;
+
+                // Display the image dynamically
+                displayImage(imageUrl);
+            });
+        }
+
+        function displayImage(url) {
+            const imageContainer = document.getElementById('imageContainer');
+            if (imageContainer) {
+                imageContainer.innerHTML = `<img src="${url}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+            }
+        }
+
+        // Listen for Flutter platform readiness
+        window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+            console.log("WebView is ready!");
+        });
+    </script>
+</head>
+<body>
+<h1>Welcome to the Local Page</h1>
+
+<!-- Buttons -->
+<button onclick="otpVerified()">Verify OTP</button>
+<button onclick="uploadDocs()">Upload Docs</button>
+
+<!-- Image container -->
+<div id="imageContainer" style="margin-top: 20px;">
+    <p>No image uploaded yet.</p>
+</div>
+</body>
+</html>
