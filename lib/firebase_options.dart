@@ -65,15 +65,13 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAm_dJqfVaKZ96FHX1_dSO3Itp-JZuBHMA',
-    appId: '1:623494990675:ios:7c7f38d1ac9e2f0eaf2fa6',
-    messagingSenderId: '623494990675',
-    projectId: 'neetprep-essential',
-    storageBucket: 'neetprep-essential.appspot.com',
-    androidClientId:
-        '623494990675-647as0481bl6s5k1urpar9du32820r8a.apps.googleusercontent.com',
-    iosClientId:
-        '623494990675-gpm53iokejaicuc2qguav5b0l49eu83b.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBPnDx4rOFgC4vQXZeqTyc4GMP-xQDFmTc',
+    appId: '1:545751718198:ios:0ad53ca21295b77e58fb97',
+    messagingSenderId: '545751718198',
+    projectId: 'neetprepios',
+    storageBucket: 'neetprepios.firebasestorage.app',
+    iosClientId: '545751718198-vuf6jdbui14uhcetonj1j2lob1k76jmh.apps.googleusercontent.com',
     iosBundleId: 'com.neetprep.ios',
   );
+
 }
