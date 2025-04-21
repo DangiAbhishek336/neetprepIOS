@@ -1,40 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:neetprep_essential/flutter_flow/flutter_flow_theme.dart';
-import 'package:neetprep_essential/pages/abhyasbatch2/abhyasBatch2InfoPage.dart';
-import 'package:neetprep_essential/pages/create_test/classroom_test_series_page/classroom_test_series_page_widget.dart';
-import 'package:neetprep_essential/pages/create_test/classroom_test_series_page/promotion_page_widget.dart';
-import 'package:neetprep_essential/pages/create_test/classroom_test_series_page/thankyou_page_with_center_widget.dart';
-import 'package:neetprep_essential/pages/flashcard/flashcard_chapter_wise_page/flashcard_chapter_wise_page_widget.dart';
-import 'package:neetprep_essential/pages/flashcard/flashcard_deck_page/flashcard_deck_page_widget.dart';
-import 'package:neetprep_essential/pages/flashcard/flashcard_page/flashcard_page_widget.dart';
-import 'package:neetprep_essential/pages/flutter_webview/flutter_webview.dart';
-import 'package:neetprep_essential/pages/ncert_annotation/ncert_annotation.dart';
-import 'package:neetprep_essential/pages/payment/order_page/book_purchase_form.dart';
-import 'package:neetprep_essential/pages/practice/assertion_chapter_wise_page/assertion_chapter_wise_page_widget.dart';
-import 'package:neetprep_essential/pages/starmarkedQs/StarmarkQuestionPage/starmarkedQuestionPagewidget.dart';
-import 'package:neetprep_essential/pages/starmarkedQs/starmarkedChapterWisePage/starmarkedChapterWisePageWidget.dart';
-import 'package:neetprep_essential/pages/starmarkedQs/starmarkedSearchPage/starmarkedSearchPagewidget.dart';
-import 'package:neetprep_essential/pages/user_info_form/user_form/user_info_form_widget.dart';
+import 'package:neetprep_essential/pages/auth/login_page/login_page_widget.dart';
+
+import 'package:neetprep_essential/pages/practice/practice_chapter_wise_page/practice_chapter_page_widget.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
-import '../../pages/abhyasbatch2/abhyasBatch2.dart';
-import '../../pages/bookmarkedQs/bookmarked_chapter_wise_page/bookmarked_chapter_wise_page_widget.dart';
-import '../../pages/bookmarkedQs/bookmarked_questions_page/bookmark_questions_page_widget.dart';
-import '../../pages/bookmarkedQs/bookmarked_search_page/bookmarked_search_page_widget.dart';
-import '../../pages/create_test/classroom_test_series_page/personal_details_page_widget.dart';
-import '../../pages/create_test/classroom_test_series_page/thankyou_page_widget.dart';
-import '../../pages/flashcard/flashcard_question_page/flashcard_question_page_widget.dart';
-import '../../pages/flashcard/flashcard_search_page/flashcard_search_page_widget.dart';
-import '../../pages/practice/assertion_search_page/assertion_search_page_widget.dart';
-import '../../pages/practice/essential_chapter_wise_page/essential_chapter_wise_page_widget.dart';
-import '../../pages/practice/essential_search_page/essential_search_page_widget.dart';
-import '../../pages/practice/hardestqs_chapter_wise_page/hardestqs_chapter_page_widget.dart';
-import '../../pages/practice/practice_chapter_wise_page/practice_chapter_page_widget.dart';
-import '../../pages/practice_log/practice_log.dart';
-import '../../pages/user_info_form/form_completion_handler/form_completion_handler_widget.dart';
 import '/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -101,8 +73,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-
-
       errorBuilder: (context, state) => appStateNotifier.loggedIn
           ? PracticeChapterPageWidget()
           : LoginPageWidget(),
@@ -113,222 +83,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, _) => appStateNotifier.loggedIn
               ? PracticeChapterPageWidget()
               : LoginPageWidget(),
-        ),
-        FFRoute(
-          name: 'BookmarkedChapterWisePage',
-          path: '/bookmarkedChapterWisePage',
-          builder: (context, params) => BookmarkedChapterWisePageWidget(),
-        ),
-        FFRoute(
-          name: 'HardestQsChapterPageWidget',
-          path: '/hardestQsChapterPageWidget',
-          builder: (context, params) => HardestQsChapterPageWidget(),
-        ),
-        FFRoute(
-          name: 'StarmarkedChapterWisePage',
-          path: '/starmarkedChapterWisePage',
-          builder: (context, params) => StarmarkedChapterWisePageWidget(),
-        ),
-        FFRoute(
-          name: 'EssentialChapterWisePage',
-          path: '/essentialChapterWisePage',
-          builder: (context, params) => EssentialChapterWisePageWidget(),
-        ),
-        FFRoute(
-          name: 'StarmarkQuestionsPage',
-          path: '/StarmarkQuestionsPage',
-          builder: (context, params) => StarmarkedQuestionsPageWidget(
-            chapterId: params.getParam('chapterId', ParamType.String),
-            topicName: params.getParam('topicName', ParamType.String),
-            count: params.getParam('count', ParamType.int)
-          ),
-        ),
-        FFRoute(
-          name: 'BookmarkQuestionsPage',
-          path: '/BookmarkQuestionsPage',
-          builder: (context, params) => BookmarkedQuestionsPageWidget(
-            chapterId: params.getParam('chapterId', ParamType.String),
-            topicName: params.getParam('topicName', ParamType.String),
-            courseId: params.getParam('courseId', ParamType.String),
-            count: params.getParam('count', ParamType.int)
-          ),
-        ),
-
-        FFRoute(
-          name: 'StarmarkedSearchPage',
-          path: '/starmarkedSearchPage',
-          builder: (context, params) => StarmarkedSearchPageWidget(),
-        ),
-        FFRoute(
-          name: 'BookmarkedSearchPage',
-          path: '/bookmarkedSearchPage',
-          builder: (context, params) => BookmarkedSearchPageWidget(),
-        ),
-        FFRoute(
-          name: 'FormCompletionHandler',
-          path: '/formCompletionHandler',
-          requireAuth: true,
-          builder: (context, params) => FormCompletionHandler(),
-        ),
-        FFRoute(
-          name: 'PracticeQuetionsPage',
-          path: '/practiceQuetionsPage',
-          requireAuth: true,
-          builder: (context, params) => PracticeQuetionsPageWidget(
-            testId: params.getParam('testId', ParamType.String),
-            offset: params.getParam('offset', ParamType.int),
-            numberOfQuestions: params.getParam('numberOfQuestions', ParamType.int),
-            sectionPointer: params.getParam('sectionPointer', ParamType.int),
-            chapterName: params.getParam('chapterName', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.int),
-          ),
-        ),
-        FFRoute(
-          name: 'FlashcardPage',
-          path: '/flashcardPage',
-          requireAuth: true,
-          builder: (context, params) => FlashcardPageWidget(
-            deckName:params.getParam('deckName', ParamType.String),
-            deckId: params.getParam('deckId', ParamType.String),
-            offset: params.getParam('offset', ParamType.int),
-            numberOfQuestions:
-            params.getParam('numberOfQuestions', ParamType.int),
-            sectionPointer: params.getParam('sectionPointer', ParamType.int),
-          ),
-        ),
-        FFRoute(
-          name: 'PracticeLog',
-          path: '/practiceLog',
-          requireAuth: true,
-          builder: (context, params) => PracticeLog(),
-        ),
-        FFRoute(
-          name: 'NotesPage',
-          path: '/notesPage',
-          requireAuth: true,
-          builder: (context, params) => NotesPageWidget(),
-        ),
-        FFRoute(
-          name: 'UserInfoForm',
-          path: '/userInfoForm',
-          requireAuth: true,
-          builder: (context, params) => UserInfoForm(),
-        ),
-        FFRoute(
-          name: 'ClassroomTestSeriesPage',
-          path: '/classroomTestSeriesPage',
-          requireAuth: true,
-          builder: (context, params) => ClassroomTestSeriesPageWidget(),
-        ),
-        FFRoute(
-          name: 'ThankYouPage',
-          path: '/thankYouPage',
-          requireAuth: true,
-          builder: (context, params) => ThankYouPageWidget(),
-        ),
-        FFRoute(
-          name: 'PromotionPage',
-          path: '/promotionPage',
-          requireAuth: true,
-          builder: (context, params) => PromotionPage(),
-        ),
-        FFRoute(
-          name: 'ThankYouPageWithCenterAvailable',
-          path: '/thankYouPageWithCenterAvailable',
-          requireAuth: true,
-          builder: (context, params) => ThankYouPageWithCenterAvailable(),
-        ),
-        FFRoute(
-          name: 'CreateTestPage',
-          path: '/createTestPage',
-          requireAuth: true,
-          builder: (context, params) => CreateTestPageWidget(),
-        ),
-        FFRoute(
-          name: 'PersonalDetailsPageWidget',
-          path: '/personalDetailsPageWidget',
-          requireAuth: true,
-          builder: (context, params) => PersonalDetailsPageWidget(
-              isFromBuyNow:params.getParam('isFromBuyNow', ParamType.bool)
-          ),
-        ),
-        FFRoute(
-          name: 'TestList',
-          path: '/testList',
-          requireAuth: true,
-          builder: (context, params) => TestListWidget(
-            pdfLink: params.getParam('pdfLink', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'StartTestPage',
-          path: '/startTestPage',
-          requireAuth: true,
-          builder: (context, params) => StartTestPageWidget(
-            testId: params.getParam('testId', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'OrderPage',
-          path: '/orderPage',
-          requireAuth: true,
-          builder: (context, params) => OrderPageWidget(
-            courseId: params.getParam('courseId', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.String),
-            state: params.getParam('state', ParamType.String),
-            city:params.getParam('city', ParamType.String),
-              centerAddress:params.getParam('centerAddress', ParamType.String)
-          ),
-        ),
-        FFRoute(
-          name: 'CreateAndPreviewTestPage',
-          path: '/createAndPreviewTestPage',
-          requireAuth: true,
-          builder: (context, params) => CreateAndPreviewTestPageWidget(),
-        ),
-        FFRoute(
-          name: 'testingNew',
-          path: '/testingNew',
-          builder: (context, params) => TestingNewWidget(),
-        ),
-        FFRoute(
-          name: 'ncertAnnotation',
-          path: '/ncertAnnotation',
-          builder: (context, params) => NcertAnnotation(
-              webUrl: params.getParam('webUrl', ParamType.String),
-              title: params.getParam('title', ParamType.String)
-          ),
-        ),
-        FFRoute(
-          name: 'flutterWebView',
-          path: '/flutterWebView',
-          builder: (context, params) => FlutterWebView(
-              webUrl: params.getParam('webUrl', ParamType.String),
-              title: params.getParam('title', ParamType.String)
-          ),
-        ),
-        FFRoute(
-          name: 'abhyasBatch2',
-          path: '/abhyasBatch2',
-          builder: (context, params) => AbhyasBatch2(
-          ),
-        ),
-        FFRoute(
-          name: 'abhyasBatch2InfoPage',
-          path: '/abhyasBatch2InfoPage',
-          builder: (context, params) => AbhyasBatch2InfoPage(
-          ),
-        ),
-        FFRoute(
-          name: 'LearnMore',
-          path: '/learnMore',
-          requireAuth: true,
-          builder: (context, params) => LearnMoreWidget(
-            value: params.getParam('value', ParamType.String),
-            is6MonthChecked: params.getParam('is6MonthChecked', ParamType.bool),
-            is1YearChecked: params.getParam('is1YearChecked', ParamType.bool),
-          ),
         ),
         FFRoute(
           name: 'ReportQuestionPage',
@@ -351,24 +105,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'TestPage',
-          path: '/testPage',
-          requireAuth: true,
-          builder: (context, params) => TestPageWidget(
-            testId: params.getParam('testId', ParamType.String),
-            testAttemptId: params.getParam('testAttemptId', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'ViewAnswerPage',
-          path: '/viewAnswerPage',
-          requireAuth: true,
-          builder: (context, params) => ViewAnswerPageWidget(
-            testAttemptId: params.getParam('testAttemptId', ParamType.String),
-          ),
-        ),
-        FFRoute(
           name: 'LockPage',
           path: '/lockPage',
           requireAuth: true,
@@ -380,55 +116,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AboutWidget(),
         ),
         FFRoute(
-          name: 'CreateTestResultPage',
-          path: '/createTestResultPage',
-          requireAuth: true,
-          builder: (context, params) => CreateTestResultPageWidget(
-            testAttemptId: params.getParam('testAttemptId', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.String),
-          ),
-        ),
-        FFRoute(
           name: 'PracticeChapterWisePage',
           path: '/practiceChapterWisePage',
           requireAuth: true,
           builder: (context, params) => PracticeChapterPageWidget(),
-        ),
-        FFRoute(
-          name: 'AssertionChapterWisePage',
-          path: '/assertionChapterWisePage',
-          requireAuth: true,
-          builder: (context, params) => AssertionChapterWisePageWidget(),
-        ),
-        FFRoute(
-          name: 'AssertionSearchPage',
-          path: '/assertionSearchPage',
-          builder: (context, params) => AssertionSearchPageWidget(
-            hasAccess: params.getParam('hasAccess', ParamType.bool),
-
-          ),
-        ),
-        FFRoute(
-          name: 'FlashcardChapterWisePage',
-          path: '/flashcardChapterWisePage',
-          requireAuth: true,
-          builder: (context, params) => FlashcardChapterWisePageWidget(),
-        ),
-        FFRoute(
-          name: 'FlashcardDeckPage',
-          path: '/flashcardDeckPage',
-          requireAuth: true,
-          builder: (context, params) => FlashcardDeckPageWidget(
-            deckId: params.getParam('deckId', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'FlashcardQuestionPage',
-          path: '/flashcardQuestionPage',
-          requireAuth: true,
-          builder: (context, params) => FlashcardQuestionPage(
-            questionId: params.getParam('questionId', ParamType.String),
-          ),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -436,35 +127,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginPageWidget(),
         ),
         FFRoute(
-          name: 'PostTransaction',
-          path: '/postTransaction',
-          requireAuth: true,
-          builder: (context, params) => PostTransactionWidget(
-              success: params.getParam('success', ParamType.bool),
-              id: params.getParam('id', ParamType.String),
-              amount: params.getParam('amount', ParamType.String),
-              course: params.getParam('course', ParamType.String)),
-        ),
-        FFRoute(
           name: 'CourseDetailPage24',
           path: '/courseDetailPage24',
           builder: (context, params) => CourseDetailPage24Widget(),
-        ),
-        FFRoute(
-          name: 'BookPurchaseForm',
-          path: '/bookPurchaseForm',
-          builder: (context, params) => BookPurchaseForm(),
-        ),
-        FFRoute(
-          name: 'PracticeFreeQuestionsPage',
-          path: '/practiceFreeQuestionsPage',
-          requireAuth: true,
-          builder: (context, params) => PracticeFreeQuestionsPageWidget(
-            testId: params.getParam('testId', ParamType.String),
-            offset: params.getParam('offset', ParamType.int),
-            numberOfQuestions:
-                params.getParam('numberOfQuestions', ParamType.int),
-          ),
         ),
         FFRoute(
           name: 'LandingPage',
@@ -477,62 +142,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AllCoursesPageWidget(),
         ),
         FFRoute(
-          name: 'BookmarkSoonPage',
-          path: '/bookmarkSoonPage',
-          builder: (context, params) => BookmarkSoonPageWidget(),
-        ),
-        FFRoute(
           name: 'CourseDetailPage25',
           path: '/courseDetailPage25',
           builder: (context, params) => CourseDetailPage25Widget(),
         ),
-        FFRoute(
-          name: 'BookmarkedQuesDisplayPage',
-          path: '/bookmarkedQuesDisplayPage',
-          builder: (context, params) => BookmarkedQuesDisplayPageWidget(),
-        ),
-        FFRoute(
-          name: 'PracticeTestPage',
-          path: '/practiceTestPage',
-          requireAuth: true,
-          builder: (context, params) => PracticeTestPageWidget(
-            testId: params.getParam('testId', ParamType.String),
-            courseIdInt: params.getParam('courseIdInt', ParamType.int),
-            courseIdInts: params.getParam('courseIdInts', ParamType.String),
-            topicId: params.getParam('topicId', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'PracticeSearchPage',
-          path: '/practiceSearchPage',
-          builder: (context, params) => PracticeSearchPageWidget(
-              courseIdInt: params.getParam('courseIdInt', ParamType.int),
-              courseIdInts: params.getParam('courseIdInts', ParamType.String)
-          ),
-        ),
-        FFRoute(
-          name: 'EssentialSearchPage',
-          path: '/essentialSearchPage',
-          builder: (context, params) => EssentialSearchPageWidget(
-              hasAccess: params.getParam('hasAccess', ParamType.bool),
-              courseIdInt: params.getParam('courseIdInt', ParamType.int),
-              courseIdInts: params.getParam('courseIdInts', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'FlashcardSearchPage',
-          path: '/flashcardSearchPage',
-          builder: (context, params) => FlashcardSearchPageWidget(),
-        ),
-        FFRoute(
-          name: 'NotesViewerPage',
-          path: '/notesViewerPage',
-          requireAuth: true,
-          builder: (context, params) => NotesViewerPageWidget(
-            pdfURL: params.getParam('pdfURL', ParamType.String),
-            pdfName: params.getParam('pdfName', ParamType.String),
-          ),
-        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -589,21 +202,20 @@ extension NavigationExtensions on BuildContext {
     }
   }
 
-  void safePopForTests( String? courseIdInt) {
+  void safePopForTests(String? courseIdInt) {
     // If there is only one route on the stack, navigate to the initial
     // page instead of popping.
     if (canPop()) {
       pop();
     } else {
-      if(courseIdInt==FFAppState().testCourseIdInt.toString())
-      go('/createAndPreviewTestPage');
-      else if(courseIdInt==FFAppState().classroomTestCourseIdInt.toString()){
+      if (courseIdInt == FFAppState().testCourseIdInt.toString())
+        go('/createAndPreviewTestPage');
+      else if (courseIdInt ==
+          FFAppState().classroomTestCourseIdInt.toString()) {
         go('/classroomTestSeriesPage');
-      }
-      else if(courseIdInt==FFAppState().flashcardCourseIdInt.toString()){
+      } else if (courseIdInt == FFAppState().flashcardCourseIdInt.toString()) {
         go('/flashcardChapterWisePage');
-      }
-      else if(courseIdInt==FFAppState().assertionCourseIdInt.toString()) {
+      } else if (courseIdInt == FFAppState().assertionCourseIdInt.toString()) {
         go('/assertionChapterWisePage');
       }
     }
@@ -737,8 +349,8 @@ class FFRoute {
                   color: Colors.black,
                   child: Image.asset(
                     FFAppState().isDarkMode
-                        ?
-                    'assets/images/Splash_Screen_Essential_Dark.png':'assets/images/Splash_Screen_-_Essential.png',
+                        ? 'assets/images/Splash_Screen_Essential_Dark.png'
+                        : 'assets/images/Splash_Screen_-_Essential.png',
                     fit: BoxFit.contain,
                   ),
                 )

@@ -11,7 +11,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Practice Group Code
 
 class PracticeGroup {
-  static String baseUrl =  FFAppState().baseUrl;
+  static String baseUrl = FFAppState().baseUrl;
   static Map<String, String> headers = {};
   static GetPracticeTestsToShowSubjectsInThePracticeTabCall
       getPracticeTestsToShowSubjectsInThePracticeTabCall =
@@ -20,8 +20,8 @@ class PracticeGroup {
       getPracticeTestsToShowChapterWiseCall =
       GetPracticeTestsToShowChapterWiseCall();
   static GetPracticeTestsToShowOpenAndLockedTopicsCall
-  getPracticeTestsToShowOpenAndLockedTopicsCall =
-  GetPracticeTestsToShowOpenAndLockedTopicsCall();
+      getPracticeTestsToShowOpenAndLockedTopicsCall =
+      GetPracticeTestsToShowOpenAndLockedTopicsCall();
   static GetPracticeTestDetailsForAnExampleSubjectAnatomyCall
       getPracticeTestDetailsForAnExampleSubjectAnatomyCall =
       GetPracticeTestDetailsForAnExampleSubjectAnatomyCall();
@@ -137,8 +137,6 @@ class GetPracticeTestsToShowChapterWiseCall {
       );
 }
 
-
-
 class GetPracticeTestsToShowOpenAndLockedTopicsCall {
   Future<ApiCallResponse> call({
     required String authToken,
@@ -146,7 +144,8 @@ class GetPracticeTestsToShowOpenAndLockedTopicsCall {
     required List<String>? excludeIds,
   }) {
     // Convert excludeIds to a GraphQL-compatible string format
-    final excludeIdsFormatted = excludeIds != null ? excludeIds.map((id) => id).toList() : [];
+    final excludeIdsFormatted =
+        excludeIds != null ? excludeIds.map((id) => id).toList() : [];
 
     // Prepare the GraphQL request body
     final body = jsonEncode({
@@ -240,46 +239,41 @@ class GetPracticeTestsToShowOpenAndLockedTopicsCall {
     );
   }
 
-
-
-
   dynamic openTopics(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.openTopics.edges''',
-    true,
-  );
+        response,
+        r'''$.data.course.subjects.edges[:].node.openTopics.edges''',
+        true,
+      );
 
   dynamic openTopicNodes(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.openTopics.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.subjects.edges[:].node.openTopics.edges[:].node''',
+        true,
+      );
 
   dynamic lockedTopicNodes(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.lockedTopics.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.subjects.edges[:].node.lockedTopics.edges[:].node''',
+        true,
+      );
 
   dynamic lockedTopics(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.lockedTopics.edges''',
-    true,
-  );
-
+        response,
+        r'''$.data.course.subjects.edges[:].node.lockedTopics.edges''',
+        true,
+      );
 
   dynamic openTopicsQuestionSetsId(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.openTopics.edges[:].node.questionSets.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.subjects.edges[:].node.openTopics.edges[:].node.questionSets.edges[:].node''',
+        true,
+      );
   dynamic lockedTopicsQuestionSetsId(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.subjects.edges[:].node.lockedTopics.edges[:].node.questionSets.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.subjects.edges[:].node.lockedTopics.edges[:].node.questionSets.edges[:].node''',
+        true,
+      );
 }
-
 
 class GetPracticeTestDetailsForAnExampleSubjectAnatomyCall {
   Future<ApiCallResponse> call({
@@ -388,22 +382,30 @@ class GetPracticeQuestionsForATestGivenIdOffsetAndFirstNQuestionsCall {
       cache: true,
     );
   }
+
   dynamic testQuestions(dynamic response) => getJsonField(
-    response,
-    r'''$.data.test.questions.edges[:].node''',
-    true,
-  );
-  dynamic getNcertSentenceAtIndex(dynamic response, int questionIndex, int sentenceIndex) => getJsonField(
-    response,
-    r'''$.data.test.questions.edges[''' + questionIndex.toString() + r'''].node.ncertSentences.edges[:].node''',
-  );
-  dynamic haveNcertSentenceAtIndex(dynamic response, int questionIndex) => getJsonField(
-    response,
-    r'''$.data.test.questions.edges[''' + questionIndex.toString() + r'''].node.ncertSentences.edges''',
-  );
+        response,
+        r'''$.data.test.questions.edges[:].node''',
+        true,
+      );
+  dynamic getNcertSentenceAtIndex(
+          dynamic response, int questionIndex, int sentenceIndex) =>
+      getJsonField(
+        response,
+        r'''$.data.test.questions.edges[''' +
+            questionIndex.toString() +
+            r'''].node.ncertSentences.edges[:].node''',
+      );
+  dynamic haveNcertSentenceAtIndex(dynamic response, int questionIndex) =>
+      getJsonField(
+        response,
+        r'''$.data.test.questions.edges[''' +
+            questionIndex.toString() +
+            r'''].node.ncertSentences.edges''',
+      );
   dynamic ncertSentences(dynamic response) => getJsonField(
         response,
-    r'''$.data.test.questions.edges[:].node.ncertSentences.edges[*].node.sentenceUrl''',
+        r'''$.data.test.questions.edges[:].node.ncertSentences.edges[*].node.sentenceUrl''',
         true,
       );
 
@@ -449,6 +451,7 @@ class GetPracticeQuestionsForATestGivenIdOffsetAndFirstNQuestionsCall {
       return [];
     }
   }
+
   dynamic testQuestionCorrectOptionIndices(dynamic response) => getJsonField(
         response,
         r'''$.data.test.questions.edges[:].node.correctOptionIndex''',
@@ -474,10 +477,10 @@ class GetPracticeQuestionsForATestGivenIdOffsetAndFirstNQuestionsCall {
       );
 
   dynamic testTags(dynamic response) => getJsonList(
-    response,
-    r'''$.data.test.questions.edges[:].node.tags.edges''',
-    true,
-  );
+        response,
+        r'''$.data.test.questions.edges[:].node.tags.edges''',
+        true,
+      );
 
   dynamic testExamYear(dynamic response) => getJsonField(
         response,
@@ -537,14 +540,15 @@ class CreateAnswerForAPracticeQuestionByAUserWithSpecificMarkedOptionCall {
     int? userAnswer = 3,
     int? durationInSec = 0,
     String? authToken =
-    'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OTcsInBob25lIjoiKzkxNzAyMjAwMTQzNSIsImV4cCI6MTY4OTQwOTQ5OSwiaWF0IjoxNjczODU3NDk5fQ.jNEEFn_BpF7JQoJEDB8lhEdKvujvuOHD12IrdP6_KFk',
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OTcsInBob25lIjoiKzkxNzAyMjAwMTQzNSIsImV4cCI6MTY4OTQwOTQ5OSwiaWF0IjoxNjczODU3NDk5fQ.jNEEFn_BpF7JQoJEDB8lhEdKvujvuOHD12IrdP6_KFk',
   }) {
-    final body = durationInSec==null || durationInSec==0 ?
-    '''{
+    final body = durationInSec == null || durationInSec == 0
+        ? '''{
       "query": "mutation createAnswer(\$input: createAnswerInput!) {\\n    createAnswer(input: \$input) {\\n        clientMutationId\\n    \\t\\tquestion{\\n          userAnswer{\\n            userAnswer\\n          durationInSec\\n          }\\n        }\\n    }\\n}",
       "variables": "{\\n  \\"input\\": {\\n    \\"questionId\\": \\"$questionId\\",\\n    \\"userId\\": \\"$userId\\",\\n    \\"userAnswer\\": $userAnswer\\n  }\\n}",
       "operationName": "createAnswer"
-    }'''  :'''
+    }'''
+        : '''
 {
   "query": "mutation createAnswer(\$input: createAnswerInput!) {\\n    createAnswer(input: \$input) {\\n        clientMutationId\\n    \\t\\tquestion{\\n          userAnswer{\\n            userAnswer\\n          durationInSec\\n          }\\n        }\\n    }\\n}",
   "variables": "{\\n  \\"input\\": {\\n    \\"questionId\\": \\"$questionId\\",\\n    \\"userId\\": \\"$userId\\",\\n    \\"durationInSec\\": \\"$durationInSec\\",\\n    \\"userAnswer\\": $userAnswer\\n  }\\n}",
@@ -552,7 +556,7 @@ class CreateAnswerForAPracticeQuestionByAUserWithSpecificMarkedOptionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName:
-      'Create answer for a practice question by a user with specific marked option ',
+          'Create answer for a practice question by a user with specific marked option ',
       apiUrl: '${PracticeGroup.baseUrl}/graphql',
       callType: ApiCallType.POST,
       headers: {
@@ -636,7 +640,6 @@ class CreateOrDeleteBookmarkForAPracticeQuestionByAUserCall {
   }
 }
 
-
 class CreateOrDeleteStarmarkQuestionCall {
   Future<ApiCallResponse> call({
     required String questionId,
@@ -675,9 +678,6 @@ class CreateOrDeleteStarmarkQuestionCall {
     );
   }
 }
-
-
-
 
 class CreateOrDeleteStarMarkForAPracticeQuestionByAUserCall {
   Future<ApiCallResponse> call({
@@ -781,7 +781,7 @@ class GetAllQuestionStatusGivenTestIDCall {
 /// Start Flashcard Group Code
 
 class FlashcardGroup {
-  static String baseUrl =  FFAppState().baseUrl;
+  static String baseUrl = FFAppState().baseUrl;
   static Map<String, String> headers = {};
   static GetDecksToShowChapterWiseCall getDecksToShowChapterWiseCall =
       GetDecksToShowChapterWiseCall();
@@ -1189,7 +1189,7 @@ class GetBookmarkedFlashcardsForDeckGivenIdOffsetAndFirstNLimitCall {
 /// Start Test Group Code
 
 class TestGroup {
-  static String baseUrl =  FFAppState().baseUrl;
+  static String baseUrl = FFAppState().baseUrl;
   static Map<String, String> headers = {};
   static ListOfCustomCreatedTestsByTheUserOrderedByDateOfCreationDescendingCall
       listOfCustomCreatedTestsByTheUserOrderedByDateOfCreationDescendingCall =
@@ -1702,7 +1702,7 @@ class CreateTestAttemptForATestByAUserCall {
 /// Start Notes Group Code
 
 class NotesGroup {
-  static String baseUrl =  FFAppState().baseUrl;
+  static String baseUrl = FFAppState().baseUrl;
   static Map<String, String> headers = {};
   static GetCourseNotesWhichHaveExternalUrlAsLinksForDownloadingPdfCall
       getCourseNotesWhichHaveExternalUrlAsLinksForDownloadingPdfCall =
@@ -1755,15 +1755,15 @@ class SignupGroup {
       loggedInUserInformationAndCourseAccessCheckingApiCall =
       LoggedInUserInformationAndCourseAccessCheckingApiCall();
   static LoggedInUserInformationAndMultipleCourseAccessCheckingApiCall
-  loggedInUserInformationAndMultipleCourseAccessCheckingApiCall =
-  LoggedInUserInformationAndMultipleCourseAccessCheckingApiCall();
+      loggedInUserInformationAndMultipleCourseAccessCheckingApiCall =
+      LoggedInUserInformationAndMultipleCourseAccessCheckingApiCall();
   static GoogleLoginServerCallWithCodeReceivedFromGoogleAuthenticationCall
       googleLoginServerCallWithCodeReceivedFromGoogleAuthenticationCall =
       GoogleLoginServerCallWithCodeReceivedFromGoogleAuthenticationCall();
   static CreateOrUpdateUserProfile createOrUpdateUserProfile =
       CreateOrUpdateUserProfile();
   static CreateOrUpdateUserProfile2 createOrUpdateUserProfile2 =
-  CreateOrUpdateUserProfile2();
+      CreateOrUpdateUserProfile2();
   static GetUserInformationApiCall getUserInformationApiCall =
       GetUserInformationApiCall();
 }
@@ -1804,35 +1804,34 @@ class LoggedInUserInformationAndCourseAccessCheckingApiCall {
       );
 
   dynamic courseStatus(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.profile.courseStatus''',
-  );
+        response,
+        r'''$.data.me.profile.courseStatus''',
+      );
   dynamic freeChapters(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges[:].node.freeChapters''',
-    true,
-  );
+        response,
+        r'''$.data.me.userCourses.edges[:].node.freeChapters''',
+        true,
+      );
   dynamic courses(dynamic response) => getJsonField(
         response,
         r'''$.data.me.userCourses.edges''',
         true,
       );
   dynamic expiryCourse(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.me.userCourses.edges[:].node''',
+        true,
+      );
   dynamic expiryDate(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges[:].node.expiryAt''',
-    false,
-  );
+        response,
+        r'''$.data.me.userCourses.edges[:].node.expiryAt''',
+        false,
+      );
   dynamic courseStatusForSpecificId(dynamic response, int courseId) {
     final courseStatus = getJsonField(
       response,
       r'''$.data.me.profile.courseStatus''',
     );
-
 
     // Check if the courseStatus contains the specific course ID
     if (courseStatus is Map && courseStatus.containsKey(courseId.toString())) {
@@ -1842,15 +1841,15 @@ class LoggedInUserInformationAndCourseAccessCheckingApiCall {
   }
 
   dynamic phoneConfirmed(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.phoneConfirmed''',
-    false,
-  );
+        response,
+        r'''$.data.me.phoneConfirmed''',
+        false,
+      );
   dynamic phone(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.phone''',
-    false,
-  );
+        response,
+        r'''$.data.me.phone''',
+        false,
+      );
 }
 
 class LoggedInUserInformationAndMultipleCourseAccessCheckingApiCall {
@@ -1884,32 +1883,32 @@ class LoggedInUserInformationAndMultipleCourseAccessCheckingApiCall {
   }
 
   dynamic me(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me''',
-  );
+        response,
+        r'''$.data.me''',
+      );
 
   dynamic courses(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges''',
-    true,
-  );
+        response,
+        r'''$.data.me.userCourses.edges''',
+        true,
+      );
   dynamic expiryCourse(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.me.userCourses.edges[:].node''',
+        true,
+      );
 
   dynamic freeChapters(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.userCourses.edges[:].node.freeChapters''',
-    true,
-  );
+        response,
+        r'''$.data.me.userCourses.edges[:].node.freeChapters''',
+        true,
+      );
 
   // Extracts courseStatus
   dynamic courseStatus(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.profile.courseStatus''',
-  );
+        response,
+        r'''$.data.me.profile.courseStatus''',
+      );
 }
 
 class GetUserInformationApiCall {
@@ -1952,11 +1951,10 @@ class GetUserInformationApiCall {
       );
 
   dynamic parentPhone(dynamic response) => getJsonField(
-    response,
-    r'''$.data.me.profile.parentPhone''',
-    false,
-  );
-
+        response,
+        r'''$.data.me.profile.parentPhone''',
+        false,
+      );
 
   dynamic city(dynamic response) => getJsonField(
         response,
@@ -2069,12 +2067,12 @@ class CreateOrUpdateUserProfile {
 class CreateOrUpdateUserProfile2 {
   Future<ApiCallResponse> call(
       {String? city = '',
-        String? state = '',
-        String? userId = '',
-        String? authToken = '',
-        String? parentPhone = '',
-        String? neetExamYear = '',
-        String? firstName = ''}) {
+      String? state = '',
+      String? userId = '',
+      String? authToken = '',
+      String? parentPhone = '',
+      String? neetExamYear = '',
+      String? firstName = ''}) {
     final body = '''
 {
   "query": "mutation setProfile(\$input: createOrUpdateProfileInput!) {\\n  createOrUpdateProfile(input: \$input) {\\n    clientMutationId\\n    }\\n}\\n",
@@ -2109,9 +2107,9 @@ class CreateOrUpdateUserProfile2 {
   }
 
   dynamic clientMutationId(dynamic response) => getJsonField(
-    response,
-    r'''$.data.createOrUpdateProfile.clientMutationId''',
-  );
+        response,
+        r'''$.data.createOrUpdateProfile.clientMutationId''',
+      );
 }
 
 class GoogleLoginServerCallWithCodeReceivedFromGoogleAuthenticationCall {
@@ -2181,8 +2179,7 @@ class CreatePaymentForAUserForACourseAndCourseOfferAndGetChecksumCall {
       int? userid,
       bool? hasShipment,
       Object? addOns,
-        String? couponId
-      }) {
+      String? couponId}) {
     Map<String, dynamic> params = hasShipment == true
         ? {
             "allow_shipment": 1,
@@ -2203,15 +2200,15 @@ class CreatePaymentForAUserForACourseAndCourseOfferAndGetChecksumCall {
             'COURSE_OFFER_ID': courseOfferId,
             'USERID': userid,
             "addonCourseIds": addOns,
-             "couponId": couponId.toString()
+            "couponId": couponId.toString()
           };
     if (params['addonCourseIds']?.isEmpty ?? false) {
       params.remove('addonCourseIds');
     }
-    if(params['couponId']?.isEmpty || params['couponId']==null){
+    if (params['couponId']?.isEmpty || params['couponId'] == null) {
       params.remove('couponId');
     }
-    print("create payment api params"+params.toString());
+    print("create payment api params" + params.toString());
     return ApiManager.instance.makeApiCall(
       callName:
           'Create payment for a user for a course and course offer and get checksum',
@@ -2282,15 +2279,16 @@ class GetCoursePriceAndCourseOffersToSelectFromToStartPaymentCall {
     String? courseId = '',
   }) {
     final body = courseId == "Q291cnNlOjMyNTc="
-        ? '''
+            ? '''
 {
   "query": "query GetCourseDetail(\$id: ID!) {\\n  course(id: \$id) {\\n    id\\n    name\\n    description\\n    fee\\n    discountedFee\\n    hasShipment\\n          discountPercentage\\n    public\\n    expiryAt\\n    image\\n    bestSeller\\n    origFee\\n    feeTitle\\n    feeDesc\\n    allowAddon\\n    addons: addons(orderBy: [IDDESC]) {\\n      edges {\\n        node {\\n          id\\n          courseId\\n          addonCourseId\\n          addonCourseOffer{\\n            id\\n          title\\n          fee\\n          discountedFee\\n          offerExpiryAt\\n          hasShipment\\n          description\\n                 }\\n        addonCourse {\\n            id\\n          }\\n        }\\n      }\\n    }\\n    offers: allOffers(orderBy: [IDASC])  {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          addons: addons(orderBy: IDASC]){\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseOffer{\\n            id\\n          title\\n          fee\\n          discountedFee\\n          offerExpiryAt\\n          hasShipment\\n          description\\n                 }\\n        addonCourseId\\n                addonCourse {\\n                  id\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n    neet24Offers: allOffers(where: {title: {like: \\"%24%\\"}}) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          addons: addons(orderBy: [IDDESC]){\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer{\\n            id\\n          title\\n          fee\\n          discountedFee\\n          offerExpiryAt\\n          hasShipment\\n          description\\n                 }\\n        addonCourse {\\n                  id\\n                name\\n                 description\\n                 fee\\n                discountedFee\\n                hasShipment\\n                description\\n                 }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n    neet25Offers: allOffers(where: {title: {like: \\"%25%\\"}}) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          addons: addons(orderBy: [IDDESC]){\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer{\\n            id\\n          title\\n          fee\\n          discountedFee\\n          offerExpiryAt\\n          hasShipment\\n          description\\n                 }\\n        addonCourse {\\n                  id\\n                name\\n                 description\\n                 fee\\n                discountedFee\\n                hasShipment\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n    neet26Offers: allOffers(where: {title: {like: \\"%26%\\"}}) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          addons: addons(orderBy: [IDDESC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer{\\n            id\\n          title\\n          fee\\n          discountedFee\\n          offerExpiryAt\\n          hasShipment\\n           description\\n          }\\n                addonCourse {\\n                  id\\n                name\\n                 description\\n                 fee\\n                discountedFee\\n                hasShipment\\n                description\\n                 }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n  }\\n}",
   "variables": "{\\n  \\"id\\": \\"$courseId\\"\\n}",
   "operationName": "GetCourseDetail"
-}''':
-  //     : courseId == FFAppState().courseId
-  //          ?
-    '''
+}'''
+            :
+            //     : courseId == FFAppState().courseId
+            //          ?
+            '''
 {
   "query": "query GetCourseDetail(\$id: ID!) {\\n  course(id: \$id) {\\n    id\\n    name\\n    description\\n    fee\\n    discountedFee\\n    hasShipment\\n    discountPercentage\\n    public\\n    expiryAt\\n    image\\n    bestSeller\\n    origFee\\n    feeTitle\\n    feeDesc\\n    allowAddon\\n    offers: allOffers(orderBy: [IDASC]) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          addons: addons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  hasShipment\\n                  description\\n                }\\n                addonCourseId\\n                addonCourse {\\n                  id\\n                  name\\n                  fee\\n                  discountedFee\\n                  expiryAt\\n                  hasShipment\\n                  description\\n                }\\n              }\\n            }\\n          }\\n          complimentaryAddons: complimentaryAddons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                complimentaryCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  hasShipment\\n                  description\\n                courseId\\n                }\\n                addonCourseId\\n                complimentaryCourse {\\n                  id\\n                  name\\n                  fee\\n                  origFee\\n                  discountedFee\\n                  expiryAt\\n                  hasShipment\\n                  description\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n    neet25Offers: allOffers(where: {title: {like: \\"%25%\\"}},orderBy: [IDASC]) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          woTaxFee\\n          parentCourseOfferId\\n          finalCourseOfferId\\n          complimentaryAddons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                complimentaryCourse {\\n                  id\\n                  name\\n                fee\\n          origFee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n         hasShipment\\n         }\\n                complimentaryCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  expiryAt\\n                  hasShipment\\n                  description\\n                courseId}\\n              }\\n            }\\n          }\\n          addons: addons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  hasShipment\\n                  description\\n                }\\n                addonCourse {\\n                  id\\n                  name\\n                  description\\n                  fee\\n                  origFee\\n                  discountedFee\\n                  hasShipment\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n neet27Offers: allOffers(where: {title: {like: \\"%27%\\"}},orderBy: [IDASC]) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          woTaxFee\\n          parentCourseOfferId\\n          finalCourseOfferId\\n          complimentaryAddons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                complimentaryCourse {\\n                  id\\n                  name\\n                fee\\n          origFee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n         hasShipment\\n         }\\n                complimentaryCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  expiryAt\\n                  hasShipment\\n                  description\\n                courseId}\\n              }\\n            }\\n          }\\n          addons: addons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  hasShipment\\n                  description\\n                }\\n                addonCourse {\\n                  id\\n                  name\\n                  description\\n                  fee\\n                  origFee\\n                  discountedFee\\n                  hasShipment\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n    neet26Offers: allOffers(where: {title: {like: \\"%26%\\"}},orderBy: [IDASC]) {\\n      edges {\\n        node {\\n          id\\n          title\\n          description\\n          fee\\n          discountPercentage\\n          discountedFee\\n          expiryAt\\n          durationInDays\\n          hasShipment\\n          woTaxFee\\n          parentCourseOfferId\\n          finalCourseOfferId\\n          complimentaryAddons (orderBy: [IDASC]){\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                complimentaryCourse {\\n                  id\\n                  name\\n                description\\n                fee\\n                origFee\\n                discountedFee\\n                expiryAt\\n                hasShipment\\n }\\n                complimentaryCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  expiryAt\\n                  hasShipment\\n                  description\\n                courseId\\n }\\n              }\\n            }\\n          }\\n          addons: addons(orderBy: [IDASC]) {\\n            edges {\\n              node {\\n                id\\n                courseId\\n                courseOfferId\\n                addonCourseId\\n                addonCourseOffer {\\n                  id\\n                  title\\n                  fee\\n                  discountedFee\\n                  offerExpiryAt\\n                  hasShipment\\n                  description\\n                }\\n                addonCourse {\\n                  id\\n                  name\\n                  description\\n                  fee\\n                  origFee\\n                  discountedFee\\n                  hasShipment\\n                  description\\n                }\\n              }\\n            }\\n          }\\n        }\\n      }\\n    }\\n  }\\n}",
   "variables": "{\\n \\"id\\": \\"$courseId\\"\\n}",
@@ -2301,12 +2299,11 @@ class GetCoursePriceAndCourseOffersToSelectFromToStartPaymentCall {
 //             : '''
 // {
 
-
 //   "query": "query GetCourseDetail(\$id: ID!) {\\n    course(id: \$id) {\\n        id\\n        name\\n        description\\n        fee\\n        discountedFee\\n        discountPercentage\\n        public\\n        expiryAt\\n        image\\n        bestSeller\\n        origFee\\n        feeTitle\\n        feeDesc\\n        hasShipment\\n        type\\n        offers:allOffers {\\n              edges {\\n                node {\\n                id\\n                  title\\n                  description\\n                  fee\\n                  discountPercentage\\n                  discountedFee\\n                  expiryAt\\n                  durationInDays\\n                hasShipment\\n                  }\\n            }\\n        }\\n    }\\n}",
 //   "variables": "{\\n  \\"id\\": \\"$courseId\\"\\n}",
 //   "operationName": "GetCourseDetail"
 // }'''
-    ;
+        ;
     return ApiManager.instance.makeApiCall(
       callName:
           'Get course price and course offers to select from to start payment',
@@ -2331,12 +2328,12 @@ class GetCoursePriceAndCourseOffersToSelectFromToStartPaymentCall {
         r'''$.data''',
       );
 
-  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET24(dynamic response) => getJsonField(
+  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET24(dynamic response) =>
+      getJsonField(
         response,
         r'''$.data.course.neet24Offers.edges[0].node.addons.edges[:].node''',
         true,
       );
-
 
   dynamic neet24CourseOffers(dynamic response) => getJsonField(
         response,
@@ -2386,12 +2383,11 @@ class GetCoursePriceAndCourseOffersToSelectFromToStartPaymentCall {
         true,
       );
 
-dynamic neet25courseOffersId(dynamic response) => getJsonField(
-  response,
-  r'''$.data.course.neet25Offers.edges[:].node.id''',
-  true,
-);
-
+  dynamic neet25courseOffersId(dynamic response) => getJsonField(
+        response,
+        r'''$.data.course.neet25Offers.edges[:].node.id''',
+        true,
+      );
 
   dynamic neet25CourseOffers(dynamic response) => getJsonField(
         response,
@@ -2435,37 +2431,39 @@ dynamic neet25courseOffersId(dynamic response) => getJsonField(
         true,
       );
 
-  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET25(dynamic response) => getJsonField(
+  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET25(dynamic response) =>
+      getJsonField(
         response,
         r'''$.data.course.neet25Offers.edges[0].node.addons.edges[:].node''',
         true,
       );
 
-
-
-  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET25(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet25Offers.edges[0].node.complimentaryAddons.edges[:].node''',
-    true,
-  );
-  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET26(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet26Offers.edges[0].node.complimentaryAddons.edges[:].node''',
-    true,
-  );
+  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET25(
+          dynamic response) =>
+      getJsonField(
+        response,
+        r'''$.data.course.neet25Offers.edges[0].node.complimentaryAddons.edges[:].node''',
+        true,
+      );
+  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET26(
+          dynamic response) =>
+      getJsonField(
+        response,
+        r'''$.data.course.neet26Offers.edges[0].node.complimentaryAddons.edges[:].node''',
+        true,
+      );
 
   dynamic neet26courseOffersId(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet26Offers.edges[:].node.id''',
-    true,
-  );
-
+        response,
+        r'''$.data.course.neet26Offers.edges[:].node.id''',
+        true,
+      );
 
   dynamic neet26CourseOffers(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet26Offers.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet26Offers.edges[:].node''',
+        true,
+      );
 
   dynamic neet26OfferDiscountedFees(dynamic response) => getJsonField(
         response,
@@ -2503,78 +2501,74 @@ dynamic neet25courseOffersId(dynamic response) => getJsonField(
         true,
       );
 
-  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET26(dynamic response) => getJsonField(
+  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET26(dynamic response) =>
+      getJsonField(
         response,
         r'''$.data.course.neet26Offers.edges[0].node.addons.edges[:].node''',
         true,
       );
 
-  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET27(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[0].node.complimentaryAddons.edges[:].node''',
-    true,
-  );
+  dynamic getAllcomplimentaryCourseOffersForFirstCourseOfferOfNEET27(
+          dynamic response) =>
+      getJsonField(
+        response,
+        r'''$.data.course.neet27Offers.edges[0].node.complimentaryAddons.edges[:].node''',
+        true,
+      );
   dynamic neet27courseOffersId(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.id''',
-    true,
-  );
-
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.id''',
+        true,
+      );
 
   dynamic neet27CourseOffers(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node''',
+        true,
+      );
 
   dynamic neet27OfferDiscountedFees(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.discountedFee''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.discountedFee''',
+        true,
+      );
 
   dynamic neet27OfferFees(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.fee''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.fee''',
+        true,
+      );
 
   dynamic neet27OfferTitles(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.title''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.title''',
+        true,
+      );
 
   dynamic neet27OfferDurations(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.durationInDays''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.durationInDays''',
+        true,
+      );
 
   dynamic neet27Offerdispercent(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.discountPercentage''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.discountPercentage''',
+        true,
+      );
 
   dynamic neet27HasShipment(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[:].node.hasShipment''',
-    true,
-  );
+        response,
+        r'''$.data.course.neet27Offers.edges[:].node.hasShipment''',
+        true,
+      );
 
-  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET27(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.neet27Offers.edges[0].node.addons.edges[:].node''',
-    true,
-  );
-
-
-
-
-
-
-
+  dynamic getAllAddOnCoursesForFirstCourseOfferOfNEET27(dynamic response) =>
+      getJsonField(
+        response,
+        r'''$.data.course.neet27Offers.edges[0].node.addons.edges[:].node''',
+        true,
+      );
 
   dynamic courseOffers(dynamic response) => getJsonField(
         response,
@@ -2649,15 +2643,15 @@ dynamic neet25courseOffersId(dynamic response) => getJsonField(
       );
 
   dynamic getAllComplimentaryCourseOffers(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.offers.edges[:].node.complimentaryAddons.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.offers.edges[:].node.complimentaryAddons.edges[:].node''',
+        true,
+      );
   dynamic getAllAddonsCourseOffers(dynamic response) => getJsonField(
-    response,
-    r'''$.data.course.offers.edges[:].node.addons.edges[:].node''',
-    true,
-  );
+        response,
+        r'''$.data.course.offers.edges[:].node.addons.edges[:].node''',
+        true,
+      );
 }
 
 class PaymentSuccessBackendProcessingCallToEnableCourseCall {

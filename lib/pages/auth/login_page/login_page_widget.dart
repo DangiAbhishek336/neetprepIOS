@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
 import 'package:http/http.dart' as http;
+
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
@@ -28,94 +29,118 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   var response;
 
   Future<bool> isFormCompleted() async {
-    response= await SignupGroup
-        .getUserInformationApiCall
-        .call(
+    response = await SignupGroup.getUserInformationApiCall.call(
       authToken: FFAppState().subjectToken,
     );
-    bool isPhonePresent  = false, isCityPresent  = false,isStatePresent  = false, isBoardExamYearPresent  = false, isNeetExamYearPresent=false, isFirstNamePresent = false, isLastNamePresent = false, isDOBPresent = false, isRegistrationNoPresent = false;
-    if(SignupGroup.getUserInformationApiCall.me( response?.jsonBody)!=null) {
-      isPhonePresent = SignupGroup.getUserInformationApiCall.phone(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .phone( response?.jsonBody)
-              .isNotEmpty;
+    bool isPhonePresent = false,
+        isCityPresent = false,
+        isStatePresent = false,
+        isBoardExamYearPresent = false,
+        isNeetExamYearPresent = false,
+        isFirstNamePresent = false,
+        isLastNamePresent = false,
+        isDOBPresent = false,
+        isRegistrationNoPresent = false;
+    if (SignupGroup.getUserInformationApiCall.me(response?.jsonBody) != null) {
+      isPhonePresent =
+          SignupGroup.getUserInformationApiCall.phone(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .phone(response?.jsonBody)
+                  .isNotEmpty;
 
-      isCityPresent = SignupGroup.getUserInformationApiCall.city(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .city( response?.jsonBody)
-              .isNotEmpty;
+      isCityPresent =
+          SignupGroup.getUserInformationApiCall.city(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .city(response?.jsonBody)
+                  .isNotEmpty;
 
-      isStatePresent = SignupGroup.getUserInformationApiCall.state(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .state( response?.jsonBody)
-              .isNotEmpty;
+      isStatePresent =
+          SignupGroup.getUserInformationApiCall.state(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .state(response?.jsonBody)
+                  .isNotEmpty;
 
       isBoardExamYearPresent = SignupGroup.getUserInformationApiCall
-          .boardExamYear( response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .boardExamYear(response?.jsonBody).toString()
+                  .boardExamYear(response?.jsonBody) !=
+              null &&
+          SignupGroup.getUserInformationApiCall
+              .boardExamYear(response?.jsonBody)
+              .toString()
               .isNotEmpty;
 
       isNeetExamYearPresent = SignupGroup.getUserInformationApiCall
-          .neetExamYear(response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .neetExamYear(response?.jsonBody).toString()
+                  .neetExamYear(response?.jsonBody) !=
+              null &&
+          SignupGroup.getUserInformationApiCall
+              .neetExamYear(response?.jsonBody)
+              .toString()
               .isNotEmpty;
 
-      isFirstNamePresent = SignupGroup.getUserInformationApiCall.firstName(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .firstName(response?.jsonBody)
-              .isNotEmpty;
+      isFirstNamePresent =
+          SignupGroup.getUserInformationApiCall.firstName(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .firstName(response?.jsonBody)
+                  .isNotEmpty;
 
-      isLastNamePresent = SignupGroup.getUserInformationApiCall.lastName(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .lastName( response?.jsonBody)
-              .isNotEmpty;
-      isDOBPresent= SignupGroup.getUserInformationApiCall.dob(
-          response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
-              .dob(response?.jsonBody)
-              .isNotEmpty;
-      isRegistrationNoPresent= SignupGroup.getUserInformationApiCall.registrationNo(response?.jsonBody) != null
-          && SignupGroup.getUserInformationApiCall
+      isLastNamePresent =
+          SignupGroup.getUserInformationApiCall.lastName(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .lastName(response?.jsonBody)
+                  .isNotEmpty;
+      isDOBPresent =
+          SignupGroup.getUserInformationApiCall.dob(response?.jsonBody) !=
+                  null &&
+              SignupGroup.getUserInformationApiCall
+                  .dob(response?.jsonBody)
+                  .isNotEmpty;
+      isRegistrationNoPresent = SignupGroup.getUserInformationApiCall
+                  .registrationNo(response?.jsonBody) !=
+              null &&
+          SignupGroup.getUserInformationApiCall
               .registrationNo(response?.jsonBody)
               .isNotEmpty;
     }
 
-    bool isFormCompleted  = isPhonePresent && isCityPresent && isNeetExamYearPresent && isStatePresent && isBoardExamYearPresent  && isFirstNamePresent && isLastNamePresent && isDOBPresent;
-    if(isNeetExamYearPresent && isFormCompleted){
-      String neetExamYear =  SignupGroup.getUserInformationApiCall
-          .neetExamYear( response?.jsonBody).toString();
-      if(neetExamYear=="2024" && !isRegistrationNoPresent){
+    bool isFormCompleted = isPhonePresent &&
+        isCityPresent &&
+        isNeetExamYearPresent &&
+        isStatePresent &&
+        isBoardExamYearPresent &&
+        isFirstNamePresent &&
+        isLastNamePresent &&
+        isDOBPresent;
+    if (isNeetExamYearPresent && isFormCompleted) {
+      String neetExamYear = SignupGroup.getUserInformationApiCall
+          .neetExamYear(response?.jsonBody)
+          .toString();
+      if (neetExamYear == "2024" && !isRegistrationNoPresent) {
         isFormCompleted = false;
       }
-
     }
     FFAppState().isFormCompleted = isFormCompleted;
-    if(FFAppState().isFormCompleted) {
-      FFAppState().firstName =
-          SignupGroup.getUserInformationApiCall.firstName(response?.jsonBody).toString();
-      FFAppState().lastName =
-          SignupGroup.getUserInformationApiCall.lastName(response?.jsonBody)
-              .toString();
+    if (FFAppState().isFormCompleted) {
+      FFAppState().firstName = SignupGroup.getUserInformationApiCall
+          .firstName(response?.jsonBody)
+          .toString();
+      FFAppState().lastName = SignupGroup.getUserInformationApiCall
+          .lastName(response?.jsonBody)
+          .toString();
       FFAppState().phoneNum = SignupGroup.getUserInformationApiCall
           .phone(response?.jsonBody)
           .toString();
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(isFormCompleted){
+    if (isFormCompleted) {
       prefs.setBool('isPersonalDetailsCompleted', true);
-    }
-    else{
+    } else {
       prefs.setBool('isPersonalDetailsCompleted', false);
     }
-    return Future.value(isFormCompleted) ;
-
+    return Future.value(isFormCompleted);
   }
 
   Future<void> startUpApiRequest() async {
@@ -136,14 +161,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   }
 
   Future<void> checkIfAuthTokenExpired() async {
-    ApiCallResponse response =  await SignupGroup.loggedInUserInformationAndCourseAccessCheckingApiCall
-        .call(
-        authToken: FFAppState().subjectToken
-    );
-    if((response.succeeded ?? true) && (SignupGroup.loggedInUserInformationAndCourseAccessCheckingApiCall.me((response.jsonBody ?? '')) != null)){
+    ApiCallResponse response = await SignupGroup
+        .loggedInUserInformationAndCourseAccessCheckingApiCall
+        .call(authToken: FFAppState().subjectToken);
+    if ((response.succeeded ?? true) &&
+        (SignupGroup.loggedInUserInformationAndCourseAccessCheckingApiCall
+                .me((response.jsonBody ?? '')) !=
+            null)) {
       context.goNamed('PracticeChapterWisePage');
     }
-
   }
 
   @override
@@ -153,7 +179,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
     _model = createModel(context, () => LoginPageModel());
 
-    if(loggedIn){
+    if (loggedIn) {
       checkIfAuthTokenExpired();
     }
 
@@ -188,7 +214,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
               body: SafeArea(
-
                 top: true,
                 child: Visibility(
                   visible: !_model.isLoading,
@@ -237,7 +262,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                       BorderRadius.circular(
                                                           8.0),
                                                   child: Image.asset(
-                                                     FFAppState().isDarkMode? 'assets/images/essential-logo-dark.png':'assets/images/Frame_1000006609.png',
+                                                    FFAppState().isDarkMode
+                                                        ? 'assets/images/essential-logo-dark.png'
+                                                        : 'assets/images/Frame_1000006609.png',
                                                     width: 45.0,
                                                     height: 45.0,
                                                     fit: BoxFit.cover,
@@ -317,7 +344,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                     child: SvgPicture.asset(
                                                       'assets/images/practiceTests.svg',
                                                       fit: BoxFit.fitHeight,
-                                                      width:MediaQuery.of(context).size.width*0.8,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
                                                     ),
                                                   ),
                                                 ),
@@ -361,7 +392,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
-                                                    fontSize: 13,
+                                                        fontSize: 13,
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -465,17 +496,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         //   }
                                         // });
 
-                                      //  await  startUpApiRequest();
+                                        //  await  startUpApiRequest();
                                         var profile = {
                                           'Name': FFAppState().userName,
                                           'UserId': FFAppState().userIdInt,
                                           'Email': FFAppState().emailId,
-                                          'Identity':FFAppState().userIdInt,
+                                          'Identity': FFAppState().userIdInt,
                                         };
-                                        print("profile"+profile.toString());
-                                        CleverTapService.onUserLogin(profile);
-                                        context.goNamed('PracticeChapterWisePage');
-
+                                        print("profile" + profile.toString());
+                                        context
+                                            .goNamed('PracticeChapterWisePage');
 
                                         if (_shouldSetState) setState(() {});
                                         return;
@@ -487,7 +517,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     child: Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                         border: Border.all(

@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:neetprep_essential/app_state.dart';
+
 Future<void> handelBackgroundMessage(RemoteMessage message) async {
   log('Title: ${message.notification?.title}');
   log('Body: ${message.notification?.body}');
@@ -111,7 +112,6 @@ class FirebaseApi {
         'Authorization': 'Bearer $authorizationToken',
       };
 
-
       Map<String, dynamic> body = {
         'userId': userId,
         'fcmToken': fcmToken,
@@ -122,7 +122,6 @@ class FirebaseApi {
         'app': app,
       };
 
-
       http.Response response = await http.post(
         Uri.parse(url),
         headers: headers,
@@ -132,10 +131,9 @@ class FirebaseApi {
       if (response.statusCode == 200) {
         log('Update successful. Response body: ${response.body}');
       } else {
-        FirebaseCrashlytics.instance.setCustomKey(
-            'fcm_token_update_error', response.body.toString());
-        log('Failed to update. Status code: ${response
-            .statusCode}. Response body: ${response.body}');
+        FirebaseCrashlytics.instance
+            .setCustomKey('fcm_token_update_error', response.body.toString());
+        log('Failed to update. Status code: ${response.statusCode}. Response body: ${response.body}');
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
     } catch (e, stackTrace) {
@@ -145,24 +143,25 @@ class FirebaseApi {
     }
   }
 
-
-
-
-
-
   static Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
 
     final fCMToken = await _firebaseMessaging.getToken();
-    FirebaseCrashlytics.instance.setCustomKey("fcm_token",fCMToken!);
-    FirebaseCrashlytics.instance.setUserIdentifier(fCMToken??"");
+    FirebaseCrashlytics.instance.setCustomKey("fcm_token", fCMToken!);
+    FirebaseCrashlytics.instance.setUserIdentifier(fCMToken ?? "");
     print("Fcm Token : $fCMToken");
-    fcmToken=fCMToken;
+    fcmToken = fCMToken;
     print("updated value : $fcmToken");
-    await updateFcmToken(authorizationToken: FFAppState().subjectToken,userId: FFAppState().userIdInt,fcmToken: fCMToken,deviceId: "",androidDetails: "",platform:"android" ,app:"abhyas", deviceAdsId: "");
+    await updateFcmToken(
+        authorizationToken: FFAppState().subjectToken,
+        userId: FFAppState().userIdInt,
+        fcmToken: fCMToken,
+        deviceId: "",
+        androidDetails: "",
+        platform: "android",
+        app: "abhyas",
+        deviceAdsId: "");
     initPushNotifications();
-    CleverTapService.enablePushNotification();
     initLocalNotifications();
   }
 }
-

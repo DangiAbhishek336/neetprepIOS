@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:isolate';
 import 'dart:io' show Platform;
 import 'package:clevertap_plugin/clevertap_plugin.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -15,33 +14,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:neetprep_essential/firebase/firebase_push_notification.dart';
-import 'package:neetprep_essential/pages/bookmarkedQs/bookmarked_chapter_wise_page/bookmarked_chapter_wise_page_model.dart';
-import 'package:neetprep_essential/pages/bookmarkedQs/bookmarked_questions_page/bookmarked_questions_page_model.dart';
-import 'package:neetprep_essential/pages/create_test/classroom_test_series_page/personal_details_page_model.dart';
-import 'package:neetprep_essential/pages/create_test/start_test_page/start_test_page_widget.dart';
-import 'package:neetprep_essential/pages/flashcard/flashcard_deck_page/flashcard_deck_page_provider.dart';
-import 'package:neetprep_essential/pages/flashcard/flashcard_question_page/flashcard_question_page_model.dart';
-import 'package:neetprep_essential/pages/practice/essential_chapter_wise_page/essential_chapter_wise_page_model.dart';
-import 'package:neetprep_essential/pages/practice/hardestqs_chapter_wise_page/hardestqs_chapter_page_model.dart';
-import 'package:neetprep_essential/pages/practice/practice_chapter_wise_page/practice_chapter_page_model.dart';
-import 'package:neetprep_essential/pages/practice/practice_chapter_wise_page/practice_chapter_wise_page_model.dart';
-import 'package:neetprep_essential/pages/starmarkedQs/StarmarkQuestionPage/starmarkedQuestionPagemodel.dart';
-import 'package:neetprep_essential/pages/starmarkedQs/starmarkedChapterWisePage/starmarkedChapterWisePageModel.dart';
-import 'package:neetprep_essential/pages/practice_log/practice_log_provider.dart';
-
-import 'package:neetprep_essential/pages/user_info_form/user_form/user_info_form_model.dart';
-import 'package:neetprep_essential/pages/user_info_form/user_form/user_info_form_widget.dart';
-import 'package:neetprep_essential/providers/commonProvider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:screen_protector/screen_protector.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:uni_links/uni_links.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
@@ -50,7 +30,6 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'components/theme_notifier/theme_notifier.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -64,14 +43,12 @@ class AppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-
 late CleverTapPlugin _clevertapPlugin;
 
 void inAppNotificationShow(Map<String, dynamic> map) {
-
-    print("inAppNotificationShow called = ${map.toString()}");
-
+  print("inAppNotificationShow called = ${map.toString()}");
 }
+
 final bool testWithWorkManager = false;
 
 @pragma('vm:entry-point')
@@ -79,8 +56,6 @@ void onKilledStateNotificationClickedHandler(Map<String, dynamic> map) async {
   print("onKilledStateNotificationClickedHandler called from headless task!");
   print("Notification Payload received: " + map.toString());
 }
-
-
 
 void main() async {
   runZonedGuarded(() async {
@@ -93,9 +68,8 @@ void main() async {
     if (!kIsWeb) {
       await Firebase.initializeApp();
       await FirebaseApi.initNotifications();
-
     }
-    if(kIsWeb){
+    if (kIsWeb) {
       CleverTapPlugin.init("884-767-6K7Z");
     }
     if (!kIsWeb) {
@@ -138,12 +112,8 @@ void main() async {
       }).sendPort);
     }
 
-    runApp(ChangeNotifierProvider(
-      create: (context) => appState,
-      child: ShowCaseWidget(
-        builder: Builder(builder: (context) => MyApp()),
-      ),
-    ));
+    runApp(
+        ChangeNotifierProvider(create: (context) => appState, child: MyApp()));
   }, (error, stackTrace) {
     FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
@@ -160,11 +130,11 @@ void main() async {
     };
   });
 
-
   CleverTapPlugin.onKilledStateNotificationClicked(
       onKilledStateNotificationClickedHandler);
   _clevertapPlugin = new CleverTapPlugin();
-  _clevertapPlugin.setCleverTapInAppNotificationShowHandler(inAppNotificationShow);
+  _clevertapPlugin
+      .setCleverTapInAppNotificationShowHandler(inAppNotificationShow);
 }
 
 class MyApp extends StatefulWidget {
@@ -188,7 +158,7 @@ class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode =
       //ThemeMode.light;
-       FlutterFlowTheme.themeMode;
+      FlutterFlowTheme.themeMode;
 
   late Stream<BaseAuthUser> userStream;
 
@@ -221,35 +191,29 @@ class _MyAppState extends State<MyApp> {
     Uri uri = Uri.parse(link);
     if (uri.pathSegments.isNotEmpty) {
       if (uri.pathSegments.first == 'orderpage') {
-
-
         String? courseIdInt = uri.queryParameters['courseIdInt'] ?? '';
-       log("courseIdInt"+courseIdInt.toString());
-          context.pushNamed(
-            'OrderPage',
-            queryParameters: {
-              'courseId':functions.getBase64OfCourseId(courseIdInt).toString(),
-              'courseIdInt': courseIdInt.toString(),
-            },
-          );
-
+        log("courseIdInt" + courseIdInt.toString());
+        context.pushNamed(
+          'OrderPage',
+          queryParameters: {
+            'courseId': functions.getBase64OfCourseId(courseIdInt).toString(),
+            'courseIdInt': courseIdInt.toString(),
+          },
+        );
       } else if (uri.pathSegments.first == 'startTestPage') {
+        String? testId = uri.queryParameters['testId'];
+        String? courseIdInt = uri.queryParameters['courseIdInt'];
 
-           String? testId = uri.queryParameters['testId'];
-          String? courseIdInt = uri.queryParameters['courseIdInt'] ;
-
-           context.goNamed(
-             'StartTestPage',
-             queryParameters: {
-               'testId':functions.getBase64OfTestId(testId!),
-               'courseIdInt': serializeParam(
-                 courseIdInt
-                     .toString(),
-                 ParamType.String,
-               ),
-             },
-           );
-
+        context.goNamed(
+          'StartTestPage',
+          queryParameters: {
+            'testId': functions.getBase64OfTestId(testId!),
+            'courseIdInt': serializeParam(
+              courseIdInt.toString(),
+              ParamType.String,
+            ),
+          },
+        );
       }
     }
   }
@@ -279,7 +243,7 @@ class _MyAppState extends State<MyApp> {
 
   static void _handleKilledStateNotificationInteraction() async {
     CleverTapAppLaunchNotification appLaunchNotification =
-    await CleverTapPlugin.getAppLaunchNotification();
+        await CleverTapPlugin.getAppLaunchNotification();
     print(
         "_handleKilledStateNotificationInteraction => $appLaunchNotification");
 
@@ -287,7 +251,6 @@ class _MyAppState extends State<MyApp> {
       Map<String, dynamic> notificationPayload = appLaunchNotification.payload!;
     }
   }
-
 
   @override
   void initState() {
@@ -315,21 +278,14 @@ class _MyAppState extends State<MyApp> {
     });
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await ScreenProtector.preventScreenshotOn();
-    //  await startUpApiRequest();
-
+      //  await startUpApiRequest();
     });
-    if(!kIsWeb) {
+    if (!kIsWeb) {
       if (Platform.isAndroid) {
         _handleKilledStateNotificationInteraction();
       }
     }
     initDeepLink();
-
-
-
-
-
-
 
     Future<void> initPlatformState() async {
       var deviceData = <String, dynamic>{};
@@ -360,23 +316,6 @@ class _MyAppState extends State<MyApp> {
       if (!mounted) return;
     }
 
-    void initInternetConnectionChecker() {
-      listener = InternetConnectionChecker().onStatusChange.listen((status) {
-        if (status == InternetConnectionStatus.disconnected) {
-          Fluttertoast.showToast(
-            msg: "You are offline. Please check your internet connection.",
-          );
-          FFAppState().isInternetConnected = false;
-        }
-        if (status == InternetConnectionStatus.connected) {
-          FFAppState().isInternetConnected = true;
-        }
-        print("FFAppState().isInternetConnected" +
-            FFAppState().isInternetConnected.toString());
-        setState(() {});
-      });
-    }
-
     Future<void> _initPackageInfo() async {
       final info = await PackageInfo.fromPlatform();
       setState(() {
@@ -384,7 +323,6 @@ class _MyAppState extends State<MyApp> {
       });
     }
 
-    if (!kIsWeb) initInternetConnectionChecker();
     _initPackageInfo();
     initPlatformState();
   }
@@ -444,79 +382,37 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => PersonalDetailsPageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FlashcardQuestionPageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FlashcardDeckProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BookmarkedChapterWisePageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BookmarkedQuestionPageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => StarmarkedChapterWisePageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => StarmarkedQuestionPageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PracticeChapterWisePageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PracticeChapterPageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => CommonProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => UserInfoFormModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ThemeNotifier(FFAppState().isDarkMode ?ThemeMode.dark:ThemeMode.light),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => EssentialChapterWisePageModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => PracticeLogProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => HardestQsChapterPageModel(),
+          create: (context) => ThemeNotifier(
+              FFAppState().isDarkMode ? ThemeMode.dark : ThemeMode.light),
         ),
       ],
-      child: Consumer<ThemeNotifier>(
-          builder: (context, themeNotifier ,_) {
-            return MaterialApp.router(
-              title: 'neetprep essential',
-              localizationsDelegates: [
-                FFLocalizationsDelegate(),
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              locale: _locale,
-              supportedLocales: const [
-                Locale('en'),
-              ],
-              theme: ThemeData(
-                useMaterial3: false,
-                brightness: Brightness.light,
-                scrollbarTheme: ScrollbarThemeData(),
-              ),
-              darkTheme: ThemeData(
-                useMaterial3: false,
-                brightness: Brightness.dark,
-                scrollbarTheme: ScrollbarThemeData(),
-              ),
-              themeMode: themeNotifier.value,
-              routerConfig: _router,
-            );
-          }
-      ),);
+      child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
+        return MaterialApp.router(
+          title: 'neetprep essential',
+          localizationsDelegates: [
+            FFLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: _locale,
+          supportedLocales: const [
+            Locale('en'),
+          ],
+          theme: ThemeData(
+            useMaterial3: false,
+            brightness: Brightness.light,
+            scrollbarTheme: ScrollbarThemeData(),
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: false,
+            brightness: Brightness.dark,
+            scrollbarTheme: ScrollbarThemeData(),
+          ),
+          themeMode: themeNotifier.value,
+          routerConfig: _router,
+        );
+      }),
+    );
   }
 }

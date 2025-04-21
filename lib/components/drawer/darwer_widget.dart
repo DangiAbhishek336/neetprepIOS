@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neetprep_essential/app_state.dart';
-import 'package:neetprep_essential/providers/commonProvider.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:screen_protector/screen_protector.dart';
@@ -16,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../auth/firebase_auth/auth_util.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_util.dart';
-import '../../pages/practice/practice_chapter_wise_page/practice_chapter_wise_page_model.dart';
 import '../../utlis/text.dart';
 import '../need_help_pop_up/need_help_pop_up_widget.dart';
 import '../theme_notifier/theme_notifier.dart';
@@ -33,35 +30,12 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget>
     with TickerProviderStateMixin {
-  late PracticeChapterWisePageModel _model;
   bool isPyqSelected = false;
   bool isMoreSelected = false;
   bool isTestSeriesSelected = false;
 
   @override
   void initState() {
-    _model = Provider.of<PracticeChapterWisePageModel>(context, listen: false);
-    if (widget.pageName == DrawerStrings.ncertAnnotation ||
-        widget.pageName == DrawerStrings.bioNcert) {
-      isPyqSelected = true;
-      isTestSeriesSelected = false;
-      isMoreSelected = false;
-    }
-    if (widget.pageName == DrawerStrings.pagewiseFlashcards ||
-        widget.pageName == DrawerStrings.arQsPowerUp ||
-        widget.pageName == DrawerStrings.homeTestSeriesBooks ||
-        widget.pageName == DrawerStrings.abhyasBooks ||
-        widget.pageName == DrawerStrings.abhyasEssentialBooks) {
-      isMoreSelected = true;
-      isPyqSelected = false;
-    }
-    // if (widget.pageName == DrawerStrings.classroomTestSeries ||
-    //     widget.pageName == DrawerStrings.onlineTestSeries) {
-    //   isTestSeriesSelected = true;
-    //   isMoreSelected = true;
-    //   isPyqSelected = false;
-    // }
-
     super.initState();
   }
 
@@ -75,9 +49,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<PracticeChapterWisePageModel, CommonProvider,
+    return Consumer<
             ThemeNotifier>(
-        builder: (context, practiceChapProvider, commonProvider, themeNotifier,
+        builder: (context, themeNotifier,
             child) {
       return SafeArea(
         child: Container(
@@ -591,15 +565,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           focusColor: Colors.transparent,
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
-                          onTap: () async {
-                            Scaffold.of(context).closeDrawer();
-                            FFAppState().isScreenshotCaptureDisabled
-                                ? commonProvider
-                                    .showEnableScreenshotCaptureBottomSheet(
-                                        context)
-                                : commonProvider
-                                    .showFeedBackFormBottomSheet(context);
-                          },
+                          onTap: () async {},
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 24.0, 5.0),
