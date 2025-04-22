@@ -19,7 +19,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 Future<dynamic> gmailLogin(BuildContext context) async {
   final _googleSignIn = GoogleSignIn(
     clientId:
-        "623494990675-3n8ejpeft86m7o0sgtgbnmpmkfv36pqv.apps.googleusercontent.com",
+        "com.googleusercontent.apps.545751718198-vuf6jdbui14uhcetonj1j2lob1k76jmh",
     scopes: ["profile", "email"],
   );
   var userData;
@@ -30,9 +30,9 @@ Future<dynamic> gmailLogin(BuildContext context) async {
         return await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
       }*/
 
-      await signOutWithGoogle().catchError((e,stackTrace){
+      await signOutWithGoogle().catchError((e, stackTrace) {
         FirebaseCrashlytics.instance.setCustomKey('login_error', e.toString());
-        FirebaseCrashlytics.instance.log("Login Failed "+ e.toString());
+        FirebaseCrashlytics.instance.log("Login Failed " + e.toString());
         FirebaseCrashlytics.instance.recordError(e, stackTrace);
       });
       userData = await _googleSignIn.signIn();
@@ -52,12 +52,12 @@ Future<dynamic> gmailLogin(BuildContext context) async {
       final credential = GoogleAuthProvider.credential(
           idToken: authTokens?.idToken, accessToken: authTokens?.accessToken);
       return FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e,stackTrace) {
+    } catch (e, stackTrace) {
       // The idea is to have a fallback login on debug mode as that would allow testing the app which is currently
       // failing due to javascript origin mismatch for google sign in
       print(e);
       FirebaseCrashlytics.instance.setCustomKey('login_error', e.toString());
-      FirebaseCrashlytics.instance.log("Login Failed "+ e.toString());
+      FirebaseCrashlytics.instance.log("Login Failed " + e.toString());
       FirebaseCrashlytics.instance.recordError(e, stackTrace);
       if (kDebugMode) {
         final auth =

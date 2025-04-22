@@ -344,17 +344,7 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Container(
-                  color: Colors.black,
-                  child: Image.asset(
-                    FFAppState().isDarkMode
-                        ? 'assets/images/Splash_Screen_Essential_Dark.png'
-                        : 'assets/images/Splash_Screen_-_Essential.png',
-                    fit: BoxFit.contain,
-                  ),
-                )
-              : page;
+          final child = page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

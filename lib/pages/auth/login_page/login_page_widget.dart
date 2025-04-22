@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../backend/api_requests/api_calls.dart';
@@ -28,138 +30,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var response;
 
-  Future<bool> isFormCompleted() async {
-    response = await SignupGroup.getUserInformationApiCall.call(
-      authToken: FFAppState().subjectToken,
-    );
-    bool isPhonePresent = false,
-        isCityPresent = false,
-        isStatePresent = false,
-        isBoardExamYearPresent = false,
-        isNeetExamYearPresent = false,
-        isFirstNamePresent = false,
-        isLastNamePresent = false,
-        isDOBPresent = false,
-        isRegistrationNoPresent = false;
-    if (SignupGroup.getUserInformationApiCall.me(response?.jsonBody) != null) {
-      isPhonePresent =
-          SignupGroup.getUserInformationApiCall.phone(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .phone(response?.jsonBody)
-                  .isNotEmpty;
-
-      isCityPresent =
-          SignupGroup.getUserInformationApiCall.city(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .city(response?.jsonBody)
-                  .isNotEmpty;
-
-      isStatePresent =
-          SignupGroup.getUserInformationApiCall.state(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .state(response?.jsonBody)
-                  .isNotEmpty;
-
-      isBoardExamYearPresent = SignupGroup.getUserInformationApiCall
-                  .boardExamYear(response?.jsonBody) !=
-              null &&
-          SignupGroup.getUserInformationApiCall
-              .boardExamYear(response?.jsonBody)
-              .toString()
-              .isNotEmpty;
-
-      isNeetExamYearPresent = SignupGroup.getUserInformationApiCall
-                  .neetExamYear(response?.jsonBody) !=
-              null &&
-          SignupGroup.getUserInformationApiCall
-              .neetExamYear(response?.jsonBody)
-              .toString()
-              .isNotEmpty;
-
-      isFirstNamePresent =
-          SignupGroup.getUserInformationApiCall.firstName(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .firstName(response?.jsonBody)
-                  .isNotEmpty;
-
-      isLastNamePresent =
-          SignupGroup.getUserInformationApiCall.lastName(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .lastName(response?.jsonBody)
-                  .isNotEmpty;
-      isDOBPresent =
-          SignupGroup.getUserInformationApiCall.dob(response?.jsonBody) !=
-                  null &&
-              SignupGroup.getUserInformationApiCall
-                  .dob(response?.jsonBody)
-                  .isNotEmpty;
-      isRegistrationNoPresent = SignupGroup.getUserInformationApiCall
-                  .registrationNo(response?.jsonBody) !=
-              null &&
-          SignupGroup.getUserInformationApiCall
-              .registrationNo(response?.jsonBody)
-              .isNotEmpty;
-    }
-
-    bool isFormCompleted = isPhonePresent &&
-        isCityPresent &&
-        isNeetExamYearPresent &&
-        isStatePresent &&
-        isBoardExamYearPresent &&
-        isFirstNamePresent &&
-        isLastNamePresent &&
-        isDOBPresent;
-    if (isNeetExamYearPresent && isFormCompleted) {
-      String neetExamYear = SignupGroup.getUserInformationApiCall
-          .neetExamYear(response?.jsonBody)
-          .toString();
-      if (neetExamYear == "2024" && !isRegistrationNoPresent) {
-        isFormCompleted = false;
-      }
-    }
-    FFAppState().isFormCompleted = isFormCompleted;
-    if (FFAppState().isFormCompleted) {
-      FFAppState().firstName = SignupGroup.getUserInformationApiCall
-          .firstName(response?.jsonBody)
-          .toString();
-      FFAppState().lastName = SignupGroup.getUserInformationApiCall
-          .lastName(response?.jsonBody)
-          .toString();
-      FFAppState().phoneNum = SignupGroup.getUserInformationApiCall
-          .phone(response?.jsonBody)
-          .toString();
-    }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (isFormCompleted) {
-      prefs.setBool('isPersonalDetailsCompleted', true);
-    } else {
-      prefs.setBool('isPersonalDetailsCompleted', false);
-    }
-    return Future.value(isFormCompleted);
-  }
-
-  Future<void> startUpApiRequest() async {
-    final response = await http.post(
-      Uri.parse('${FFAppState().baseUrl}/startup_api'),
-      headers: {
-        'Authorization': 'Bearer ${FFAppState().subjectToken}',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Request successful');
-      print(response.body);
-    } else {
-      print('Request failed with status: ${response.statusCode}');
-    }
-  }
-
   Future<void> checkIfAuthTokenExpired() async {
     ApiCallResponse response = await SignupGroup
         .loggedInUserInformationAndCourseAccessCheckingApiCall
@@ -174,6 +44,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   void initState() {
+    log("i am here");
+
     super.initState();
     FirebaseAnalytics.instance.setCurrentScreen(screenName: "LoginPage");
 
@@ -468,51 +340,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       FFAppState().abhyasBanner = null;
                                       FFAppState().testSeriesBanner = null;
 
-                                      if (loggedIn) {
-                                        // isFormCompleted()
-                                        //     .then((isFormCompleted) async {
-                                        //   FFAppState().isFormCompleted =
-                                        //       isFormCompleted;
-                                        //   if (FFAppState().isFormCompleted) {
-                                        //     FFAppState().firstName = SignupGroup
-                                        //         .getUserInformationApiCall
-                                        //         .firstName(response.jsonBody)
-                                        //         .toString();
-                                        //     FFAppState().lastName = SignupGroup
-                                        //         .getUserInformationApiCall
-                                        //         .lastName(response.jsonBody)
-                                        //         .toString();
-                                        //     FFAppState().phoneNum = SignupGroup
-                                        //         .getUserInformationApiCall
-                                        //         .phone(response.jsonBody)
-                                        //         .toString();
-                                        //     FFAppState().isFormCompleted = isFormCompleted;
-                                        //     if (FFAppState().isFormCompleted) {
-                                        //         context.goNamed('PracticeChapterWisePage');
-                                        //     }
-                                        //
-                                        //   } else {
-                                        //     context.goNamed('UserInfoForm');
-                                        //   }
-                                        // });
-
-                                        //  await  startUpApiRequest();
-                                        var profile = {
-                                          'Name': FFAppState().userName,
-                                          'UserId': FFAppState().userIdInt,
-                                          'Email': FFAppState().emailId,
-                                          'Identity': FFAppState().userIdInt,
-                                        };
-                                        print("profile" + profile.toString());
-                                        context
-                                            .goNamed('PracticeChapterWisePage');
-
-                                        if (_shouldSetState) setState(() {});
-                                        return;
-                                      } else {
-                                        if (_shouldSetState) setState(() {});
-                                        return;
-                                      }
+                                 
                                     },
                                     child: Container(
                                       width: double.infinity,

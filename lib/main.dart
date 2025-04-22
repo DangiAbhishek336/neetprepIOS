@@ -43,7 +43,6 @@ class AppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-
 void inAppNotificationShow(Map<String, dynamic> map) {
   print("inAppNotificationShow called = ${map.toString()}");
 }
@@ -167,146 +166,73 @@ class _MyAppState extends State<MyApp> {
   late final StreamSubscription<InternetConnectionStatus> listener;
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
-  Future<void> startUpApiRequest() async {
-    final response = await http.post(
-      Uri.parse('${FFAppState().baseUrl}/startup_api'),
-      headers: {
-        'Authorization': 'Bearer ${FFAppState().subjectToken}',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Request successful');
-      print(response.body);
-    } else {
-      print('Request failed with status: ${response.statusCode}');
-    }
-  }
-
-  // Parse the link and navigate accordingly
-  void _parseLink(String link) {
-    log("inside parse link");
-    Uri uri = Uri.parse(link);
-    if (uri.pathSegments.isNotEmpty) {
-      if (uri.pathSegments.first == 'orderpage') {
-        String? courseIdInt = uri.queryParameters['courseIdInt'] ?? '';
-        log("courseIdInt" + courseIdInt.toString());
-        context.pushNamed(
-          'OrderPage',
-          queryParameters: {
-            'courseId': functions.getBase64OfCourseId(courseIdInt).toString(),
-            'courseIdInt': courseIdInt.toString(),
-          },
-        );
-      } else if (uri.pathSegments.first == 'startTestPage') {
-        String? testId = uri.queryParameters['testId'];
-        String? courseIdInt = uri.queryParameters['courseIdInt'];
-
-        context.goNamed(
-          'StartTestPage',
-          queryParameters: {
-            'testId': functions.getBase64OfTestId(testId!),
-            'courseIdInt': serializeParam(
-              courseIdInt.toString(),
-              ParamType.String,
-            ),
-          },
-        );
-      }
-    }
-  }
-
-  void initDeepLink() async {
-    try {
-      // For app launch from background
-
-      getInitialLink().then((link) {
-        log(link.toString());
-        if (link != null) {
-          _parseLink(link);
-        }
-      });
-
-      // For runtime deep link handling
-      linkStream.listen((link) {
-        log(link.toString());
-        if (link != null) {
-          _parseLink(link);
-        }
-      });
-    } catch (e) {
-      print('Error initializing deep link: $e');
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     _appStateNotifier = AppStateNotifier.instance;
-    print(FFAppState().userIdInt);
-    print(functions.getBase64OfUserId(FFAppState().userIdInt));
-    print(FFAppState().subjectToken);
     _router = createRouter(_appStateNotifier);
+
+    log("logged in ? ${_appStateNotifier.loggedIn.toString()}");
+
     userStream = neetprepEssentialFirebaseUserStream()
       ..listen((user) => _appStateNotifier.update(user));
     jwtTokenStream.listen((_) {});
-    Future.delayed(
-      Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
-    );
-    InAppUpdate.checkForUpdate().then((updateInfo) {
-      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-        InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-          if (appUpdateResult == AppUpdateResult.success) {
-            InAppUpdate.performImmediateUpdate();
-          }
-        });
-      }
-    });
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await ScreenProtector.preventScreenshotOn();
-      //  await startUpApiRequest();
-    });
+    // Future.delayed(
+    //   Duration(milliseconds: 1000),
+    //   () => _appStateNotifier.stopShowingSplashImage(),
+    // );
+    // InAppUpdate.checkForUpdate().then((updateInfo) {
+    //   if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+    //     InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+    //       if (appUpdateResult == AppUpdateResult.success) {
+    //         InAppUpdate.performImmediateUpdate();
+    //       }
+    //     });
+    //   }
+    // });
+    // SchedulerBinding.instance.addPostFrameCallback((_) async {
+    //   await ScreenProtector.preventScreenshotOn();
+    //   //  await startUpApiRequest();
+    // });
 
-    Future<void> initPlatformState() async {
-      var deviceData = <String, dynamic>{};
+    // Future<void> initPlatformState() async {
+    //   var deviceData = <String, dynamic>{};
 
-      try {
-        if (kIsWeb) {
-          deviceData =
-              _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
-        } else {
-          if (defaultTargetPlatform == TargetPlatform.android) {
-            deviceData =
-                _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-          } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-            deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
-          } else {
-            deviceData = {};
-          }
-        }
-        deviceData['version'] = _packageInfo.version;
-        deviceData['buildNumber'] = _packageInfo.buildNumber;
-        FFAppState().deviceData = deviceData.toString();
-      } on PlatformException {
-        deviceData = <String, dynamic>{
-          'Error:': 'Failed to get platform version.'
-        };
-      }
+    //   try {
+    //     if (kIsWeb) {
+    //       deviceData =
+    //           _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
+    //     } else {
+    //       if (defaultTargetPlatform == TargetPlatform.android) {
+    //         deviceData =
+    //             _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+    //       } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    //         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+    //       } else {
+    //         deviceData = {};
+    //       }
+    //     }
+    //     deviceData['version'] = _packageInfo.version;
+    //     deviceData['buildNumber'] = _packageInfo.buildNumber;
+    //     FFAppState().deviceData = deviceData.toString();
+    //   } on PlatformException {
+    //     deviceData = <String, dynamic>{
+    //       'Error:': 'Failed to get platform version.'
+    //     };
+    //   }
 
-      if (!mounted) return;
-    }
+    //   if (!mounted) return;
+    // }
 
-    Future<void> _initPackageInfo() async {
-      final info = await PackageInfo.fromPlatform();
-      setState(() {
-        _packageInfo = info;
-      });
-    }
+    //   Future<void> _initPackageInfo() async {
+    //     final info = await PackageInfo.fromPlatform();
+    //     setState(() {
+    //       _packageInfo = info;
+    //     });
+    //   }
 
-    _initPackageInfo();
-    initPlatformState();
+    //   _initPackageInfo();
+    //   // initPlatformState();
   }
 
   @override
