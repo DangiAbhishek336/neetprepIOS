@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:neetprep_essential/pages/auth/login_page/login_page_widget.dart';
 
-import 'package:neetprep_essential/pages/practice/practice_chapter_wise_page/practice_chapter_page_widget.dart';
+import 'package:neetprep_essential/pages/practice/WebView/practice_chapter_page_widget.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
