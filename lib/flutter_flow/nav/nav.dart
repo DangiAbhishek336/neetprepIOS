@@ -74,14 +74,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? PracticeChapterPageWidget()
+          ? FlutterWebView(
+              webUrl:
+                  'https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light',
+              title: 'Streaks',
+            )
           : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? PracticeChapterPageWidget()
+              ? FlutterWebView(
+                  webUrl:
+                      'https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light',
+                  title: 'Streaks',
+                )
               : LoginPageWidget(),
         ),
         FFRoute(
@@ -116,10 +124,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AboutWidget(),
         ),
         FFRoute(
-          name: 'PracticeChapterWisePage',
-          path: '/practiceChapterWisePage',
-          requireAuth: true,
-          builder: (context, params) => PracticeChapterPageWidget(),
+          name: 'flutterWebView',
+          path: '/flutterWebView',
+          builder: (context, params) => FlutterWebView(
+              webUrl: params.getParam('webUrl', ParamType.String),
+              title: params.getParam('title', ParamType.String)),
         ),
         FFRoute(
           name: 'LoginPage',

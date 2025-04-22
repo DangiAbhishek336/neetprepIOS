@@ -296,7 +296,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
         return MaterialApp.router(
-          title: 'neetprep essential',
+          title: 'Neetprep',
           localizationsDelegates: [
             FFLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,

@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:developer';
+
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -19,7 +21,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 Future<dynamic> gmailLogin(BuildContext context) async {
   final _googleSignIn = GoogleSignIn(
     clientId:
-        "com.googleusercontent.apps.545751718198-vuf6jdbui14uhcetonj1j2lob1k76jmh",
+        "545751718198-vuf6jdbui14uhcetonj1j2lob1k76jmh.apps.googleusercontent.com",
     scopes: ["profile", "email"],
   );
   var userData;
@@ -43,6 +45,9 @@ Future<dynamic> gmailLogin(BuildContext context) async {
         name: userData?.displayName,
         picture: userData?.photoUrl,
       );
+
+      log(userAccessInfo!.jsonBody.toString());
+      ;
       FFAppState().userIdInt =
           getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.id''');
       FFAppState().subjectToken =

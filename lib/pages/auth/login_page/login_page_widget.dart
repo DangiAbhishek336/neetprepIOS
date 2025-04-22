@@ -340,7 +340,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       FFAppState().abhyasBanner = null;
                                       FFAppState().testSeriesBanner = null;
 
-                                 
+                                      if (loggedIn) {
+                                        context.pushNamed(
+                                          'flutterWebView',
+                                          queryParameters: {
+                                            'webUrl':
+                                                "https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light}",
+                                            'title': "Streaks"
+                                          },
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: double.infinity,
