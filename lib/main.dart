@@ -43,7 +43,6 @@ class AppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-late CleverTapPlugin _clevertapPlugin;
 
 void inAppNotificationShow(Map<String, dynamic> map) {
   print("inAppNotificationShow called = ${map.toString()}");
@@ -130,11 +129,11 @@ void main() async {
     // };
   });
 
-  CleverTapPlugin.onKilledStateNotificationClicked(
-      onKilledStateNotificationClickedHandler);
-  _clevertapPlugin = new CleverTapPlugin();
-  _clevertapPlugin
-      .setCleverTapInAppNotificationShowHandler(inAppNotificationShow);
+  // CleverTapPlugin.onKilledStateNotificationClicked(
+  //     onKilledStateNotificationClickedHandler);
+  // _clevertapPlugin = new CleverTapPlugin();
+  // _clevertapPlugin
+  //     .setCleverTapInAppNotificationShowHandler(inAppNotificationShow);
 }
 
 class MyApp extends StatefulWidget {
@@ -241,17 +240,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  static void _handleKilledStateNotificationInteraction() async {
-    CleverTapAppLaunchNotification appLaunchNotification =
-        await CleverTapPlugin.getAppLaunchNotification();
-    print(
-        "_handleKilledStateNotificationInteraction => $appLaunchNotification");
-
-    if (appLaunchNotification.didNotificationLaunchApp) {
-      Map<String, dynamic> notificationPayload = appLaunchNotification.payload!;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -280,12 +268,6 @@ class _MyAppState extends State<MyApp> {
       await ScreenProtector.preventScreenshotOn();
       //  await startUpApiRequest();
     });
-    if (!kIsWeb) {
-      if (Platform.isAndroid) {
-        _handleKilledStateNotificationInteraction();
-      }
-    }
-    initDeepLink();
 
     Future<void> initPlatformState() async {
       var deviceData = <String, dynamic>{};
