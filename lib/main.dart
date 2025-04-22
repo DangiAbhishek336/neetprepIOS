@@ -72,62 +72,62 @@ void main() async {
     if (kIsWeb) {
       CleverTapPlugin.init("884-767-6K7Z");
     }
-    if (!kIsWeb) {
-      if (kIsWeb) {
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(false);
-      } else {
-        await FirebaseCrashlytics.instance
-            .setCrashlyticsCollectionEnabled(true);
-        FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    // if (!kIsWeb) {
+    //   if (kIsWeb) {
+    //     await FirebaseCrashlytics.instance
+    //         .setCrashlyticsCollectionEnabled(false);
+    //   } else {
+    //     await FirebaseCrashlytics.instance
+    //         .setCrashlyticsCollectionEnabled(true);
+    //     FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
 
-        // Pass all uncaught "fatal" errors from the framework to Crashlytics
-        FlutterError.onError =
-            FirebaseCrashlytics.instance.recordFlutterFatalError;
+    //     // Pass all uncaught "fatal" errors from the framework to Crashlytics
+    //     FlutterError.onError =
+    //         FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-        FlutterError.onError = (errorDetails) {
-          FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-          FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
-          FirebaseCrashlytics.instance.log(errorDetails.toString());
-          FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-          FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-        };
-        // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-        PlatformDispatcher.instance.onError = (error, stack) {
-          FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-          return true;
-        };
-      }
-    }
-    if (!kIsWeb && !kDebugMode) {
-      Isolate.current.addErrorListener(RawReceivePort((pair) async {
-        FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-        final List<dynamic> errorAndStacktrace = pair;
-        await FirebaseCrashlytics.instance.recordError(
-          errorAndStacktrace.first,
-          errorAndStacktrace.last,
-          fatal: true,
-        );
-      }).sendPort);
-    }
+    //     FlutterError.onError = (errorDetails) {
+    //       FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    //       FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
+    //       FirebaseCrashlytics.instance.log(errorDetails.toString());
+    //       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    //       FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    //     };
+    //     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    //     PlatformDispatcher.instance.onError = (error, stack) {
+    //       FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    //       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    //       return true;
+    //     };
+    //   }
+    // }
+    // if (!kIsWeb && !kDebugMode) {
+    //   Isolate.current.addErrorListener(RawReceivePort((pair) async {
+    //     FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    //     final List<dynamic> errorAndStacktrace = pair;
+    //     await FirebaseCrashlytics.instance.recordError(
+    //       errorAndStacktrace.first,
+    //       errorAndStacktrace.last,
+    //       fatal: true,
+    //     );
+    //   }).sendPort);
+    // }
 
     runApp(
         ChangeNotifierProvider(create: (context) => appState, child: MyApp()));
   }, (error, stackTrace) {
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
-      FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-      FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
-      FirebaseCrashlytics.instance.log(errorDetails.toString());
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-    };
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
+    // FlutterError.onError = (errorDetails) {
+    //   FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
+    //   FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    //   FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
+    //   FirebaseCrashlytics.instance.log(errorDetails.toString());
+    //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    //   FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    // };
+    // PlatformDispatcher.instance.onError = (error, stack) {
+    //   FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
+    //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    //   return true;
+    // };
   });
 
   CleverTapPlugin.onKilledStateNotificationClicked(
