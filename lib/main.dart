@@ -67,9 +67,9 @@ void main() async {
       await Firebase.initializeApp();
       await FirebaseApi.initNotifications();
     }
-    if (kIsWeb) {
-      CleverTapPlugin.init("884-767-6K7Z");
-    }
+    // if (kIsWeb) {
+    //   CleverTapPlugin.init("884-767-6K7Z");
+    // }
     // if (!kIsWeb) {
     //   if (kIsWeb) {
     //     await FirebaseCrashlytics.instance
