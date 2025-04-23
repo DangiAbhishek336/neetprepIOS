@@ -12,6 +12,8 @@ class LoginPageModel extends FlutterFlowModel {
   // Stores action output result for [Custom Action - gmailLogin] action in Container widget.
   dynamic userJson;
 
+  dynamic appleUserJson;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

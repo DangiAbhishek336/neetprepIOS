@@ -7,3 +7,4 @@ export 'get_json.dart' show getJson;
 export 'paytm_integration.dart' show paytmIntegration;
 export 'check_int.dart' show checkInt;
 export 'refresh_webpage.dart' show refreshWebpage;
+export 'apple_login.dart' show appleLogin;

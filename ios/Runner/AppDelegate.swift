@@ -35,8 +35,11 @@ import UserNotifications // Add this import
         CleverTap.sharedInstance()?.recordNotificationViewedEvent(withData: notification.request.content.userInfo)
         
         // Show the notification even in the foreground (with banner, sound, and badge)
-        completionHandler([.banner, .sound, .badge])
-    }
+       if #available(iOS 14.0, *) {
+           completionHandler([.banner, .sound, .badge]) // Modern banner (iOS 14+)
+        } else {
+        completionHandler([.alert, .sound, .badge])  // Classic alert (iOS 10-13)
+    }    }
     
     // Handle notification taps (when the user opens the notification)
     override func userNotificationCenter(

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:isolate';
 import 'dart:io' show Platform;
 import 'package:clevertap_plugin/clevertap_plugin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -287,6 +288,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -294,33 +297,36 @@ class _MyAppState extends State<MyApp> {
               FFAppState().isDarkMode ? ThemeMode.dark : ThemeMode.light),
         ),
       ],
-      child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
-        return MaterialApp.router(
-          title: 'Neetprep',
-          localizationsDelegates: [
-            FFLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          locale: _locale,
-          supportedLocales: const [
-            Locale('en'),
-          ],
-          theme: ThemeData(
-            useMaterial3: false,
-            brightness: Brightness.light,
-            scrollbarTheme: ScrollbarThemeData(),
-          ),
-          darkTheme: ThemeData(
-            useMaterial3: false,
-            brightness: Brightness.dark,
-            scrollbarTheme: ScrollbarThemeData(),
-          ),
-          themeMode: themeNotifier.value,
-          routerConfig: _router,
-        );
-      }),
+      child: ScreenUtilInit(
+        designSize: Size(size.width, size.height),
+        child: Consumer<ThemeNotifier>(builder: (context, themeNotifier, _) {
+          return MaterialApp.router(
+            title: 'Neetprep',
+            localizationsDelegates: [
+              FFLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            locale: _locale,
+            supportedLocales: const [
+              Locale('en'),
+            ],
+            theme: ThemeData(
+              useMaterial3: false,
+              brightness: Brightness.light,
+              scrollbarTheme: ScrollbarThemeData(),
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: false,
+              brightness: Brightness.dark,
+              scrollbarTheme: ScrollbarThemeData(),
+            ),
+            themeMode: themeNotifier.value,
+            routerConfig: _router,
+          );
+        }),
+      ),
     );
   }
 }

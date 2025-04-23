@@ -15,26 +15,28 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-
 version: 1.1.35+221
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  lottie: ^3.3.1
   auto_size_text: 3.0.0
+  buttons_tabbar: ^1.3.8
   cached_network_image: ^3.2.3
+  carousel_slider: ^5.0.0
+  clevertap_plugin: ^3.3.1
+  cloud_firestore: ^5.6.6
   confetti: ^0.8.0
   csslib: ^1.0.2
   device_info_plus: ^11.3.0
   device_info_plus_platform_interface: ^7.0.2
-  flutter_keyboard_visibility: ^6.0.0
   dio: ^5.3.3
   dropdown_button2: ^2.3.9
   easy_debounce: ^2.0.3
   equatable: ^2.0.7
   expandable: 5.0.1
+  firebase_analytics: ^11.4.5
   firebase_auth: ^5.5.2
   firebase_auth_platform_interface: ^7.6.2
   firebase_auth_web: ^5.8.0
@@ -43,7 +45,11 @@ dependencies:
   firebase_core_web: ^2.7.0
   firebase_crashlytics: ^4.3.5
   firebase_crashlytics_platform_interface: ^3.6.5
+  firebase_in_app_messaging: ^0.8.1+5
   firebase_messaging: ^15.2.5
+  firebase_performance: ^0.10.1+5
+  fl_chart: ^0.71.0
+  flip_card: ^0.7.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.2.0+1
@@ -55,11 +61,15 @@ dependencies:
   flutter_html_svg: ^3.0.0-beta.2
   flutter_html_table: ^3.0.0-beta.2
   flutter_html_video: ^3.0.0-beta.2
+  flutter_image_slideshow: any
   flutter_inappwebview: ^6.1.5
+  flutter_keyboard_visibility: ^6.0.0
   flutter_local_notifications: ^19.1.0
   flutter_localizations:
     sdk: flutter
+  flutter_math_fork: 0.7.2
   flutter_pdfview: ^1.2.7
+  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.7
   fluttertoast: ^8.2.12
   font_awesome_flutter: ^10.5.0
@@ -72,15 +82,21 @@ dependencies:
   google_sign_in_platform_interface: ^2.4.2
   google_sign_in_web: ^0.12.0+5
   in_app_review: ^2.0.6
+  in_app_update: ^4.2.2
   infinite_scroll_pagination:
     git:
       url: https://github.com/FlutterFlow/infinite_scroll_pagination.git
       ref: develop
+  internet_connection_checker: ^3.0.1
   internet_file: ^1.2.0
   intl: ^0.19.0
-  json_path: ^0.7.5
   js: ^0.7.1
+  json_path: ^0.7.5
+  just_the_tooltip: ^0.0.12
+  lottie: ^3.3.1
   mime_type: ^1.0.1
+  new_version_plus: ^0.1.0
+  package_info_plus: ^8.3.0
   page_transition: ^2.0.9
   path_provider: ^2.1.1
   path_provider_android: ^2.2.0
@@ -90,55 +106,39 @@ dependencies:
   plugin_platform_interface: ^2.1.6
   pointer_interceptor: ^0.10.1+2
   provider: ^6.0.5
+  rename: ^3.0.2
   rxdart: ^0.28.0
+  screen_protector: ^1.4.2
   share_plus: ^10.1.4
   shared_preferences: ^2.2.1
   shared_preferences_android: ^2.2.1
   shared_preferences_ios: 2.1.1
   shared_preferences_platform_interface: ^2.3.1
   shared_preferences_web: ^2.2.1
+  showcaseview: ^4.0.1
   sign_in_with_apple: ^7.0.1
   sign_in_with_apple_platform_interface: ^2.0.0
   sign_in_with_apple_web: ^3.0.0
   smooth_page_indicator: ^1.1.0
   sqflite: ^2.3.0
   syncfusion_flutter_pdfviewer: ^29.1.38
+  table_calendar: ^3.0.9
   text_search: ^1.0.2
   timeago: ^3.5.0
+  uni_links: ^0.5.1
   universal_html: ^2.2.1
+  upgrader: ^11.3.1
   url_launcher: ^6.1.14
   url_launcher_android: ^6.1.0
   url_launcher_ios: ^6.1.5
   url_launcher_platform_interface: ^2.1.5
+  webview_cookie_manager: ^2.0.2
   webview_flutter: ^4.2.2
   webview_flutter_android: ^4.4.1
   webview_flutter_platform_interface: ^2.5.1
   webview_flutter_web: ^0.2.2+1
   webview_flutter_wkwebview: ^3.7.4
   youtube_player_iframe: ^5.2.1
-  firebase_analytics: ^11.4.5
-  upgrader: ^11.3.1
-  new_version_plus: ^0.1.0
-  in_app_update: ^4.2.2
-  flip_card: ^0.7.0
-  firebase_performance: ^0.10.1+5
-  buttons_tabbar: ^1.3.8
-  flutter_math_fork: 0.7.2
-  internet_connection_checker: ^3.0.1
-  screen_protector: ^1.4.2
-  package_info_plus: ^8.3.0
-  just_the_tooltip: ^0.0.12
-  showcaseview: ^4.0.1
-  carousel_slider: ^5.0.0
-  flutter_image_slideshow: any
-  webview_cookie_manager: ^2.0.2
-  rename: ^3.0.2
-  table_calendar: ^3.0.9
-  fl_chart: ^0.71.0
-  cloud_firestore: ^5.6.6
-  clevertap_plugin: ^3.3.1
-  firebase_in_app_messaging: ^0.8.1+5
-  uni_links: ^0.5.1
 
 dependency_overrides:
   flutter_math_fork: 0.7.2
