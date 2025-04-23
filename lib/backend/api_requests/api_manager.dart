@@ -287,12 +287,13 @@ class ApiManager {
     bool decodeUtf8 = false,
     bool cache = false,
   }) async {
-    final callRecord = ApiCallRecord(callName, apiUrl, headers, params, body, bodyType);
+    final callRecord =
+        ApiCallRecord(callName, apiUrl, headers, params, body, bodyType);
 
     // Modify for your specific needs if this differs from your API.
     if (_accessToken != null) {
       headers[HttpHeaders.authorizationHeader] = 'Token $_accessToken';
-      headers['x-app-id'] = '5921edf0-9f73-48f8-8e38-becffcd88940';
+      headers['x-app-id'] = 'b75f2dc9-d4e1-4023-8938-f888fd6fc56c';
     }
     if (!apiUrl.startsWith('http')) {
       apiUrl = 'https://$apiUrl';
@@ -342,8 +343,9 @@ class ApiManager {
 
       return result;
     } on SocketException catch (e) {
-      if(!kIsWeb)
-      FirebaseCrashlytics.instance.setCustomKey("internet_connection",FFAppState().isInternetConnected);
+      if (!kIsWeb)
+        FirebaseCrashlytics.instance.setCustomKey(
+            "internet_connection", FFAppState().isInternetConnected);
       print('Socket error occurred: $e');
 
       rethrow;
@@ -354,6 +356,4 @@ class ApiManager {
       rethrow;
     }
   }
-
-
 }

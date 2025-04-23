@@ -345,8 +345,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           'flutterWebView',
                                           queryParameters: {
                                             'webUrl':
-                                                "https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light}",
-                                            'title': "Streaks"
+                                                "https://www.neetprep.com/newui/study",
+                                            'title': "Dashboard"
                                           },
                                         );
                                       }

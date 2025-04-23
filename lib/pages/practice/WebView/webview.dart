@@ -4,9 +4,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neetprep_essential/app_state.dart';
+import 'package:neetprep_essential/components/drawer/darwer_widget.dart';
 import 'package:neetprep_essential/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:neetprep_essential/flutter_flow/flutter_flow_theme.dart';
 import 'package:neetprep_essential/flutter_flow/flutter_flow_util.dart';
+import 'package:neetprep_essential/utlis/text.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/foundation.dart' show Factory, kIsWeb;
@@ -260,30 +262,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 24.0,
-            ),
-            onPressed: () async {
-              if (!kIsWeb) {
-                if (await _controller.canGoBack()) {
-                  await _controller.goBack();
-                } else {
-                  // FFAppState().annotationVisibility = false;
-                  context.pop();
-                }
-              } else {
-                webViewController?.goBack();
-                print("working");
-              }
-            },
-          ),
+          leading: DrawerWidget(DrawerStrings.abhyasBatch),
           title: Align(
             alignment: AlignmentDirectional(-0.35, 0.2),
             child: Text(

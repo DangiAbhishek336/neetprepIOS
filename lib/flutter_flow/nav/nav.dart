@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:neetprep_essential/pages/auth/login_page/login_page_widget.dart';
 
-import 'package:neetprep_essential/pages/practice/WebView/practice_chapter_page_widget.dart';
+import 'package:neetprep_essential/pages/practice/WebView/webview.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
@@ -75,9 +75,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
           ? FlutterWebView(
-              webUrl:
-                  'https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light',
-              title: 'Streaks',
+              webUrl: 'https://www.neetprep.com/newui/study',
+              title: 'Dashboard',
             )
           : LoginPageWidget(),
       routes: [
@@ -86,9 +85,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? FlutterWebView(
-                  webUrl:
-                      'https://www.neetprep.com/newui/achievements/dashboard?disable=header,back_btn&app=reflex&theme=light',
-                  title: 'Streaks',
+                  webUrl: 'https://www.neetprep.com/newui/study',
+                  title: 'Dashboard',
                 )
               : LoginPageWidget(),
         ),
