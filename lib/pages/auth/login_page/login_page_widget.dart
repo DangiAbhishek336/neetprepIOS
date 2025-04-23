@@ -18,7 +18,6 @@ import 'login_page_model.dart';
 export 'login_page_model.dart';
 import 'package:http/http.dart' as http;
 
-
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
@@ -305,105 +304,95 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 if (isiOS)
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20.0.w, 0.0, 20.0.w, 10.0.h),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          var _shouldSetState = false;
-                                          setState(() {
-                                            _model.isLoading = true;
-                                          });
-                                          _model.appleUserJson =
-                                              await actions.appleLogin(
-                                            context,
-                                          );
-                                          _shouldSetState = true;
-                                          FFAppState().jwtToken = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.accessToken''',
-                                          ).toString();
-                                          FFAppState().userName = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.name''',
-                                          ).toString();
-                                          FFAppState().emailId = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.email''',
-                                          ).toString().toLowerCase();
-                                          FFAppState().displayImage =
-                                              getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.profile''',
-                                          );
-                                          setState(() {
-                                            _model.isLoading = false;
-                                          });
-                                          if (loggedIn) {
-                                            context.goNamed('PracticePage');
-
-                                            if (_shouldSetState)
-                                              setState(() {});
-                                            return;
-                                          } else {
-                                            if (_shouldSetState)
-                                              setState(() {});
-                                            return;
-                                          }
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0.w, 0.0, 20.0.w, 10.0.h),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        var _shouldSetState = false;
+                                        setState(() {
+                                          _model.isLoading = true;
+                                        });
+                                        _model.appleUserJson =
+                                            await actions.appleLogin(
+                                          context,
+                                        );
+                                        _shouldSetState = true;
+                                        FFAppState().jwtToken = getJsonField(
+                                          _model.appleUserJson,
+                                          r'''$.accessToken''',
+                                        ).toString();
+                                        FFAppState().userName = getJsonField(
+                                          _model.appleUserJson,
+                                          r'''$.name''',
+                                        ).toString();
+                                        FFAppState().emailId = getJsonField(
+                                          _model.appleUserJson,
+                                          r'''$.email''',
+                                        ).toString().toLowerCase();
+                                        FFAppState().displayImage =
+                                            getJsonField(
+                                          _model.appleUserJson,
+                                          r'''$.profile''',
+                                        );
+                                        setState(() {
+                                          _model.isLoading = false;
+                                        });
+                                        if (loggedIn) {
+                                          context.goNamed('PracticePage');
 
                                           if (_shouldSetState) setState(() {});
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
+                                          return;
+                                        } else {
+                                          if (_shouldSetState) setState(() {});
+                                          return;
+                                        }
+
+                                        if (_shouldSetState) setState(() {});
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border: Border.all(
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(28.0.r),
-                                            border: Border.all(
-                                              color: Colors.black,
-                                              width: 1.0,
-                                            ),
+                                                .accent1,
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0.w,
-                                                    5.0.h,
-                                                    15.0.w,
-                                                    5.0.h),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0.0, 0.0,
-                                                          10.0.w, 0.0),
-                                                  child: SvgPicture.asset(
-                                                    Theme.of(context)
-                                                                .brightness ==
-                                                            Brightness.dark
-                                                        ? 'assets/images/Apple_logo_white.svg'
-                                                        : 'assets/images/icons8-apple-logo_(1).svg',
-                                                    width: 19.0.w,
-                                                    height: 40.0.h,
-                                                    fit: BoxFit.contain,
-                                                  ),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15.0.w, 5.0.h, 15.0.w, 5.0.h),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 10.0.w, 0.0),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/icons8-apple-logo_(1).svg',
+                                                  width: 19.0.w,
+                                                  height: 40.0.h,
+                                                  fit: BoxFit.contain,
                                                 ),
-                                                Text(
-                                                  'Sign in with Apple',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium,
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                              Text(
+                                                'Sign in with Apple',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
