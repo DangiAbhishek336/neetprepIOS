@@ -340,6 +340,31 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       FFAppState().abhyasBanner = null;
                                       FFAppState().testSeriesBanner = null;
 
+                                      await SignupGroup
+                                          .loggedInUserInformationAndCourseAccessCheckingApiCall
+                                          .call(
+                                        authToken: FFAppState().subjectToken,
+                                        courseIdInt: FFAppState().courseIdInt,
+                                      )
+                                          .then((value) async {
+                                        final userData = getJsonField(
+                                            value.jsonBody,
+                                            r'''$.data.me.profile''');
+
+                                        if (userData != null) {
+                                          String userName =
+                                              userData['displayName'] ??
+                                                  "Unknown User";
+                                          String userEmail =
+                                              userData['email'] ?? "No Email";
+                                          String userPhone =
+                                              userData['phone'] ?? "No Phone";
+
+                                          CleverTapService.initialize(
+                                              userName, userEmail, userPhone);
+                                        }
+                                      });
+
                                       if (loggedIn) {
                                         context.pushNamed(
                                           'flutterWebView',

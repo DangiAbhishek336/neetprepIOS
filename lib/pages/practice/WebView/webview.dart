@@ -262,7 +262,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
-          leading: DrawerWidget(DrawerStrings.abhyasBatch),
+          // leading: ,
           title: Align(
             alignment: AlignmentDirectional(-0.35, 0.2),
             child: Text(

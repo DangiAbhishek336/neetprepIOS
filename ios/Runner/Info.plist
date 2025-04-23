@@ -21,6 +21,15 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 
+	 <!-- CleverTap Account Details -->
+    <key>CleverTapAccountID</key>
+    <string>466-7ZR-5K7Z</string>
+    <key>CleverTapToken</key>
+    <string>21a-664</string>
+    <key>CleverTapPasscode</key>
+    <string>AMC-BOC-ULEL</string>
+
+
 	<!-- URL Types for Google Sign-In -->
 	<key>CFBundleURLTypes</key>
 	<array>

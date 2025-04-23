@@ -31,19 +31,13 @@ class CleverTapService {
           .toIso8601String(); // You can also use millisecondsSinceEpoch if needed
 
       //expiry flow added for user course
-      dynamic expiryDate = null;
-      dynamic mbbsStartingYear = null;
-      dynamic collegeName = null;
 
       Map<String, dynamic> profile = {
         'Name': name,
         'Email': email,
         'createdAt': createdAt,
-        'courseExpiryDate': expiryDate != null ? expiryDate : '',
         'phone': phone,
         'MSG-whatsapp': true,
-        'MBBS Starting Year': mbbsStartingYear,
-        'College Name': collegeName
       };
 
       //It ends here
@@ -52,7 +46,7 @@ class CleverTapService {
         print("here are the clevetap init");
         CleverTapPlugin.setDebugLevel(3);
 
-        CleverTapPlugin.init("8RK-K84-8R7Z").onError((error, stackTrace) {
+        CleverTapPlugin.init("466-7ZR-5K7Z").onError((error, stackTrace) {
           print(error.toString());
         });
         // CleverTapPlugin.onUserLogin(profile);
