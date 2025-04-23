@@ -321,38 +321,73 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             await actions.appleLogin(
                                           context,
                                         );
+
+                                        log(_model.appleUserJson.toString());
                                         _shouldSetState = true;
-                                        FFAppState().jwtToken = getJsonField(
-                                          _model.appleUserJson,
-                                          r'''$.accessToken''',
-                                        ).toString();
-                                        FFAppState().userName = getJsonField(
-                                          _model.appleUserJson,
-                                          r'''$.name''',
-                                        ).toString();
-                                        FFAppState().emailId = getJsonField(
-                                          _model.appleUserJson,
-                                          r'''$.email''',
-                                        ).toString().toLowerCase();
-                                        FFAppState().displayImage =
-                                            getJsonField(
-                                          _model.appleUserJson,
-                                          r'''$.profile''',
-                                        );
+                                        final accessToken = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.accessToken''');
+                                        FFAppState().jwtToken = accessToken
+                                                ?.toString() ??
+                                            ''; // Default empty string if null
+
+                                        final name = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.name''');
+                                        FFAppState().userName = name
+                                                ?.toString() ??
+                                            ''; // Default empty string if null
+
+                                        final email = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.email''');
+                                        FFAppState().emailId = email
+                                                ?.toString()
+                                                .toLowerCase() ??
+                                            ''; // Default empty string if null
+
+                                        final profile = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.profile''');
+                                        FFAppState().displayImage = profile;
                                         setState(() {
                                           _model.isLoading = false;
                                         });
+                                        await SignupGroup
+                                            .loggedInUserInformationAndCourseAccessCheckingApiCall
+                                            .call(
+                                          authToken: FFAppState().subjectToken,
+                                          courseIdInt: FFAppState().courseIdInt,
+                                        )
+                                            .then((value) async {
+                                          final userData = getJsonField(
+                                              value.jsonBody,
+                                              r'''$.data.me.profile''');
+
+                                          if (userData != null) {
+                                            String userName =
+                                                userData['displayName'] ??
+                                                    "Unknown User";
+                                            String userEmail =
+                                                userData['email'] ?? "No Email";
+                                            String userPhone =
+                                                userData['phone'] ?? "No Phone";
+
+                                            CleverTapService.initialize(
+                                                userName, userEmail, userPhone);
+                                          }
+                                        });
+
                                         if (loggedIn) {
-                                          context.goNamed('PracticePage');
-
-                                          if (_shouldSetState) setState(() {});
-                                          return;
-                                        } else {
-                                          if (_shouldSetState) setState(() {});
-                                          return;
+                                          context.pushNamed(
+                                            'flutterWebView',
+                                            queryParameters: {
+                                              'webUrl':
+                                                  "https://www.neetprep.com/newui/study",
+                                              'title': "Dashboard"
+                                            },
+                                          );
                                         }
-
-                                        if (_shouldSetState) setState(() {});
                                       },
                                       child: Container(
                                         width: double.infinity,
@@ -903,7 +938,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 await launchURL(
-                                                    'https://neetprep.com/tos');
+                                                    'https://www.neetprep.com/tos#privacy-policy');
                                               },
                                               child: Text(
                                                 'Privacy',
@@ -942,7 +977,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 await launchURL(
-                                                    'https://neetprep.com/tos');
+                                                    'https://www.neetprep.com/tos#privacy-policy');
                                               },
                                               child: Text(
                                                 'Policy',
@@ -1093,7 +1128,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 await launchURL(
-                                                    'https://neetprep.com/tos');
+                                                    'https://www.neetprep.com/tos');
                                               },
                                               child: Text(
                                                 'Term',
@@ -1132,7 +1167,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 await launchURL(
-                                                    'https://neetprep.com/tos');
+                                                    'https://www.neetprep.com/tos');
                                               },
                                               child: Text(
                                                 'of',
@@ -1171,7 +1206,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                   Colors.transparent,
                                               onTap: () async {
                                                 await launchURL(
-                                                    'https://neetprep.com/tos');
+                                                    'https://www.neetprep.com/tos');
                                               },
                                               child: Text(
                                                 'Services',
