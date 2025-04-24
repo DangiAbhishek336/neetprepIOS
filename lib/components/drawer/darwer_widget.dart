@@ -49,10 +49,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<
-            ThemeNotifier>(
-        builder: (context, themeNotifier,
-            child) {
+    return Consumer<ThemeNotifier>(builder: (context, themeNotifier, child) {
       return SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
