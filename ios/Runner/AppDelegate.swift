@@ -15,6 +15,7 @@ import UserNotifications // Add this import
         // Initialize CleverTap
         CleverTap.autoIntegrate()
         CleverTapPlugin.sharedInstance()?.applicationDidLaunch(options: launchOptions)
+
         
         // Register Flutter plugins
         GeneratedPluginRegistrant.register(with: self)

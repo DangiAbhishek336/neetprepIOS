@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neetprep_essential/app_state.dart';
 import 'package:neetprep_essential/components/drawer/darwer_widget.dart';
@@ -56,6 +57,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
   String questionStr = "";
   bool optionSelected = false;
   bool isBookmarked = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> _setCookie(InAppWebViewController controller) async {
     // Ensure you're setting cookies on the correct domain
@@ -259,10 +261,11 @@ class _FlutterWebViewState extends State<FlutterWebView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        key: _scaffoldKey,
+        drawer: DrawerWidget(DrawerStrings.abhyasBatch),
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          // leading: ,
           title: Align(
             alignment: AlignmentDirectional(-0.35, 0.2),
             child: Text(
@@ -279,9 +282,16 @@ class _FlutterWebViewState extends State<FlutterWebView> {
                   ),
             ),
           ),
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu,
+                  color: FlutterFlowTheme.of(context).primaryText),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
           actions: [],
           centerTitle: false,
-          elevation: 0.0,
+          elevation: 1.0,
         ),
         body: kIsWeb
             ? Container(
@@ -360,8 +370,10 @@ class _FlutterWebViewState extends State<FlutterWebView> {
                   },
                 ),
               )
-            : WebViewWidget(
-                controller: _controller,
+            : SizedBox(
+                child: WebViewWidget(
+                  controller: _controller,
+                ),
               ));
   }
 }
