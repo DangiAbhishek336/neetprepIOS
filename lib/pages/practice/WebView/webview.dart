@@ -378,7 +378,6 @@ class _FlutterWebViewState extends State<FlutterWebView> {
                     controller: _controller,
                   ),
                 ));
-      ;
     });
   }
 }

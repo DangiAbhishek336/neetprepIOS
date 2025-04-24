@@ -324,32 +324,32 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
                                         log(_model.appleUserJson.toString());
                                         _shouldSetState = true;
-                                        final accessToken = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.accessToken''');
-                                        FFAppState().jwtToken = accessToken
-                                                ?.toString() ??
-                                            ''; // Default empty string if null
+                                        // final accessToken = getJsonField(
+                                        //     _model.appleUserJson,
+                                        //     r'''$.accessToken''');
+                                        // FFAppState().jwtToken = accessToken
+                                        //         ?.toString() ??
+                                        //     ''; // Default empty string if null
 
-                                        final name = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.name''');
-                                        FFAppState().userName = name
-                                                ?.toString() ??
-                                            ''; // Default empty string if null
+                                        // final name = getJsonField(
+                                        //     _model.appleUserJson,
+                                        //     r'''$.name''');
+                                        // FFAppState().userName = name
+                                        //         ?.toString() ??
+                                        //     ''; // Default empty string if null
 
-                                        final email = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.email''');
-                                        FFAppState().emailId = email
-                                                ?.toString()
-                                                .toLowerCase() ??
-                                            ''; // Default empty string if null
+                                        // final email = getJsonField(
+                                        //     _model.appleUserJson,
+                                        //     r'''$.email''');
+                                        // FFAppState().emailId = email
+                                        //         ?.toString()
+                                        //         .toLowerCase() ??
+                                        //     ''; // Default empty string if null
 
-                                        final profile = getJsonField(
-                                            _model.appleUserJson,
-                                            r'''$.profile''');
-                                        FFAppState().displayImage = profile;
+                                        // final profile = getJsonField(
+                                        //     _model.appleUserJson,
+                                        //     r'''$.profile''');
+                                        // FFAppState().displayImage = profile;
                                         setState(() {
                                           _model.isLoading = false;
                                         });
