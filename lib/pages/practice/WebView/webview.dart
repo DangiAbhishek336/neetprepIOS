@@ -272,6 +272,21 @@ class _FlutterWebViewState extends State<FlutterWebView> {
         showIgnore: false,
         showLater: true,
         upgrader: upgrader,
+        // upgrader: Upgrader(
+        //   debugLogging: true,
+        //   debugDisplayAlways: true,
+
+        //   minAppVersion: '2.0.0', // Test forced upgrade
+        //   durationUntilAlertAgain:
+        //       Duration(seconds: 30), // Short duration for testing
+        //   willDisplayUpgrade: (
+        //       {required bool display,
+        //       String? installedVersion,
+        //       UpgraderVersionInfo? versionInfo}) {
+        //     // Callback before displaying upgrade dialog
+        //     debugPrint('Will display upgrade: $display');
+        //   },
+        // ),
         child: Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             key: _scaffoldKey,
