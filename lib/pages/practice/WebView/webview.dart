@@ -12,6 +12,7 @@ import 'package:neetprep_essential/flutter_flow/flutter_flow_theme.dart';
 import 'package:neetprep_essential/flutter_flow/flutter_flow_util.dart';
 import 'package:neetprep_essential/utlis/text.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/foundation.dart' show Factory, kIsWeb;
@@ -39,6 +40,10 @@ class _FlutterWebViewState extends State<FlutterWebView> {
   String idToken = FFAppState().subjectToken; // Your id_token value here
 
   ///
+  ///
+  static final upgrader = Upgrader(
+    durationUntilAlertAgain: Duration(hours: 12),
+  );
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
@@ -262,122 +267,128 @@ class _FlutterWebViewState extends State<FlutterWebView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeNotifier>(builder: (context, themeNotifier, child) {
-      return Scaffold(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          key: _scaffoldKey,
-          drawer: DrawerWidget(DrawerStrings.abhyasBatch),
-          appBar: AppBar(
+      return UpgradeAlert(
+        barrierDismissible: true,
+        showIgnore: false,
+        showLater: true,
+        upgrader: upgrader,
+        child: Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            automaticallyImplyLeading: false,
-            title: Align(
-              alignment: AlignmentDirectional(-0.35, 0.2),
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.start,
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily:
-                          FlutterFlowTheme.of(context).headlineMediumFamily,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                      useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).headlineMediumFamily),
-                    ),
+            key: _scaffoldKey,
+            drawer: DrawerWidget(DrawerStrings.abhyasBatch),
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              automaticallyImplyLeading: false,
+              title: Align(
+                alignment: AlignmentDirectional(-0.35, 0.2),
+                child: Text(
+                  widget.title,
+                  textAlign: TextAlign.start,
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily:
+                            FlutterFlowTheme.of(context).headlineMediumFamily,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).headlineMediumFamily),
+                      ),
+                ),
               ),
-            ),
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.menu,
-                    color: FlutterFlowTheme.of(context).primaryText),
-                onPressed: () => Scaffold.of(context).openDrawer(),
+              leading: Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.menu,
+                      color: FlutterFlowTheme.of(context).primaryText),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
               ),
+              actions: [],
+              centerTitle: false,
+              elevation: 1.0,
             ),
-            actions: [],
-            centerTitle: false,
-            elevation: 1.0,
-          ),
-          body: kIsWeb
-              ? Container(
-                  height: 500,
-                  width: 500,
-                  child: InAppWebView(
-                    key: webViewKey,
-                    initialUrlRequest: URLRequest(
-                      url: WebUri(
-                          '${widget.webUrl}&id_token=${FFAppState().subjectToken}'),
-                    ),
-                    initialUserScripts: UnmodifiableListView<UserScript>([]),
-                    initialSettings: settings,
-                    contextMenu: contextMenu,
-                    onWebViewCreated: (controller) async {
-                      webViewController = controller;
-                      // Inject the JavaScript to set the cookies
-                      await _injectJavaScriptForCookies(controller);
-                    },
-                    onLoadStart: (controller, url) async {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
-                    },
-                    onLoadStop: (controller, url) async {
-                      setState(() {
-                        this.url = url.toString();
-                        urlController.text = this.url;
-                      });
+            body: kIsWeb
+                ? Container(
+                    height: 500,
+                    width: 500,
+                    child: InAppWebView(
+                      key: webViewKey,
+                      initialUrlRequest: URLRequest(
+                        url: WebUri(
+                            '${widget.webUrl}&id_token=${FFAppState().subjectToken}'),
+                      ),
+                      initialUserScripts: UnmodifiableListView<UserScript>([]),
+                      initialSettings: settings,
+                      contextMenu: contextMenu,
+                      onWebViewCreated: (controller) async {
+                        webViewController = controller;
+                        // Inject the JavaScript to set the cookies
+                        await _injectJavaScriptForCookies(controller);
+                      },
+                      onLoadStart: (controller, url) async {
+                        setState(() {
+                          this.url = url.toString();
+                          urlController.text = this.url;
+                        });
+                      },
+                      onLoadStop: (controller, url) async {
+                        setState(() {
+                          this.url = url.toString();
+                          urlController.text = this.url;
+                        });
 
-                      await controller.injectJavascriptFileFromUrl(
-                          urlFile: WebUri(
-                              'https://code.jquery.com/jquery-3.3.1.min.js'),
-                          scriptHtmlTagAttributes: ScriptHtmlTagAttributes(
-                              id: 'jquery',
-                              onLoad: () {
-                                print("jQuery loaded and ready to be used!");
-                              },
-                              onError: () {
-                                print(
-                                    "jQuery not available! Some error occurred.");
-                              }));
+                        await controller.injectJavascriptFileFromUrl(
+                            urlFile: WebUri(
+                                'https://code.jquery.com/jquery-3.3.1.min.js'),
+                            scriptHtmlTagAttributes: ScriptHtmlTagAttributes(
+                                id: 'jquery',
+                                onLoad: () {
+                                  print("jQuery loaded and ready to be used!");
+                                },
+                                onError: () {
+                                  print(
+                                      "jQuery not available! Some error occurred.");
+                                }));
 
-                      // Ensure the JavaScript is injected after the page loads
-                      await _injectJavaScriptForCookies(controller);
-                      print("Cookies set after onLoadStop");
-                    },
-                    onPermissionRequest: (controller, request) async {
-                      return PermissionResponse(
-                          resources: request.resources,
-                          action: PermissionResponseAction.GRANT);
-                    },
-                    shouldOverrideUrlLoading:
-                        (controller, navigationAction) async {
-                      var uri = navigationAction.request.url!;
-                      return NavigationActionPolicy.ALLOW;
-                    },
-                    initialOptions: InAppWebViewGroupOptions(
-                      ios: IOSInAppWebViewOptions(
-                        sharedCookiesEnabled: true,
+                        // Ensure the JavaScript is injected after the page loads
+                        await _injectJavaScriptForCookies(controller);
+                        print("Cookies set after onLoadStop");
+                      },
+                      onPermissionRequest: (controller, request) async {
+                        return PermissionResponse(
+                            resources: request.resources,
+                            action: PermissionResponseAction.GRANT);
+                      },
+                      shouldOverrideUrlLoading:
+                          (controller, navigationAction) async {
+                        var uri = navigationAction.request.url!;
+                        return NavigationActionPolicy.ALLOW;
+                      },
+                      initialOptions: InAppWebViewGroupOptions(
+                        ios: IOSInAppWebViewOptions(
+                          sharedCookiesEnabled: true,
+                        ),
+                        android: AndroidInAppWebViewOptions(
+                          useHybridComposition: true,
+                        ),
+                        crossPlatform: InAppWebViewOptions(
+                          javaScriptEnabled: true,
+                          supportZoom: false,
+                        ),
                       ),
-                      android: AndroidInAppWebViewOptions(
-                        useHybridComposition: true,
-                      ),
-                      crossPlatform: InAppWebViewOptions(
-                        javaScriptEnabled: true,
-                        supportZoom: false,
-                      ),
+                      onReceivedError: (controller, request, error) {
+                        print('Error: ${error.description}');
+                      },
+                      onConsoleMessage: (controller, consoleMessage) {
+                        print('Console Message: ${consoleMessage.message}');
+                      },
                     ),
-                    onReceivedError: (controller, request, error) {
-                      print('Error: ${error.description}');
-                    },
-                    onConsoleMessage: (controller, consoleMessage) {
-                      print('Console Message: ${consoleMessage.message}');
-                    },
-                  ),
-                )
-              : SizedBox(
-                  child: WebViewWidget(
-                    controller: _controller,
-                  ),
-                ));
+                  )
+                : SizedBox(
+                    child: WebViewWidget(
+                      controller: _controller,
+                    ),
+                  )),
+      );
     });
   }
 }
