@@ -771,7 +771,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8.0.r),
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                        .primaryText,
                                   ),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
