@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neetprep_essential/app_state.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:provider/provider.dart';
 import 'package:screen_protector/screen_protector.dart';
@@ -33,14 +35,21 @@ class _DrawerWidgetState extends State<DrawerWidget>
   bool isPyqSelected = false;
   bool isMoreSelected = false;
   bool isTestSeriesSelected = false;
+  String version = "";
 
   @override
   void initState() {
+    initialize();
     super.initState();
   }
 
   final ThemeNotifier themeNotifier = ThemeNotifier(
       ThemeMode.light); // Initialize with light mode or retrieve saved state.
+
+  void initialize() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+  }
 
   @override
   void dispose() {
@@ -213,103 +222,103 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              OutlinedButton(
-                                onPressed: () {
-                                  context.pushNamed('flutterWebView',
-                                      queryParameters: {
-                                        'webUrl':
-                                            "${FFAppState().baseUrl}/newui/streakLeaderboard?embed=1&disable=home_btn&id_token=${FFAppState().subjectToken}",
-                                        'title': "Streak Leaderboard"
-                                      });
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0))),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset('assets/images/selections.png',
-                                        width: 25.0,
-                                        height: 25.0,
-                                        fit: BoxFit.cover),
-                                    SizedBox(width: 5.0),
-                                    Text('Leaderboard',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 13.0,
-                                              fontWeight: FontWeight.normal,
-                                              useGoogleFonts: GoogleFonts
-                                                      .asMap()
-                                                  .containsKey(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily),
-                                            )),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 5.0),
-                              OutlinedButton(
-                                onPressed: () {
-                                  context.pushNamed(
-                                    'PracticeLog',
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0))),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Image.asset('assets/images/qpCalendar.png',
-                                        width: 25.0,
-                                        height: 24.0,
-                                        fit: BoxFit.cover),
-                                    SizedBox(width: 5.0),
-                                    Text('QP Calender',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 13.0,
-                                              fontWeight: FontWeight.normal,
-                                              useGoogleFonts: GoogleFonts
-                                                      .asMap()
-                                                  .containsKey(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily),
-                                            )),
-                                  ],
-                                ),
-                              ),
-                            ]),
-                      )
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      //   child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         OutlinedButton(
+                      //           onPressed: () {
+                      //             context.pushNamed('flutterWebView',
+                      //                 queryParameters: {
+                      //                   'webUrl':
+                      //                       "${FFAppState().baseUrl}/newui/streakLeaderboard?embed=1&disable=home_btn&id_token=${FFAppState().subjectToken}",
+                      //                   'title': "Streak Leaderboard"
+                      //                 });
+                      //           },
+                      //           style: ButtonStyle(
+                      //             shape: MaterialStateProperty.all(
+                      //                 RoundedRectangleBorder(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(10.0))),
+                      //           ),
+                      //           child: Row(
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             children: [
+                      //               Image.asset('assets/images/selections.png',
+                      //                   width: 25.0,
+                      //                   height: 25.0,
+                      //                   fit: BoxFit.cover),
+                      //               SizedBox(width: 5.0),
+                      //               Text('Leaderboard',
+                      //                   style: FlutterFlowTheme.of(context)
+                      //                       .bodyMedium
+                      //                       .override(
+                      //                         fontFamily:
+                      //                             FlutterFlowTheme.of(context)
+                      //                                 .bodyMediumFamily,
+                      //                         color:
+                      //                             FlutterFlowTheme.of(context)
+                      //                                 .primaryText,
+                      //                         fontSize: 13.0,
+                      //                         fontWeight: FontWeight.normal,
+                      //                         useGoogleFonts: GoogleFonts
+                      //                                 .asMap()
+                      //                             .containsKey(
+                      //                                 FlutterFlowTheme.of(
+                      //                                         context)
+                      //                                     .bodyMediumFamily),
+                      //                       )),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         SizedBox(width: 5.0),
+                      //         OutlinedButton(
+                      //           onPressed: () {
+                      //             context.pushNamed(
+                      //               'PracticeLog',
+                      //             );
+                      //           },
+                      //           style: ButtonStyle(
+                      //             shape: MaterialStateProperty.all(
+                      //                 RoundedRectangleBorder(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(10.0))),
+                      //           ),
+                      //           child: Row(
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             children: [
+                      //               Image.asset('assets/images/qpCalendar.png',
+                      //                   width: 25.0,
+                      //                   height: 24.0,
+                      //                   fit: BoxFit.cover),
+                      //               SizedBox(width: 5.0),
+                      //               Text('QP Calender',
+                      //                   style: FlutterFlowTheme.of(context)
+                      //                       .bodyMedium
+                      //                       .override(
+                      //                         fontFamily:
+                      //                             FlutterFlowTheme.of(context)
+                      //                                 .bodyMediumFamily,
+                      //                         color:
+                      //                             FlutterFlowTheme.of(context)
+                      //                                 .primaryText,
+                      //                         fontSize: 13.0,
+                      //                         fontWeight: FontWeight.normal,
+                      //                         useGoogleFonts: GoogleFonts
+                      //                                 .asMap()
+                      //                             .containsKey(
+                      //                                 FlutterFlowTheme.of(
+                      //                                         context)
+                      //                                     .bodyMediumFamily),
+                      //                       )),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ]),
+                      // )
                     ]),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 5.0),
@@ -348,18 +357,44 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       drawerSection(
                                         context,
                                         widget.pageName,
-                                        DrawerStrings.abhyasBatch2,
+                                        "Home",
+                                        'assets/images/abhyasBatch2.svg',
+                                        () async {
+                                          if (widget.pageName != "Home") {
+                                            // context.pushNamed('abhyasBatch2');
+
+                                            context.pushNamed(
+                                              'flutterWebView',
+                                              queryParameters: {
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/study",
+                                                'title': "Dashboard"
+                                              },
+                                            );
+                                          } else
+                                            Scaffold.of(context).closeDrawer();
+                                        },
+                                      ),
+                                      dividerSection(),
+
+                                      drawerSection(
+                                        context,
+                                        widget.pageName,
+                                        DrawerStrings.Course_Catalogue,
                                         'assets/images/abhyasBatch2.svg',
                                         () async {
                                           if (widget.pageName !=
-                                              DrawerStrings.abhyasBatch2) {
-                                            context.pushNamed('abhyasBatch2');
+                                              DrawerStrings.Course_Catalogue) {
+                                            // context.pushNamed('abhyasBatch2');
 
-                                            // context.pushNamed('flutterWebView',queryParameters: {
-                                            //   'webUrl':"${FFAppState().baseUrl}/newui/subjectSelection?courseId=4775&disable=home_btn" ,
-                                            //   'title': "Abhyas  2.0"
-                                            // },
-                                            // );
+                                            context.pushNamed(
+                                              'flutterWebViewWithoutAuthToken',
+                                              queryParameters: {
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/OffersDisplay",
+                                                'title': "Course catalogue"
+                                              },
+                                            );
                                           } else
                                             Scaffold.of(context).closeDrawer();
                                         },
@@ -368,13 +403,19 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       drawerSection(
                                         context,
                                         widget.pageName,
-                                        DrawerStrings.abhyasBatch,
+                                        DrawerStrings.TargetBatch,
                                         'assets/images/ncert_abhyas.svg',
                                         () async {
                                           if (widget.pageName !=
-                                              DrawerStrings.abhyasBatch) {
-                                            context.goNamed(
-                                                'PracticeChapterWisePage');
+                                              DrawerStrings.TargetBatch) {
+                                            context.pushNamed(
+                                              'flutterWebView',
+                                              queryParameters: {
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/product",
+                                                'title': "Target Batch"
+                                              },
+                                            );
                                           } else
                                             Scaffold.of(context).closeDrawer();
                                         },
@@ -383,13 +424,19 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       drawerSection(
                                         context,
                                         widget.pageName,
-                                        DrawerStrings.abhyasEssentials,
+                                        DrawerStrings.ScoreBooster,
                                         'assets/images/book-square.svg',
                                         () async {
                                           if (widget.pageName !=
-                                              DrawerStrings.abhyasEssentials) {
-                                            context.goNamed(
-                                                'EssentialChapterWisePage');
+                                              DrawerStrings.ScoreBooster) {
+                                            context.pushNamed(
+                                              'flutterWebView',
+                                              queryParameters: {
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/scorebooster/coaching-aligned",
+                                                'title': "Score Booster"
+                                              },
+                                            );
                                           } else
                                             Scaffold.of(context).closeDrawer();
                                         },
@@ -398,150 +445,123 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       drawerSection(
                                         context,
                                         widget.pageName,
-                                        DrawerStrings.homeTestSeriesBooks,
+                                        DrawerStrings.customPracticeSession,
                                         'assets/images/book-square.svg',
                                         () async {
                                           if (widget.pageName !=
                                               DrawerStrings
-                                                  .homeTestSeriesBooks) {
+                                                  .customPracticeSession) {
                                             context.pushNamed(
-                                              'OrderPage',
+                                              'flutterWebView',
                                               queryParameters: {
-                                                'courseId': serializeParam(
-                                                  FFAppState()
-                                                      .homeTestSeriesBookCourseId,
-                                                  ParamType.String,
-                                                ),
-                                                'courseIdInt': serializeParam(
-                                                  FFAppState()
-                                                      .homeTestSeriesBookCourseIdInt
-                                                      .toString(),
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/subjectSelection",
+                                                'title':
+                                                    "Custom Practice Session"
+                                              },
                                             );
-                                            Scaffold.of(context).closeDrawer();
                                           } else
                                             Scaffold.of(context).closeDrawer();
                                         },
                                       ),
                                       dividerSection(),
+
                                       drawerSection(
                                         context,
                                         widget.pageName,
-                                        DrawerStrings.hardestQsCourse,
+                                        DrawerStrings.flashCards,
                                         'assets/images/book-square.svg',
                                         () async {
                                           if (widget.pageName !=
-                                              DrawerStrings.hardestQsCourse) {
-                                            context.goNamed(
-                                                'FormCompletionHandler');
-                                            Scaffold.of(context).closeDrawer();
+                                              DrawerStrings.flashCards) {
+                                            context.pushNamed(
+                                              'flutterWebView',
+                                              queryParameters: {
+                                                'webUrl':
+                                                    "${FFAppState().baseUrl}/newui/subjectSelection",
+                                                'title': "Flash Cards"
+                                              },
+                                            );
                                           } else
                                             Scaffold.of(context).closeDrawer();
                                         },
                                       ),
-                                      // drawerSection(
-                                      //   context,
-                                      //   widget.pageName,
-                                      //   DrawerStrings.abhyasEssentialBooks,
-                                      //   'assets/images/book-square.svg',
-                                      //       () async {
-                                      //     if (widget.pageName !=
-                                      //         DrawerStrings.abhyasEssentialBooks) {
-                                      //       context.pushNamed(
-                                      //         'OrderPage',
-                                      //         queryParameters: {
-                                      //           'courseId': serializeParam(
-                                      //             FFAppState().abhyasEssentialBookCourseId,
-                                      //             ParamType.String,
-                                      //           ),
-                                      //           'courseIdInt': serializeParam(
-                                      //             FFAppState().abhyasEssentialBookCourseIdInt.toString(),
-                                      //             ParamType.String,
-                                      //           ),
-                                      //         }.withoutNulls,
-                                      //       );
-                                      //     } else
-                                      //       Scaffold.of(context).closeDrawer();
-                                      //   },
-                                      // ),
                                       dividerSection(),
-                                      pyqMarkedNcertSection(),
-                                      drawerSection(
-                                          context,
-                                          widget.pageName,
-                                          DrawerStrings.incorrectQsHighlight,
-                                          'assets/images/incorrectQsHighlight.svg',
-                                          () async {
-                                        if (widget.pageName !=
-                                            DrawerStrings
-                                                .incorrectQsHighlight) {
-                                          print(widget.pageName);
-                                          context.pushNamed(
-                                            'ncertAnnotation',
-                                            queryParameters: {
-                                              'webUrl':
-                                                  "${FFAppState().baseUrl}/ncert-book/chapters?embed=1",
-                                              'title': DrawerStrings
-                                                  .incorrectQsHighlight
-                                            },
-                                            extra: <String, dynamic>{
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType
-                                                        .rightToLeft,
-                                              ),
-                                            },
-                                          );
-                                          Scaffold.of(context).closeDrawer();
-                                        } else
-                                          Scaffold.of(context).closeDrawer();
-                                      }),
-                                      dividerSection(),
+                                      // pyqMarkedNcertSection(),
                                       // drawerSection(
-                                      //   context,
-                                      //   widget.pageName,
-                                      //   DrawerStrings.practiceLog,
-                                      //   'assets/images/calendar-tick.svg',
-                                      //   () async {
-                                      //     if (widget.pageName !=
-                                      //         DrawerStrings
-                                      //             .homeTestSeriesBooks) {
-                                      //       Scaffold.of(context).closeDrawer();
-                                      //       context.pushNamed('PracticeLog');
-                                      //     } else
-                                      //       Scaffold.of(context).closeDrawer();
-                                      //   },
-                                      // ),
+                                      //     context,
+                                      //     widget.pageName,
+                                      //     DrawerStrings.incorrectQsHighlight,
+                                      //     'assets/images/incorrectQsHighlight.svg',
+                                      //     () async {
+                                      //   if (widget.pageName !=
+                                      //       DrawerStrings
+                                      //           .incorrectQsHighlight) {
+                                      //     print(widget.pageName);
+                                      //     context.pushNamed(
+                                      //       'ncertAnnotation',
+                                      //       queryParameters: {
+                                      //         'webUrl':
+                                      //             "${FFAppState().baseUrl}/ncert-book/chapters?embed=1",
+                                      //         'title': DrawerStrings
+                                      //             .incorrectQsHighlight
+                                      //       },
+                                      //       extra: <String, dynamic>{
+                                      //         kTransitionInfoKey:
+                                      //             TransitionInfo(
+                                      //           hasTransition: true,
+                                      //           transitionType:
+                                      //               PageTransitionType
+                                      //                   .rightToLeft,
+                                      //         ),
+                                      //       },
+                                      //     );
+                                      //     Scaffold.of(context).closeDrawer();
+                                      //   } else
+                                      //     Scaffold.of(context).closeDrawer();
+                                      // }),
                                       // dividerSection(),
-                                      drawerSection(
-                                          context,
-                                          widget.pageName,
-                                          DrawerStrings.allBookmarkedQs,
-                                          'assets/images/bookmarkedQs.svg',
-                                          () async {
-                                        if (widget.pageName !=
-                                            DrawerStrings.allBookmarkedQs) {
-                                          context.goNamed(
-                                              'BookmarkedChapterWisePage');
-                                        } else
-                                          Scaffold.of(context).closeDrawer();
-                                      }),
-                                      dividerSection(),
-                                      drawerSection(
-                                          context,
-                                          widget.pageName,
-                                          DrawerStrings.allStarmarkedQs,
-                                          'assets/images/star.svg', () async {
-                                        context.goNamed(
-                                            'StarmarkedChapterWisePage');
-                                        Scaffold.of(context).closeDrawer();
-                                      }),
-                                      dividerSection(),
-                                      moreSection()
+                                      // // drawerSection(
+                                      // //   context,
+                                      // //   widget.pageName,
+                                      // //   DrawerStrings.practiceLog,
+                                      // //   'assets/images/calendar-tick.svg',
+                                      // //   () async {
+                                      // //     if (widget.pageName !=
+                                      // //         DrawerStrings
+                                      // //             .homeTestSeriesBooks) {
+                                      // //       Scaffold.of(context).closeDrawer();
+                                      // //       context.pushNamed('PracticeLog');
+                                      // //     } else
+                                      // //       Scaffold.of(context).closeDrawer();
+                                      // //   },
+                                      // // ),
+                                      // // dividerSection(),
+                                      // drawerSection(
+                                      //     context,
+                                      //     widget.pageName,
+                                      //     DrawerStrings.allBookmarkedQs,
+                                      //     'assets/images/bookmarkedQs.svg',
+                                      //     () async {
+                                      //   if (widget.pageName !=
+                                      //       DrawerStrings.allBookmarkedQs) {
+                                      //     context.goNamed(
+                                      //         'BookmarkedChapterWisePage');
+                                      //   } else
+                                      //     Scaffold.of(context).closeDrawer();
+                                      // }),
+                                      // dividerSection(),
+                                      // drawerSection(
+                                      //     context,
+                                      //     widget.pageName,
+                                      //     DrawerStrings.allStarmarkedQs,
+                                      //     'assets/images/star.svg', () async {
+                                      //   context.goNamed(
+                                      //       'StarmarkedChapterWisePage');
+                                      //   Scaffold.of(context).closeDrawer();
+                                      // }),
+                                      // dividerSection(),
+                                      // moreSection()
                                     ]),
                               ],
                             ),
@@ -667,71 +687,124 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               30.0, 8.0, 24.0, 20.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.asset('assets/images/logout.png',
-                                    width: 25.0,
-                                    height: 24.0,
-                                    fit: BoxFit.cover,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    child: Image.asset(
+                                        'assets/images/logout.png',
+                                        width: 25.0,
+                                        height: 24.0,
+                                        fit: BoxFit.cover,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 0.0, 0.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+
+                                        FFAppState().subjectToken = '';
+                                        FFAppState().newToken = '';
+                                        FFAppState().userName = '';
+                                        FFAppState().userIdInt = 0;
+                                        FFAppState().emailId = '';
+                                        FFAppState().displayImage = '';
+                                        FFAppState().isFormCompleted = false;
+                                        FFAppState().clearUserInfoQueryCacheKey(
+                                            FFAppState().userIdInt.toString());
+                                        GoRouter.of(context)
+                                            .prepareAuthEvent(true);
+                                        await authManager.signOut();
+                                        GoRouter.of(context)
+                                            .clearRedirectLocation();
+
+                                        await actions.refreshWebpage();
+
+                                        context.goNamedAuth(
+                                          'LoginPage',
+                                          context.mounted,
+                                          ignoreRedirect: true,
+                                        );
+                                      },
+                                      child: Text(
+                                        'Log out',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.normal,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.containsKey('isCallbackSubmitted')
-                                        ? prefs.remove('isCallbackSubmitted')
-                                        : false;
-
-                                    FFAppState().subjectToken = '';
-                                    FFAppState().newToken = '';
-                                    FFAppState().userName = '';
-                                    FFAppState().userIdInt = 0;
-                                    FFAppState().emailId = '';
-                                    FFAppState().displayImage = '';
-                                    FFAppState().isFormCompleted = false;
-                                    FFAppState().clearUserInfoQueryCacheKey(
-                                        FFAppState().userIdInt.toString());
-                                    GoRouter.of(context).prepareAuthEvent(true);
-                                    await authManager.signOut();
-                                    GoRouter.of(context)
-                                        .clearRedirectLocation();
-
-                                    await actions.refreshWebpage();
-
-                                    context.goNamedAuth(
-                                      'LoginPage',
-                                      context.mounted,
-                                      ignoreRedirect: true,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Log out',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
+                                    0.0.w, 0.0.h, 15.0.w, 0.0.h),
+                                child: Container(
+                                  width: 61.0.w,
+                                  height: 26.0.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0.r),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                  ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await launchURL(
+                                          'https://www.reflexprep.com/cont/tos');
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        'V ${version}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
+                                                      .bodyMediumFamily,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .accent8,
+                                              fontSize: 10.0.sp,
+                                              fontWeight: FontWeight.w400,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                              ),
+                                            ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -811,72 +884,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                         ),
                   ),
                 ),
-                text == DrawerStrings.abhyasEssentialBooks ||
-                        text == DrawerStrings.homeTestSeriesBooks
-                    ? Flexible(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Container(
-                              padding: EdgeInsets.fromLTRB(12, 2, 12, 2),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                ),
-                              ),
-                              child: Text(
-                                "New",
-                                style: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontSize: 12.0,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily),
-                                    ),
-                              )),
-                        ),
-                      )
-                    : text == DrawerStrings.hardestQsCourse
-                        ? Flexible(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Container(
-                                  padding: EdgeInsets.fromLTRB(12, 2, 12, 2),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Free",
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          fontSize: 12.0,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmallFamily),
-                                        ),
-                                  )),
-                            ),
-                          )
-                        : SizedBox(),
               ],
             ),
           ),
@@ -1072,510 +1079,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                       ),
                     ])),
           ]),
-    );
-  }
-
-  Widget moreSection() {
-    return PointerInterceptor(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              isMoreSelected = !isMoreSelected;
-              isPyqSelected = false;
-              setState(() {});
-            },
-            child: Container(
-              decoration: new BoxDecoration(
-                color: isMoreSelected
-                    ? FlutterFlowTheme.of(context).sectionBackgroundColor
-                    : FlutterFlowTheme.of(context).secondaryBackground,
-              ),
-              padding: EdgeInsetsDirectional.fromSTEB(30.0, 8.0, 40.0, 8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(0.0),
-                    child: SvgPicture.asset(
-                      color: isMoreSelected
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).primaryText,
-                      'assets/images/note.svg',
-                      width: 25.0,
-                      height: 25.0,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                    child: Text(
-                      'More',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily:
-                                FlutterFlowTheme.of(context).bodyMediumFamily,
-                            color: isMoreSelected
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 14.0,
-                            fontWeight: isMoreSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
-                            useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodyMediumFamily),
-                          ),
-                    ),
-                  ),
-                  Spacer(),
-                  isMoreSelected
-                      ? SvgPicture.asset("assets/images/arrow-up.svg",
-                          color: FlutterFlowTheme.of(context).primary)
-                      : SvgPicture.asset("assets/images/arrow-down.svg",
-                          color: isMoreSelected
-                              ? FlutterFlowTheme.of(context).primary
-                              : FlutterFlowTheme.of(context).primaryText)
-                ],
-              ),
-            ),
-          ),
-          // dividerSection(),
-          Visibility(
-            visible: isMoreSelected,
-            child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'OrderPage',
-                        queryParameters: {
-                          'courseId': serializeParam(
-                            FFAppState().offlineBookCourseId,
-                            ParamType.String,
-                          ),
-                          'courseIdInt': serializeParam(
-                            FFAppState().offlineBookCourseIdInt.toString(),
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
-                      Scaffold.of(context).closeDrawer();
-                      isMoreSelected = true;
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          60.0, 10.0, 40.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    DrawerStrings.abhyasBooks,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: widget.pageName ==
-                                                  DrawerStrings.abhyasBooks
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: widget.pageName ==
-                                                  DrawerStrings.abhyasBooks
-                                              ? FontWeight.w600
-                                              : FontWeight.w400,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60, right: 20),
-                    child: Container(
-                      height: 1.0, // Set the height of the divider
-                      color: FlutterFlowTheme.of(context)
-                          .accent4, // Set the color of the divider
-                    ),
-                  ),
-
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'OrderPage',
-                        queryParameters: {
-                          'courseId': serializeParam(
-                            FFAppState().abhyasEssentialBookCourseId,
-                            ParamType.String,
-                          ),
-                          'courseIdInt': serializeParam(
-                            FFAppState()
-                                .abhyasEssentialBookCourseIdInt
-                                .toString(),
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
-                      Scaffold.of(context).closeDrawer();
-                      isMoreSelected = true;
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          60.0, 10.0, 40.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    DrawerStrings.abhyasEssentialBooks,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: widget.pageName ==
-                                                  DrawerStrings
-                                                      .abhyasEssentialBooks
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: widget.pageName ==
-                                                  DrawerStrings
-                                                      .abhyasEssentialBooks
-                                              ? FontWeight.w600
-                                              : FontWeight.w400,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60, right: 20),
-                    child: Container(
-                      height: 1.0, // Set the height of the divider
-                      color: FlutterFlowTheme.of(context)
-                          .accent4, // Set the color of the divider
-                    ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.goNamed('CreateAndPreviewTestPage');
-                      Scaffold.of(context).closeDrawer();
-                      isMoreSelected = true;
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          60.0, 10.0, 40.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    DrawerStrings.testCourse,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: widget.pageName ==
-                                                  DrawerStrings.testCourse
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: widget.pageName ==
-                                                  DrawerStrings.testCourse
-                                              ? FontWeight.w600
-                                              : FontWeight.w400,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // InkWell(
-                  //   splashColor: Colors.transparent,
-                  //   focusColor: Colors.transparent,
-                  //   hoverColor: Colors.transparent,
-                  //   highlightColor: Colors.transparent,
-                  //   onTap: () async {
-                  //     context.pushNamed(
-                  //       'OrderPage',
-                  //       queryParameters: {
-                  //         'courseId': serializeParam(
-                  //           FFAppState().homeTestSeriesBookCourseId,
-                  //           ParamType.String,
-                  //         ),
-                  //         'courseIdInt': serializeParam(
-                  //           FFAppState()
-                  //               .homeTestSeriesBookCourseIdInt
-                  //               .toString(),
-                  //           ParamType.String,
-                  //         ),
-                  //       }.withoutNulls,
-                  //     );
-                  //     Scaffold.of(context).closeDrawer();
-                  //     isMoreSelected = true;
-                  //   },
-                  //   child: Container(
-                  //     padding:
-                  //         EdgeInsetsDirectional.fromSTEB(60.0, 10.0, 40.0, 10.0),
-                  //     child: Row(
-                  //       mainAxisSize: MainAxisSize.max,
-                  //       children: [
-                  //         Flexible(
-                  //           child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.start,
-                  //             children: [
-                  //               Flexible(
-                  //                 flex: 1,
-                  //                 child: Text(
-                  //                   DrawerStrings.homeTestSeriesBooks,
-                  //                   style: FlutterFlowTheme.of(context)
-                  //                       .bodyMedium
-                  //                       .override(
-                  //                         fontFamily:
-                  //                             FlutterFlowTheme.of(context)
-                  //                                 .bodyMediumFamily,
-                  //                         color: widget.pageName ==
-                  //                                 DrawerStrings
-                  //                                     .homeTestSeriesBooks
-                  //                             ? FlutterFlowTheme.of(context)
-                  //                                 .primary
-                  //                             : FlutterFlowTheme.of(context)
-                  //                                 .primaryText,
-                  //                         fontSize: 14.0,
-                  //                         fontWeight: widget.pageName ==
-                  //                                 DrawerStrings
-                  //                                     .homeTestSeriesBooks
-                  //                             ? FontWeight.w600
-                  //                             : FontWeight.w400,
-                  //                         useGoogleFonts: GoogleFonts.asMap()
-                  //                             .containsKey(
-                  //                                 FlutterFlowTheme.of(context)
-                  //                                     .bodyMediumFamily),
-                  //                       ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60, right: 20),
-                    child: Container(
-                      height: 1.0, // Set the height of the divider
-                      color: FlutterFlowTheme.of(context)
-                          .accent4, // Set the color of the divider
-                    ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.goNamed('AssertionChapterWisePage');
-                      Scaffold.of(context).closeDrawer();
-                      isMoreSelected = true;
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          60.0, 10.0, 40.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    DrawerStrings.arQsPowerUp,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: widget.pageName ==
-                                                  DrawerStrings.arQsPowerUp
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: widget.pageName ==
-                                                  DrawerStrings.arQsPowerUp
-                                              ? FontWeight.w600
-                                              : FontWeight.w400,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60, right: 20),
-                    child: Container(
-                      height: 1.0, // Set the height of the divider
-                      color: FlutterFlowTheme.of(context)
-                          .accent4, // Set the color of the divider
-                    ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.goNamed('FlashcardChapterWisePage');
-                      Scaffold.of(context).closeDrawer();
-                      isMoreSelected = true;
-                    },
-                    child: Container(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          60.0, 10.0, 40.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    DrawerStrings.pagewiseFlashcards,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: widget.pageName ==
-                                                  DrawerStrings
-                                                      .pagewiseFlashcards
-                                              ? FlutterFlowTheme.of(context)
-                                                  .primary
-                                              : FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: widget.pageName ==
-                                                  DrawerStrings
-                                                      .pagewiseFlashcards
-                                              ? FontWeight.w600
-                                              : FontWeight.w400,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 60, right: 20),
-                    child: Container(
-                      height: 1.0, // Set the height of the divider
-                      color: FlutterFlowTheme.of(context)
-                          .accent4, // Set the color of the divider
-                    ),
-                  ),
-                ])),
-          ),
-        ],
-      ),
     );
   }
 }

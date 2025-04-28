@@ -23,16 +23,18 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 // #enddocregion platform_imports
 
-class FlutterWebView extends StatefulWidget {
+class FlutterWebViewWithoutToken extends StatefulWidget {
   final String webUrl;
   final String title;
-  const FlutterWebView({required this.webUrl, required this.title});
+  const FlutterWebViewWithoutToken({required this.webUrl, required this.title});
 
   @override
-  State<FlutterWebView> createState() => _FlutterWebViewState();
+  State<FlutterWebViewWithoutToken> createState() =>
+      _FlutterWebViewWithoutTokenState();
 }
 
-class _FlutterWebViewState extends State<FlutterWebView> {
+class _FlutterWebViewWithoutTokenState
+    extends State<FlutterWebViewWithoutToken> {
   ///web
 
   final GlobalKey webViewKey = GlobalKey();
@@ -181,7 +183,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
           },
         )
         ..loadRequest(
-          Uri.parse('${widget.webUrl}&id_token=${FFAppState().subjectToken}'),
+          Uri.parse('${widget.webUrl}'),
           // '  FFAppState().baseUrl/ncert-book?embed=1&id_token=${Uri.encodeComponent(FFAppState().subjectToken)}&android=${kIsWeb ? 0 : 1}'),
         );
 
@@ -290,7 +292,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
         child: Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             key: _scaffoldKey,
-            drawer: DrawerWidget(DrawerStrings.abhyasBatch),
+            drawer: DrawerWidget(DrawerStrings.TargetBatch),
             appBar: AppBar(
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
               automaticallyImplyLeading: false,

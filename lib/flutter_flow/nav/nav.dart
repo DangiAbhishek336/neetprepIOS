@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:neetprep_essential/pages/auth/login_page/login_page_widget.dart';
 
-import 'package:neetprep_essential/pages/practice/WebView/webview.dart';
+import 'package:neetprep_essential/pages/WebView/webview.dart';
+import 'package:neetprep_essential/pages/webViewWithoutToken/webviewWithoutToken.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
@@ -125,6 +126,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'flutterWebView',
           path: '/flutterWebView',
           builder: (context, params) => FlutterWebView(
+              webUrl: params.getParam('webUrl', ParamType.String),
+              title: params.getParam('title', ParamType.String)),
+        ),
+        FFRoute(
+          name: 'flutterWebViewWithoutAuthToken',
+          path: '/flutterWebViewWithoutAuthToken',
+          builder: (context, params) => FlutterWebViewWithoutToken(
               webUrl: params.getParam('webUrl', ParamType.String),
               title: params.getParam('title', ParamType.String)),
         ),
