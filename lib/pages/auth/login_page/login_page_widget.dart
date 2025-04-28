@@ -130,44 +130,39 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         16.0, 0.0, 8.0, 0.0),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.asset(
-                                                    FFAppState().isDarkMode
-                                                        ? 'assets/images/essential-logo-dark.png'
-                                                        : 'assets/images/Frame_1000006609.png',
-                                                    width: 45.0,
-                                                    height: 45.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/logo.svg',
+                                                  fit: BoxFit.fitHeight,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.8,
                                                 ),
                                               ),
-                                              Text(
-                                                'ESSENTIAL',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .headlineLargeFamily,
-                                                          fontSize: 34.0,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .headlineLargeFamily),
-                                                        ),
-                                              ),
+                                              // Text(
+                                              //   'ESSENTIAL',
+                                              //   textAlign: TextAlign.start,
+                                              //   style:
+                                              //       FlutterFlowTheme.of(context)
+                                              //           .headlineLarge
+                                              //           .override(
+                                              //             fontFamily:
+                                              //                 FlutterFlowTheme.of(
+                                              //                         context)
+                                              //                     .headlineLargeFamily,
+                                              //             fontSize: 34.0,
+                                              //             fontWeight:
+                                              //                 FontWeight.w800,
+                                              //             fontStyle:
+                                              //                 FontStyle.italic,
+                                              //             useGoogleFonts: GoogleFonts
+                                              //                     .asMap()
+                                              //                 .containsKey(
+                                              //                     FlutterFlowTheme.of(
+                                              //                             context)
+                                              //                         .headlineLargeFamily),
+                                              //           ),
+                                              // ),
                                             ],
                                           ),
                                           Padding(
@@ -175,7 +170,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     68.0, 0.0, 0.0, 0.0),
                                             child: Text(
-                                              'PageWise NCERT Q Practice with Video Explanations.',
+                                              'Crack NEET with Daily Practice.',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -233,7 +228,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 8.0, 0.0, 0.0),
                                             child: Text(
-                                              'Padhai Karo Kahin se Lekin Q Practice karo Yahi se',
+                                              '🚀 Where NEET Toppers \nPractice Daily 🔥',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .titleLarge
@@ -260,7 +255,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 8.0, 0.0, 0.0),
                                             child: Text(
-                                              "NEETprep Essential empowers you to solve Q's exactly from pages of NCERT you are reading daily!",
+                                              "NEETPrep powers your preparation with Score Booster, Target Batches, Performance Snapshots, Flashcards, and more — all designed to maximize your success.",
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
