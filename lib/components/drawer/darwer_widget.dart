@@ -222,103 +222,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding:
-                      //       const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                      //   child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         OutlinedButton(
-                      //           onPressed: () {
-                      //             context.pushNamed('flutterWebView',
-                      //                 queryParameters: {
-                      //                   'webUrl':
-                      //                       "${FFAppState().baseUrl}/newui/streakLeaderboard?embed=1&disable=home_btn&id_token=${FFAppState().subjectToken}",
-                      //                   'title': "Streak Leaderboard"
-                      //                 });
-                      //           },
-                      //           style: ButtonStyle(
-                      //             shape: MaterialStateProperty.all(
-                      //                 RoundedRectangleBorder(
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.0))),
-                      //           ),
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             children: [
-                      //               Image.asset('assets/images/selections.png',
-                      //                   width: 25.0,
-                      //                   height: 25.0,
-                      //                   fit: BoxFit.cover),
-                      //               SizedBox(width: 5.0),
-                      //               Text('Leaderboard',
-                      //                   style: FlutterFlowTheme.of(context)
-                      //                       .bodyMedium
-                      //                       .override(
-                      //                         fontFamily:
-                      //                             FlutterFlowTheme.of(context)
-                      //                                 .bodyMediumFamily,
-                      //                         color:
-                      //                             FlutterFlowTheme.of(context)
-                      //                                 .primaryText,
-                      //                         fontSize: 13.0,
-                      //                         fontWeight: FontWeight.normal,
-                      //                         useGoogleFonts: GoogleFonts
-                      //                                 .asMap()
-                      //                             .containsKey(
-                      //                                 FlutterFlowTheme.of(
-                      //                                         context)
-                      //                                     .bodyMediumFamily),
-                      //                       )),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //         SizedBox(width: 5.0),
-                      //         OutlinedButton(
-                      //           onPressed: () {
-                      //             context.pushNamed(
-                      //               'PracticeLog',
-                      //             );
-                      //           },
-                      //           style: ButtonStyle(
-                      //             shape: MaterialStateProperty.all(
-                      //                 RoundedRectangleBorder(
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(10.0))),
-                      //           ),
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             children: [
-                      //               Image.asset('assets/images/qpCalendar.png',
-                      //                   width: 25.0,
-                      //                   height: 24.0,
-                      //                   fit: BoxFit.cover),
-                      //               SizedBox(width: 5.0),
-                      //               Text('QP Calender',
-                      //                   style: FlutterFlowTheme.of(context)
-                      //                       .bodyMedium
-                      //                       .override(
-                      //                         fontFamily:
-                      //                             FlutterFlowTheme.of(context)
-                      //                                 .bodyMediumFamily,
-                      //                         color:
-                      //                             FlutterFlowTheme.of(context)
-                      //                                 .primaryText,
-                      //                         fontSize: 13.0,
-                      //                         fontWeight: FontWeight.normal,
-                      //                         useGoogleFonts: GoogleFonts
-                      //                                 .asMap()
-                      //                             .containsKey(
-                      //                                 FlutterFlowTheme.of(
-                      //                                         context)
-                      //                                     .bodyMediumFamily),
-                      //                       )),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ]),
-                      // )
                     ]),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 5.0),
@@ -376,7 +279,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         },
                                       ),
                                       dividerSection(),
-
                                       drawerSection(
                                         context,
                                         widget.pageName,
@@ -400,27 +302,48 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         },
                                       ),
                                       dividerSection(),
-                                      drawerSection(
-                                        context,
-                                        widget.pageName,
-                                        DrawerStrings.TargetBatch,
-                                        'assets/images/ncert_abhyas.svg',
-                                        () async {
-                                          if (widget.pageName !=
-                                              DrawerStrings.TargetBatch) {
-                                            context.pushNamed(
-                                              'flutterWebView',
-                                              queryParameters: {
-                                                'webUrl':
-                                                    "${FFAppState().baseUrl}/newui/product",
-                                                'title': "Target Batch"
-                                              },
-                                            );
-                                          } else
-                                            Scaffold.of(context).closeDrawer();
-                                        },
-                                      ),
-                                      dividerSection(),
+                                      // drawerSection(
+                                      //   context,
+                                      //   widget.pageName,
+                                      //   DrawerStrings.TargetBatch,
+                                      //   'assets/images/ncert_abhyas.svg',
+                                      //   () async {
+                                      //     if (widget.pageName !=
+                                      //         DrawerStrings.TargetBatch) {
+                                      //       context.pushNamed(
+                                      //         'flutterWebView',
+                                      //         queryParameters: {
+                                      //           'webUrl':
+                                      //               "${FFAppState().baseUrl}/newui/product/3521",
+                                      //           'title': "Target Batch"
+                                      //         },
+                                      //       );
+                                      //     } else
+                                      //       Scaffold.of(context).closeDrawer();
+                                      //   },
+                                      // ),
+                                      // dividerSection(),
+                                      // drawerSection(
+                                      //     context,
+                                      //     widget.pageName,
+                                      //     DrawerStrings.TargetBatch,
+                                      //     'assets/images/ncert_abhyas.svg',
+                                      //     () async {
+                                      //   // if (widget.pageName !=
+                                      //   //     DrawerStrings.TargetBatch) {
+                                      //   context.pushNamed(
+                                      //     'flutterWebView',
+                                      //     queryParameters: {
+                                      //       'webUrl':
+                                      //           "${FFAppState().baseUrl}/newui/product/3521",
+                                      //       'title': "Target Batch"
+                                      //     },
+                                      //   );
+                                      //   //   } else
+                                      //   //     Scaffold.of(context).closeDrawer();
+                                      //   // },
+                                      // }),
+                                      // dividerSection(),
                                       drawerSection(
                                         context,
                                         widget.pageName,
@@ -465,7 +388,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         },
                                       ),
                                       dividerSection(),
-
                                       drawerSection(
                                         context,
                                         widget.pageName,
@@ -478,7 +400,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                               'flutterWebView',
                                               queryParameters: {
                                                 'webUrl':
-                                                    "${FFAppState().baseUrl}/newui/subjectSelection",
+                                                    "${FFAppState().baseUrl}/chapters/622/flashcards/4813",
                                                 'title': "Flash Cards"
                                               },
                                             );
@@ -487,81 +409,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         },
                                       ),
                                       dividerSection(),
-                                      // pyqMarkedNcertSection(),
-                                      // drawerSection(
-                                      //     context,
-                                      //     widget.pageName,
-                                      //     DrawerStrings.incorrectQsHighlight,
-                                      //     'assets/images/incorrectQsHighlight.svg',
-                                      //     () async {
-                                      //   if (widget.pageName !=
-                                      //       DrawerStrings
-                                      //           .incorrectQsHighlight) {
-                                      //     print(widget.pageName);
-                                      //     context.pushNamed(
-                                      //       'ncertAnnotation',
-                                      //       queryParameters: {
-                                      //         'webUrl':
-                                      //             "${FFAppState().baseUrl}/ncert-book/chapters?embed=1",
-                                      //         'title': DrawerStrings
-                                      //             .incorrectQsHighlight
-                                      //       },
-                                      //       extra: <String, dynamic>{
-                                      //         kTransitionInfoKey:
-                                      //             TransitionInfo(
-                                      //           hasTransition: true,
-                                      //           transitionType:
-                                      //               PageTransitionType
-                                      //                   .rightToLeft,
-                                      //         ),
-                                      //       },
-                                      //     );
-                                      //     Scaffold.of(context).closeDrawer();
-                                      //   } else
-                                      //     Scaffold.of(context).closeDrawer();
-                                      // }),
-                                      // dividerSection(),
-                                      // // drawerSection(
-                                      // //   context,
-                                      // //   widget.pageName,
-                                      // //   DrawerStrings.practiceLog,
-                                      // //   'assets/images/calendar-tick.svg',
-                                      // //   () async {
-                                      // //     if (widget.pageName !=
-                                      // //         DrawerStrings
-                                      // //             .homeTestSeriesBooks) {
-                                      // //       Scaffold.of(context).closeDrawer();
-                                      // //       context.pushNamed('PracticeLog');
-                                      // //     } else
-                                      // //       Scaffold.of(context).closeDrawer();
-                                      // //   },
-                                      // // ),
-                                      // // dividerSection(),
-                                      // drawerSection(
-                                      //     context,
-                                      //     widget.pageName,
-                                      //     DrawerStrings.allBookmarkedQs,
-                                      //     'assets/images/bookmarkedQs.svg',
-                                      //     () async {
-                                      //   if (widget.pageName !=
-                                      //       DrawerStrings.allBookmarkedQs) {
-                                      //     context.goNamed(
-                                      //         'BookmarkedChapterWisePage');
-                                      //   } else
-                                      //     Scaffold.of(context).closeDrawer();
-                                      // }),
-                                      // dividerSection(),
-                                      // drawerSection(
-                                      //     context,
-                                      //     widget.pageName,
-                                      //     DrawerStrings.allStarmarkedQs,
-                                      //     'assets/images/star.svg', () async {
-                                      //   context.goNamed(
-                                      //       'StarmarkedChapterWisePage');
-                                      //   Scaffold.of(context).closeDrawer();
-                                      // }),
-                                      // dividerSection(),
-                                      // moreSection()
                                     ]),
                               ],
                             ),
@@ -576,112 +423,113 @@ class _DrawerWidgetState extends State<DrawerWidget>
                   alignment: Alignment.bottomLeft,
                   child: Column(
                     children: [
-                      PointerInterceptor(
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {},
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                30.0, 0.0, 24.0, 5.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(0.0),
-                                  child: SvgPicture.asset(
-                                      'assets/images/messages-info.svg',
-                                      width: 25.0,
-                                      height: 24.0,
-                                      fit: BoxFit.cover,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Feedback | Support',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      PointerInterceptor(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              30.0, 8.0, 24.0, 5.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.asset('assets/images/star.png',
-                                    width: 25.0,
-                                    height: 24.0,
-                                    fit: BoxFit.cover,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    // await InAppReview.instance
-                                    //     .requestReview();
-                                    // FFAppState().showRatingPrompt = -1;
-                                    await launchURL(
-                                        'https://play.google.com/store/apps/details?id=com.neetprep.ios');
-                                    return;
-                                  },
-                                  child: Text(
-                                    'Rate us in Playstore',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // PointerInterceptor(
+                      //   child: InkWell(
+                      //     splashColor: Colors.transparent,
+                      //     focusColor: Colors.transparent,
+                      //     hoverColor: Colors.transparent,
+                      //     highlightColor: Colors.transparent,
+                      //     onTap: () async {},
+                      //     child: Padding(
+                      //       padding: EdgeInsetsDirectional.fromSTEB(
+                      //           30.0, 0.0, 24.0, 5.0),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.max,
+                      //         children: [
+                      //           ClipRRect(
+                      //             borderRadius: BorderRadius.circular(0.0),
+                      //             child: SvgPicture.asset(
+                      //                 'assets/images/messages-info.svg',
+                      //                 width: 25.0,
+                      //                 height: 24.0,
+                      //                 fit: BoxFit.cover,
+                      //                 color: FlutterFlowTheme.of(context)
+                      //                     .primaryText),
+                      //           ),
+                      //           Padding(
+                      //             padding: EdgeInsetsDirectional.fromSTEB(
+                      //                 16.0, 0.0, 0.0, 0.0),
+                      //             child: Text(
+                      //               'Feedback | Support',
+                      //               style: FlutterFlowTheme.of(context)
+                      //                   .bodyMedium
+                      //                   .override(
+                      //                     fontFamily:
+                      //                         FlutterFlowTheme.of(context)
+                      //                             .bodyMediumFamily,
+                      //                     color: FlutterFlowTheme.of(context)
+                      //                         .primaryText,
+                      //                     fontSize: 14.0,
+                      //                     fontWeight: FontWeight.normal,
+                      //                     useGoogleFonts: GoogleFonts.asMap()
+                      //                         .containsKey(
+                      //                             FlutterFlowTheme.of(context)
+                      //                                 .bodyMediumFamily),
+                      //                   ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // PointerInterceptor(
+                      //   child: Padding(
+                      //     padding: EdgeInsetsDirectional.fromSTEB(
+                      //         30.0, 8.0, 4.0, 5.0),
+                      //     child: Row(
+                      //       mainAxisSize: MainAxisSize.max,
+                      //       children: [
+                      //         // ClipRRect(
+                      //         //   borderRadius: BorderRadius.circular(0.0),
+                      //         //   child: Image.asset('assets/images/star.png',
+                      //         //       width: 25.0,
+                      //         //       height: 24.0,
+                      //         //       fit: BoxFit.cover,
+                      //         //       color: FlutterFlowTheme.of(context)
+                      //         //           .primaryText),
+                      //         // ),
+                      //         // Padding(
+                      //         //   padding: EdgeInsetsDirectional.fromSTEB(
+                      //         //       16.0, 0.0, 0.0, 0.0),
+                      //         //   child: InkWell(
+                      //         //     splashColor: Colors.transparent,
+                      //         //     focusColor: Colors.transparent,
+                      //         //     hoverColor: Colors.transparent,
+                      //         //     highlightColor: Colors.transparent,
+                      //         //     onTap: () async {
+                      //         //       // await InAppReview.instance
+                      //         //       //     .requestReview();
+                      //         //       // FFAppState().showRatingPrompt = -1;
+                      //         //       await launchURL(
+                      //         //           'https://play.google.com/store/apps/details?id=com.neetprep.ios');
+                      //         //       return;
+                      //         //     },
+                      //         //     child: Text(
+                      //         //       'Rate us in Appstore',
+                      //         //       style: FlutterFlowTheme.of(context)
+                      //         //           .bodyMedium
+                      //         //           .override(
+                      //         //             fontFamily:
+                      //         //                 FlutterFlowTheme.of(context)
+                      //         //                     .bodyMediumFamily,
+                      //         //             color: FlutterFlowTheme.of(context)
+                      //         //                 .primaryText,
+                      //         //             fontSize: 14.0,
+                      //         //             fontWeight: FontWeight.normal,
+                      //         //             useGoogleFonts: GoogleFonts.asMap()
+                      //         //                 .containsKey(
+                      //         //                     FlutterFlowTheme.of(context)
+                      //         //                         .bodyMediumFamily),
+                      //         //           ),
+                      //         //     ),
+                      //         //   ),
+                      //         // ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+
                       PointerInterceptor(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(

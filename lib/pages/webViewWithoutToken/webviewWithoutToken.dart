@@ -49,6 +49,7 @@ class _FlutterWebViewWithoutTokenState
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
+      userAgent: "neetprep/ios-1",
       mediaPlaybackRequiresUserGesture: false,
       allowsInlineMediaPlayback: true,
       javaScriptEnabled: true,

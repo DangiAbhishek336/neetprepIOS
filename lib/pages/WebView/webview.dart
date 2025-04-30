@@ -47,6 +47,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
+      userAgent: "neetprep/ios-1",
       mediaPlaybackRequiresUserGesture: false,
       allowsInlineMediaPlayback: true,
       javaScriptEnabled: true,
@@ -181,7 +182,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
           },
         )
         ..loadRequest(
-          Uri.parse('${widget.webUrl}&id_token=${FFAppState().subjectToken}'),
+          Uri.parse('${widget.webUrl}?id_token=${FFAppState().subjectToken}'),
           // '  FFAppState().baseUrl/ncert-book?embed=1&id_token=${Uri.encodeComponent(FFAppState().subjectToken)}&android=${kIsWeb ? 0 : 1}'),
         );
 

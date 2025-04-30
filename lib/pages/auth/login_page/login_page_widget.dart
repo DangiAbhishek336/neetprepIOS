@@ -123,22 +123,22 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 8.0, 0.0),
+                                            child: SvgPicture.asset(
+                                              'assets/images/logo.svg',
+                                              fit: BoxFit.fitHeight,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                            ),
+                                          ),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 8.0, 0.0),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/logo.svg',
-                                                  fit: BoxFit.fitHeight,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.8,
-                                                ),
-                                              ),
                                               // Text(
                                               //   'ESSENTIAL',
                                               //   textAlign: TextAlign.start,
@@ -210,7 +210,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                             .fromSTEB(0.0, 30.0,
                                                                 0.0, 0.0),
                                                     child: SvgPicture.asset(
-                                                      'assets/images/practiceTests.svg',
+                                                      'assets/images/neetimage.svg',
                                                       fit: BoxFit.fitHeight,
                                                       width:
                                                           MediaQuery.of(context)
