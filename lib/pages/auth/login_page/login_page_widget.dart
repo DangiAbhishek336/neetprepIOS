@@ -127,8 +127,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 0.0, 8.0, 0.0),
-                                            child: SvgPicture.asset(
-                                              'assets/images/logo.svg',
+                                            child: Image.asset(
+                                              'assets/images/logo.png',
                                               fit: BoxFit.fitHeight,
                                               width: MediaQuery.of(context)
                                                       .size
@@ -209,8 +209,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 30.0,
                                                                 0.0, 0.0),
-                                                    child: SvgPicture.asset(
-                                                      'assets/images/neetimage.svg',
+                                                    child: Image.asset(
+                                                      'assets/images/top.png',
                                                       fit: BoxFit.fitHeight,
                                                       width:
                                                           MediaQuery.of(context)

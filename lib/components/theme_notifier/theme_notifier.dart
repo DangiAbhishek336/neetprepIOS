@@ -16,10 +16,9 @@ class ThemeNotifier extends ValueNotifier<ThemeMode> {
 // Global instance
 final ThemeNotifier themeNotifier = ThemeNotifier(ThemeMode.light);
 
-
 Future<void> _setLauncherIcon(bool isDarkMode) async {
   try {
-    const platform =  MethodChannel('def');
+    const platform = MethodChannel('def');
     await platform.invokeMethod('setLauncherIcon', {'isDarkMode': isDarkMode});
   } on PlatformException catch (e) {
     print("Failed to change icon: ${e.message}");

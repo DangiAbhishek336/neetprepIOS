@@ -70,7 +70,7 @@ dependencies:
   flutter_math_fork: 0.7.2
   flutter_pdfview: ^1.2.7
   flutter_screenutil: ^5.9.3
-  flutter_svg: ^2.0.7
+  flutter_svg: ^2.1.0
   fluttertoast: ^8.2.12
   font_awesome_flutter: ^10.5.0
   from_css_color: 2.0.0
@@ -175,6 +175,7 @@ flutter:
     - assets/rive_animations/
     - assets/pdfs/
     - assets/webpage.html
+    - assets/images/top.png
 
   fonts:
     - family: MyFlutterApp
