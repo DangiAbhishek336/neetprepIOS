@@ -627,12 +627,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      await launchURL(
-                                          'https://www.reflexprep.com/cont/tos');
+                                      // await launchURL(
+                                      //     'https://www.reflexprep.com/cont/tos');
                                     },
                                     child: Center(
                                       child: Text(
-                                        'V ${version}',
+                                        'v${version}',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
