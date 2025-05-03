@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neetprep_essential/app_state.dart';
+import 'package:neetprep_essential/backend/api_requests/api_calls.dart';
+import 'package:neetprep_essential/backend/api_requests/api_manager.dart';
 import 'package:neetprep_essential/components/drawer/darwer_widget.dart';
 import 'package:neetprep_essential/components/theme_notifier/theme_notifier.dart';
 import 'package:neetprep_essential/flutter_flow/flutter_flow_icon_button.dart';
@@ -47,7 +50,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
 
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
-      userAgent: "neetprep/ios-1",
+      userAgent: "NEETprep/ios-1",
       mediaPlaybackRequiresUserGesture: false,
       allowsInlineMediaPlayback: true,
       javaScriptEnabled: true,
@@ -114,6 +117,25 @@ class _FlutterWebViewState extends State<FlutterWebView> {
     );
   }
 
+  Future<bool> checkIfAuthTokenExpired() async {
+    ApiCallResponse response = await SignupGroup
+        .loggedInUserInformationAndCourseAccessCheckingApiCall
+        .call(authToken: FFAppState().subjectToken, courseIdInt: 2135);
+
+    log("response = ${response.jsonBody}");
+
+    if ((response.statusCode == 200)) {
+      return true;
+    } else {
+      context.goNamedAuth(
+        'LoginPage',
+        context.mounted,
+        ignoreRedirect: true,
+      );
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -121,6 +143,7 @@ class _FlutterWebViewState extends State<FlutterWebView> {
       _setTokenCookieSafely();
     }
 
+    checkIfAuthTokenExpired();
     print("${widget.webUrl}?id_token=${FFAppState().subjectToken}");
     if (!kIsWeb) {
       WebViewCookieManager().clearCookies();
@@ -267,6 +290,8 @@ class _FlutterWebViewState extends State<FlutterWebView> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Consumer<ThemeNotifier>(builder: (context, themeNotifier, child) {
       return UpgradeAlert(
         barrierDismissible: true,
@@ -322,81 +347,12 @@ class _FlutterWebViewState extends State<FlutterWebView> {
               centerTitle: false,
               elevation: 1.0,
             ),
-            body: kIsWeb
-                ? Container(
-                    height: 500,
-                    width: 500,
-                    child: InAppWebView(
-                      key: webViewKey,
-                      initialUrlRequest: URLRequest(
-                        url: WebUri(
-                            '${widget.webUrl}&id_token=${FFAppState().subjectToken}'),
-                      ),
-                      initialUserScripts: UnmodifiableListView<UserScript>([]),
-                      initialSettings: settings,
-                      contextMenu: contextMenu,
-                      onWebViewCreated: (controller) async {
-                        webViewController = controller;
-                        // Inject the JavaScript to set the cookies
-                        await _injectJavaScriptForCookies(controller);
-                      },
-                      onLoadStart: (controller, url) async {
-                        setState(() {
-                          this.url = url.toString();
-                          urlController.text = this.url;
-                        });
-                      },
-                      onLoadStop: (controller, url) async {
-                        setState(() {
-                          this.url = url.toString();
-                          urlController.text = this.url;
-                        });
-
-                        await controller.injectJavascriptFileFromUrl(
-                            urlFile: WebUri(
-                                'https://code.jquery.com/jquery-3.3.1.min.js'),
-                            scriptHtmlTagAttributes: ScriptHtmlTagAttributes(
-                                id: 'jquery',
-                                onLoad: () {
-                                  print("jQuery loaded and ready to be used!");
-                                },
-                                onError: () {
-                                  print(
-                                      "jQuery not available! Some error occurred.");
-                                }));
-
-                        // Ensure the JavaScript is injected after the page loads
-                        await _injectJavaScriptForCookies(controller);
-                        print("Cookies set after onLoadStop");
-                      },
-                      onPermissionRequest: (controller, request) async {
-                        return PermissionResponse(
-                            resources: request.resources,
-                            action: PermissionResponseAction.GRANT);
-                      },
-                      shouldOverrideUrlLoading:
-                          (controller, navigationAction) async {
-                        var uri = navigationAction.request.url!;
-                        return NavigationActionPolicy.ALLOW;
-                      },
-                      initialOptions: InAppWebViewGroupOptions(
-                        ios: IOSInAppWebViewOptions(
-                          sharedCookiesEnabled: true,
-                        ),
-                        android: AndroidInAppWebViewOptions(
-                          useHybridComposition: true,
-                        ),
-                        crossPlatform: InAppWebViewOptions(
-                          javaScriptEnabled: true,
-                          supportZoom: false,
-                        ),
-                      ),
-                      onReceivedError: (controller, request, error) {
-                        print('Error: ${error.description}');
-                      },
-                      onConsoleMessage: (controller, consoleMessage) {
-                        print('Console Message: ${consoleMessage.message}');
-                      },
+            body: FFAppState().subjectToken == null ||
+                    FFAppState().subjectToken == "" ||
+                    FFAppState().subjectToken.isEmpty
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: FlutterFlowTheme.of(context).primary,
                     ),
                   )
                 : SizedBox(

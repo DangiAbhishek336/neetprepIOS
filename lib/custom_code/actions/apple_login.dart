@@ -31,29 +31,33 @@ Future<dynamic> appleLogin(BuildContext context) async {
         email: userData?.email.toLowerCase(),
         name: userData?.displayName,
         picture: userData?.photoUrl,
-      );
-      log("userAccessInfo");
-      log("user data ${userData?.toString()}");
-      log((userAccessInfo?.jsonBody.toString() ?? ''));
-      FFAppState().userIdInt =
-          getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.id''');
-      FFAppState().subjectToken =
-          getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.token''');
-    } catch (e) {
-      print(e);
+      )
+          .then((value) {
+        log("userAccessInfo");
+        log(value.jsonBody.toString());
+        ;
+        FFAppState().userIdInt =
+            getJsonField((value.jsonBody ?? ''), r'''$.id''');
+        FFAppState().subjectToken =
+            getJsonField((value.jsonBody ?? ''), r'''$.token''');
+      });
+
+      log(FFAppState().subjectToken.toString());
+    } catch (e, stackTrace) {
+      // The idea is to have a fallback login on debug mode as that would allow testing the app which is currently
+      // failing due to javascript origin mismatch for google sign in
+      log("Error in apple login: $e");
+      log("Error in apple login stacktrace: $stackTrace");
     }
   };
 
   await signInFunc();
 
   dynamic userJson = {
-    "email": getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.email'''),
+    "email": userData?.email,
     "profile": userData?.photoUrl,
-    "name":
-        getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.displayName'''),
-    "accessToken":
-        getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.token'''),
-    "phone": getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.phone''')
+    "name": userData?.displayName,
+    "accessToken": FFAppState().subjectToken ?? '',
   };
 
   return userJson;

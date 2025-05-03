@@ -296,68 +296,33 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         setState(() {
                                           _model.isLoading = true;
                                         });
-                                        _model.appleUserJson =
-                                            await actions.appleLogin(
+                                        _model.appleUserJson = await actions
+                                            .appleLogin(
                                           context,
-                                        );
-
-                                        log(_model.appleUserJson.toString());
-                                        _shouldSetState = true;
-                                        // final accessToken = getJsonField(
-                                        //     _model.appleUserJson,
-                                        //     r'''$.accessToken''');
-                                        // FFAppState().jwtToken = accessToken
-                                        //         ?.toString() ??
-                                        //     ''; // Default empty string if null
-
-                                        // final name = getJsonField(
-                                        //     _model.appleUserJson,
-                                        //     r'''$.name''');
-                                        // FFAppState().userName = name
-                                        //         ?.toString() ??
-                                        //     ''; // Default empty string if null
-
-                                        // final email = getJsonField(
-                                        //     _model.appleUserJson,
-                                        //     r'''$.email''');
-                                        // FFAppState().emailId = email
-                                        //         ?.toString()
-                                        //         .toLowerCase() ??
-                                        //     ''; // Default empty string if null
-
-                                        // final profile = getJsonField(
-                                        //     _model.appleUserJson,
-                                        //     r'''$.profile''');
-                                        // FFAppState().displayImage = profile;
-                                        setState(() {
-                                          _model.isLoading = false;
-                                        });
-                                        await SignupGroup
-                                            .loggedInUserInformationAndCourseAccessCheckingApiCall
-                                            .call(
-                                          authToken: FFAppState().subjectToken,
-                                          courseIdInt: FFAppState().courseIdInt,
                                         )
                                             .then((value) async {
-                                          final userData = getJsonField(
-                                              value.jsonBody,
-                                              r'''$.data.me.profile''');
+                                          log(_model.appleUserJson.toString());
+                                          _shouldSetState = true;
 
-                                          if (userData != null) {
-                                            String userName =
-                                                userData['displayName'] ??
-                                                    "Unknown User";
-                                            String userEmail =
-                                                userData['email'] ?? "No Email";
-                                            String userPhone =
-                                                userData['phone'] ?? "No Phone";
-
-                                            CleverTapService.initialize(
-                                                userName, userEmail, userPhone);
-                                          }
-                                        });
-
-                                        if (loggedIn) {
+                                          log(_model.userJson.toString());
+                                          FFAppState().jwtToken = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.accessToken''',
+                                          ).toString();
+                                          FFAppState().userName = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.name''',
+                                          ).toString();
+                                          FFAppState().emailId = getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.email''',
+                                          ).toString().toLowerCase();
+                                          FFAppState().displayImage =
+                                              getJsonField(
+                                            _model.appleUserJson,
+                                            r'''$.profile''',
+                                          );
+                                        }).whenComplete(() {
                                           context.pushNamed(
                                             'flutterWebView',
                                             queryParameters: {
@@ -366,7 +331,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               'title': "Dashboard"
                                             },
                                           );
-                                        }
+                                        });
+                                        setState(() {
+                                          _model.isLoading = _shouldSetState;
+                                        });
                                       },
                                       child: Container(
                                         width: double.infinity,
