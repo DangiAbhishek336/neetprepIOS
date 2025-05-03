@@ -25,6 +25,7 @@ Future<dynamic> gmailLogin(BuildContext context) async {
     scopes: ["profile", "email"],
   );
   var userData;
+  dynamic userAccessInfo;
   final signInFunc = () async {
     try {
       /*if (kIsWeb) {
@@ -38,7 +39,7 @@ Future<dynamic> gmailLogin(BuildContext context) async {
         FirebaseCrashlytics.instance.recordError(e, stackTrace);
       });
       userData = await _googleSignIn.signIn();
-      dynamic userAccessInfo = await SignupGroup
+      userAccessInfo = await SignupGroup
           .googleLoginServerCallWithCodeReceivedFromGoogleAuthenticationCall
           .call(
         email: userData?.email.toLowerCase(),
@@ -46,6 +47,7 @@ Future<dynamic> gmailLogin(BuildContext context) async {
         picture: userData?.photoUrl,
       );
 
+      log("userAccessInfo");
       log(userAccessInfo!.jsonBody.toString());
       ;
       FFAppState().userIdInt =
@@ -93,8 +95,8 @@ Future<dynamic> gmailLogin(BuildContext context) async {
     "email": userData?.email,
     "profile": userData?.photoUrl,
     "name": userData?.displayName,
-    "accessToken":
-        userData?.serverAuthCode == null ? "" : userData?.serverAuthCode,
+    "accessToken": FFAppState().subjectToken =
+        getJsonField((userAccessInfo?.jsonBody ?? ''), r'''$.token'''),
   };
 
   return userJson;

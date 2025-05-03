@@ -65,75 +65,16 @@ void main() async {
     await appState.initializePersistedState();
     GoRouter.optionURLReflectsImperativeAPIs = true;
     if (!kIsWeb) {
-      await Firebase.initializeApp();
       await FirebaseApi.initNotifications();
     }
-    // if (kIsWeb) {
-    //   CleverTapPlugin.init("884-767-6K7Z");
-    // }
-    // if (!kIsWeb) {
-    //   if (kIsWeb) {
-    //     await FirebaseCrashlytics.instance
-    //         .setCrashlyticsCollectionEnabled(false);
-    //   } else {
-    //     await FirebaseCrashlytics.instance
-    //         .setCrashlyticsCollectionEnabled(true);
-    //     FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-
-    //     // Pass all uncaught "fatal" errors from the framework to Crashlytics
-    //     FlutterError.onError =
-    //         FirebaseCrashlytics.instance.recordFlutterFatalError;
-
-    //     FlutterError.onError = (errorDetails) {
-    //       FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-    //       FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
-    //       FirebaseCrashlytics.instance.log(errorDetails.toString());
-    //       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    //       FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-    //     };
-    //     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-    //     PlatformDispatcher.instance.onError = (error, stack) {
-    //       FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-    //       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    //       return true;
-    //     };
-    //   }
-    // }
-    // if (!kIsWeb && !kDebugMode) {
-    //   Isolate.current.addErrorListener(RawReceivePort((pair) async {
-    //     FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-    //     final List<dynamic> errorAndStacktrace = pair;
-    //     await FirebaseCrashlytics.instance.recordError(
-    //       errorAndStacktrace.first,
-    //       errorAndStacktrace.last,
-    //       fatal: true,
-    //     );
-    //   }).sendPort);
-    // }
 
     runApp(
-        ChangeNotifierProvider(create: (context) => appState, child: MyApp()));
-  }, (error, stackTrace) {
-    // FlutterError.onError = (errorDetails) {
-    //   FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
-    //   FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-    //   FirebaseCrashlytics.instance.setCustomKey('userID', currentUserUid);
-    //   FirebaseCrashlytics.instance.log(errorDetails.toString());
-    //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    //   FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-    // };
-    // PlatformDispatcher.instance.onError = (error, stack) {
-    //   FirebaseCrashlytics.instance.setUserIdentifier(currentUserUid);
-    //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    //   return true;
-    // };
-  });
-
-  // CleverTapPlugin.onKilledStateNotificationClicked(
-  //     onKilledStateNotificationClickedHandler);
-  // _clevertapPlugin = new CleverTapPlugin();
-  // _clevertapPlugin
-  //     .setCleverTapInAppNotificationShowHandler(inAppNotificationShow);
+      ChangeNotifierProvider(
+        create: (context) => appState,
+        child: MyApp(),
+      ),
+    );
+  }, (error, stackTrace) {});
 }
 
 class MyApp extends StatefulWidget {
@@ -145,13 +86,7 @@ class MyApp extends StatefulWidget {
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
-class _MyAppState extends State<MyApp> {
-  AppUpdateInfo? _updateInfo;
-
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
-
-  bool _flexibleUpdateAvailable = false;
-
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // Platform messages are asynchronous, so we initialize in an async method.
 
   Locale? _locale;
@@ -163,77 +98,26 @@ class _MyAppState extends State<MyApp> {
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   late final StreamSubscription<InternetConnectionStatus> listener;
-  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
 
-    log("logged in ? ${_appStateNotifier.loggedIn.toString()}");
-
     userStream = neetprepEssentialFirebaseUserStream()
-      ..listen((user) => _appStateNotifier.update(user));
+      ..listen((user) {
+        log('Auth State Changed: ${user?.loggedIn}');
+        _appStateNotifier.setRedirectLocationIfUnset('/flutterWebView');
+
+        _appStateNotifier.update(user);
+      }).onError((error) {
+        log('Auth State Error: $error');
+      });
+
     jwtTokenStream.listen((_) {});
-    // Future.delayed(
-    //   Duration(milliseconds: 1000),
-    //   () => _appStateNotifier.stopShowingSplashImage(),
-    // );
-    // InAppUpdate.checkForUpdate().then((updateInfo) {
-    //   if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-    //     InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-    //       if (appUpdateResult == AppUpdateResult.success) {
-    //         InAppUpdate.performImmediateUpdate();
-    //       }
-    //     });
-    //   }
-    // });
-    // SchedulerBinding.instance.addPostFrameCallback((_) async {
-    //   await ScreenProtector.preventScreenshotOn();
-    //   //  await startUpApiRequest();
-    // });
-
-    // Future<void> initPlatformState() async {
-    //   var deviceData = <String, dynamic>{};
-
-    //   try {
-    //     if (kIsWeb) {
-    //       deviceData =
-    //           _readWebBrowserInfo(await deviceInfoPlugin.webBrowserInfo);
-    //     } else {
-    //       if (defaultTargetPlatform == TargetPlatform.android) {
-    //         deviceData =
-    //             _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-    //       } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-    //         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
-    //       } else {
-    //         deviceData = {};
-    //       }
-    //     }
-    //     deviceData['version'] = _packageInfo.version;
-    //     deviceData['buildNumber'] = _packageInfo.buildNumber;
-    //     FFAppState().deviceData = deviceData.toString();
-    //   } on PlatformException {
-    //     deviceData = <String, dynamic>{
-    //       'Error:': 'Failed to get platform version.'
-    //     };
-    //   }
-
-    //   if (!mounted) return;
-    // }
-
-    //   Future<void> _initPackageInfo() async {
-    //     final info = await PackageInfo.fromPlatform();
-    //     setState(() {
-    //       _packageInfo = info;
-    //     });
-    //   }
-
-    //   _initPackageInfo();
-    //   // initPlatformState();
   }
 
   @override
@@ -249,42 +133,6 @@ class _MyAppState extends State<MyApp> {
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
-
-  Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
-    return <String, dynamic>{
-      'version.sdkInt': build.version.sdkInt,
-      'version.release': build.version.release,
-      'device': build.device,
-      'model': build.model,
-    };
-  }
-
-  Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
-    return <String, dynamic>{
-      'name': data.name,
-      'systemName': data.systemName,
-      'systemVersion': data.systemVersion,
-      'model': data.model,
-    };
-  }
-
-  Map<String, dynamic> _readWebBrowserInfo(WebBrowserInfo data) {
-    return <String, dynamic>{
-      'browserName': data.browserName.name,
-      'appName': data.appName,
-      'appVersion': data.appVersion,
-      'userAgent': data.userAgent,
-    };
-  }
-
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-    buildSignature: 'Unknown',
-    installerStore: 'Unknown',
-  );
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:neetprep_essential/pages/auth/login_page/login_page_widget.dart';
@@ -35,10 +36,14 @@ class AppStateNotifier extends ChangeNotifier {
   /// Otherwise, this will trigger a refresh and interrupt the action(s).
   bool notifyOnAuthChange = true;
 
-  bool get loading => user == null || showSplashImage;
+  bool get loading => user == null;
   bool get loggedIn => user?.loggedIn ?? false;
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
-  bool get shouldRedirect => loggedIn && _redirectLocation != null;
+  bool get shouldRedirect {
+    final result = loggedIn && _redirectLocation != null;
+    log('shouldRedirect: $result (loggedIn: $loggedIn, redirectLocation: $_redirectLocation)');
+    return result;
+  }
 
   String getRedirectLocation() => _redirectLocation!;
   bool hasRedirect() => _redirectLocation != null;
@@ -52,21 +57,25 @@ class AppStateNotifier extends ChangeNotifier {
   void update(BaseAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
+
+    log('Previous user UID: ${user?.uid}');
+    log('New user UID: ${newUser.uid}');
+    log('Should update: $shouldUpdate');
+    log('Notify on auth change: $notifyOnAuthChange');
+
     initialUser ??= newUser;
     user = newUser;
-    // Refresh the app on auth change unless explicitly marked otherwise.
-    // No need to update unless the user has changed.
-    if (notifyOnAuthChange && shouldUpdate) {
-      notifyListeners();
-    }
-    // Once again mark the notifier as needing to update on auth change
-    // (in order to catch sign in / out events).
-    updateNotifyOnAuthChange(true);
-  }
+    log('Updated user: ${user?.authUserInfo.displayName}');
+    log('Updated loggedIn state: $loggedIn');
 
-  void stopShowingSplashImage() {
-    showSplashImage = false;
-    notifyListeners();
+    if (notifyOnAuthChange && shouldUpdate) {
+      log("Notifying listeners about auth change");
+      notifyListeners();
+    } else {
+      log("Skipping notification - notifyOnAuthChange: $notifyOnAuthChange, shouldUpdate: $shouldUpdate");
+    }
+
+    updateNotifyOnAuthChange(true);
   }
 }
 
@@ -74,23 +83,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? FlutterWebView(
-              webUrl: 'https://www.neetprep.com/newui/study',
-              title: 'Dashboard',
-            )
-          : LoginPageWidget(),
+      errorBuilder: (context, state) {
+        log('Error: ${state.error}');
+        log('Error logged in : ${appStateNotifier.loggedIn}');
+
+        return appStateNotifier.loggedIn
+            ? FlutterWebView(
+                webUrl: 'https://www.neetprep.com/newui/study',
+                title: 'Dashboard',
+              )
+            : LoginPageWidget();
+      },
       routes: [
         FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? FlutterWebView(
-                  webUrl: 'https://www.neetprep.com/newui/study',
-                  title: 'Dashboard',
-                )
-              : LoginPageWidget(),
-        ),
+            name: '_initialize',
+            path: '/',
+            builder: (context, _) {
+              if (appStateNotifier.loggedIn) {
+                // Force navigation to web view
+                Future.microtask(() => context.goNamed('flutterWebView',
+                        pathParameters: {
+                          'webUrl': 'https://www.neetprep.com/newui/study',
+                          'title': 'Dashboard'
+                        }));
+                return Container(); // Temporary empty widget
+              }
+              return LoginPageWidget();
+            }),
         FFRoute(
           name: 'ReportQuestionPage',
           path: '/reportQuestionPage',
@@ -125,9 +144,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'flutterWebView',
           path: '/flutterWebView',
+          requireAuth: true,
           builder: (context, params) => FlutterWebView(
-              webUrl: params.getParam('webUrl', ParamType.String),
-              title: params.getParam('title', ParamType.String)),
+            webUrl: params.getParam('webUrl', ParamType.String) ??
+                'https://www.neetprep.com/newui/study', // Default URL
+            title: params.getParam('title', ParamType.String) ??
+                'Dashboard', // Default title
+          ),
         ),
         FFRoute(
           name: 'flutterWebViewWithoutAuthToken',
@@ -246,8 +269,10 @@ extension GoRouterExtensions on GoRouter {
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
   void clearRedirectLocation() => appState.clearRedirectLocation();
-  void setRedirectLocationIfUnset(String location) =>
-      appState.updateNotifyOnAuthChange(false);
+  void setRedirectLocationIfUnset(String loc) {
+    appState._redirectLocation ??= loc; // This line is missing
+    appState.updateNotifyOnAuthChange(false);
+  }
 }
 
 extension _GoRouterStateExtensions on GoRouterState {
@@ -339,14 +364,20 @@ class FFRoute {
         name: name,
         path: path,
         redirect: (context, state) {
+          log('Route $name - checking redirect');
           if (appStateNotifier.shouldRedirect) {
             final redirectLocation = appStateNotifier.getRedirectLocation();
+            log('Redirecting to: $redirectLocation');
             appStateNotifier.clearRedirectLocation();
             return redirectLocation;
           }
 
+          log("Route $name - requireAuth: $requireAuth, loggedIn: ${appStateNotifier.loggedIn}");
+
           if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
+            final redirectUri = state.uri.toString();
+            log('Setting redirect location to: $redirectUri');
+            appStateNotifier.setRedirectLocationIfUnset(redirectUri);
             return '/loginPage';
           }
           return null;
@@ -359,8 +390,9 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          final child = page;
 
+          log("page is $page");
+          final child = page;
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition
               ? CustomTransitionPage(

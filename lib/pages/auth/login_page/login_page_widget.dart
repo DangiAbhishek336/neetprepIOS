@@ -31,18 +31,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var response;
 
-  Future<void> checkIfAuthTokenExpired() async {
-    ApiCallResponse response = await SignupGroup
-        .loggedInUserInformationAndCourseAccessCheckingApiCall
-        .call(authToken: FFAppState().subjectToken);
-    if ((response.succeeded ?? true) &&
-        (SignupGroup.loggedInUserInformationAndCourseAccessCheckingApiCall
-                .me((response.jsonBody ?? '')) !=
-            null)) {
-      context.goNamed('PracticeChapterWisePage');
-    }
-  }
-
   @override
   void initState() {
     log("i am here");
@@ -51,10 +39,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     FirebaseAnalytics.instance.setCurrentScreen(screenName: "LoginPage");
 
     _model = createModel(context, () => LoginPageModel());
-
-    if (loggedIn) {
-      checkIfAuthTokenExpired();
-    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -446,6 +430,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         context,
                                       );
                                       _shouldSetState = true;
+
+                                      log(_model.userJson.toString());
                                       FFAppState().jwtToken = getJsonField(
                                         _model.userJson,
                                         r'''$.accessToken''',
@@ -465,6 +451,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       FFAppState().freeTrialBanner = null;
                                       FFAppState().abhyasBanner = null;
                                       FFAppState().testSeriesBanner = null;
+
+                                      //     AppStateNotifier.instance.update();
 
                                       await SignupGroup
                                           .loggedInUserInformationAndCourseAccessCheckingApiCall
