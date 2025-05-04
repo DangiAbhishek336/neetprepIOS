@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:isolate';
 import 'dart:io' show Platform;
 import 'package:clevertap_plugin/clevertap_plugin.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:device_info_plus/device_info_plus.dart';
@@ -58,9 +59,11 @@ void onKilledStateNotificationClickedHandler(Map<String, dynamic> map) async {
 
 void main() async {
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     usePathUrlStrategy();
     await initFirebase();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
     final appState = FFAppState(); // Initialize FFAppState
     await appState.initializePersistedState();
     GoRouter.optionURLReflectsImperativeAPIs = true;
@@ -118,6 +121,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       });
 
     jwtTokenStream.listen((_) {});
+
+    FlutterNativeSplash.remove();
   }
 
   @override

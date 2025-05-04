@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+<!DOCTYPE html><html><head>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -73,27 +70,27 @@
 
 
   <!-- Favicon -->
-  <link rel="icon" href="Frame_1000006609.png" sizes="any"/>
+  <link rel="icon" href="Frame_1000006609.png" sizes="any">
   
 
   <!-- Open Graph & SEO tags -->
-  <meta property="og:title" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT." />
-  <meta property="og:description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam." />
-  <meta property="og:image" content="/assets/assets/images/Masterclass_in_Biology_LOGO_(2).png" /> 
-  <meta name="twitter:title" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT." />
-  <meta name="twitter:description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam." />
-  <meta name="twitter:image" content="/assets/assets/images/Masterclass_in_Biology_LOGO_(2).png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:title" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT.">
+  <meta property="og:description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam.">
+  <meta property="og:image" content="/assets/assets/images/Masterclass_in_Biology_LOGO_(2).png"> 
+  <meta name="twitter:title" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT.">
+  <meta name="twitter:description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam.">
+  <meta name="twitter:image" content="/assets/assets/images/Masterclass_in_Biology_LOGO_(2).png">
+  <meta name="twitter:card" content="summary_large_image">
 
   <title>NEETprep Essential</title>
-  <meta name="description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam." />
+  <meta name="description" content="NEET Essential helps NEET 2024 and 2025 aspirants practice and prepare effectively by focusing on NCERT. NCERT books are the best resources to develop right aptitude and     temperament to excel in the actual exam.">
     
 
   <!-- Status Bar color in Safari browser (iOS) and PWA -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1f5f9">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#1a1f24">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1f24">
 
-  <script type="application/javascript" src="/assets/packages/flutter_inappwebview_web/assets/web/web_support.js" defer></script>
+  <script type="application/javascript" src="/assets/packages/flutter_inappwebview_web/assets/web/web_support.js" defer=""></script>
 
 
   <link rel="manifest" href="manifest.json">
@@ -102,12 +99,86 @@
     var serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
-  <script type="application/javascript" src="/assets/packages/flutter_inappwebview_web/assets/web/web_support.js" defer></script>
+  <script src="flutter.js" defer=""></script>
+  <script type="application/javascript" src="/assets/packages/flutter_inappwebview_web/assets/web/web_support.js" defer=""></script>
   <script src="./assets/packages/clevertap_plugin/assets/clevertap.js"></script>
+  
+  
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <style id="splash-screen-style">
+    html {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background-color: #42a5f5;
+          background-size: 100% 100%;
+    }
+
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .contain {
+      display:block;
+      width:100%; height:100%;
+      object-fit: contain;
+    }
+
+    .stretch {
+      display:block;
+      width:100%; height:100%;
+    }
+
+    .cover {
+      display:block;
+      width:100%; height:100%;
+      object-fit: cover;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -ms-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+    }
+
+    .bottomLeft {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .bottomRight {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+  <script id="splash-screen-script">
+    function removeSplashFromWeb() {
+      document.getElementById("splash")?.remove();
+      document.getElementById("splash-branding")?.remove();
+      document.body.style.background = "transparent";
+    }
+  </script>
 </head>
 
 <body>
+  <picture id="splash">
+      <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
+      <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
+      <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
+  </picture>
+  
   <script>
 
     window.addEventListener('load', function (ev) {
@@ -139,6 +210,7 @@
 
 
 
-</body>
 
-</html>
+
+
+</body></html>

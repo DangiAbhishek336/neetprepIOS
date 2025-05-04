@@ -68,6 +68,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_math_fork: 0.7.2
+  flutter_native_splash: ^2.4.4
   flutter_pdfview: ^1.2.7
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.1.0
@@ -155,6 +156,18 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/app_launcher_icon.png"
+
+flutter_native_splash:
+  # Android & iOS Common Settings
+  color: "#42a5f5" # Background color (replace with your color)
+  image: assets/images/logo.png # Optional: Path to your splash image (e.g., logo)
+
+  # iOS-Specific Settings
+  ios: true # Enable for iOS
+  ios_content_mode: center # Logo position: "center", "scaleToFill", etc.
+  # Android-Specific Settings (optional)
+  android: true
+  android_gravity: center
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
