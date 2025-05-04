@@ -126,6 +126,15 @@ class _FlutterWebViewState extends State<FlutterWebView> {
 
     if ((response.statusCode == 200)) {
       return true;
+    } else if (FFAppState().subjectToken == null ||
+        FFAppState().subjectToken == "" ||
+        FFAppState().subjectToken.isEmpty) {
+      context.goNamedAuth(
+        'LoginPage',
+        context.mounted,
+        ignoreRedirect: true,
+      );
+      return false;
     } else {
       context.goNamedAuth(
         'LoginPage',

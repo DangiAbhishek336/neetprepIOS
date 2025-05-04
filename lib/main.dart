@@ -57,24 +57,20 @@ void onKilledStateNotificationClickedHandler(Map<String, dynamic> map) async {
 }
 
 void main() async {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    usePathUrlStrategy();
-    await initFirebase();
-    final appState = FFAppState(); // Initialize FFAppState
-    await appState.initializePersistedState();
-    GoRouter.optionURLReflectsImperativeAPIs = true;
-    if (!kIsWeb) {
-      await FirebaseApi.initNotifications();
-    }
+  WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
+  await initFirebase();
+  final appState = FFAppState(); // Initialize FFAppState
+  await appState.initializePersistedState();
 
-    runApp(
-      ChangeNotifierProvider(
-        create: (context) => appState,
-        child: MyApp(),
-      ),
-    );
-  }, (error, stackTrace) {});
+  await FirebaseApi.initNotifications();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => appState,
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -103,7 +99,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
 
@@ -118,6 +113,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       });
 
     jwtTokenStream.listen((_) {});
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override

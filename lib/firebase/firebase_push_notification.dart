@@ -4,6 +4,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:neetprep_essential/app_state.dart';
+import 'package:neetprep_essential/auth/firebase_auth/auth_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -143,8 +144,6 @@ class FirebaseApi {
       if (response.statusCode == 200) {
         log('Update successful. Response body: ${response.body}');
       } else {
-        FirebaseCrashlytics.instance
-            .setCustomKey('fcm_token_update_error', response.body.toString());
         log('Failed to update. Status code: ${response.statusCode}. Response body: ${response.body}');
         // Fluttertoast.showToast(msg: "Something went wrong!");
       }
@@ -206,17 +205,18 @@ class FirebaseApi {
       fcmToken = fCMToken;
       log("updated value : $fcmToken");
 
-      await updateFcmToken(
-        authorizationToken: FFAppState().subjectToken,
-        userId: FFAppState().userIdInt,
-        fcmToken: fCMToken,
-        deviceId: "",
-        androidDetails: "",
-        platform: "IOS",
-        app: "NeetprepIOS",
-        deviceAdsId: "",
-      );
-
+      if (loggedIn) {
+        await updateFcmToken(
+          authorizationToken: FFAppState().subjectToken,
+          userId: FFAppState().userIdInt,
+          fcmToken: fCMToken,
+          deviceId: "",
+          androidDetails: "",
+          platform: "IOS",
+          app: "NeetprepIOS",
+          deviceAdsId: "",
+        );
+      }
       initPushNotifications();
       initLocalNotifications();
     } catch (e, stack) {
