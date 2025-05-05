@@ -60,16 +60,14 @@ void onKilledStateNotificationClickedHandler(Map<String, dynamic> map) async {
 void main() async {
   runZonedGuarded(() async {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    usePathUrlStrategy();
-    await initFirebase();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+    await initFirebase();
 
     final appState = FFAppState(); // Initialize FFAppState
     await appState.initializePersistedState();
     GoRouter.optionURLReflectsImperativeAPIs = true;
-    if (!kIsWeb) {
-      await FirebaseApi.initNotifications();
-    }
+    await FirebaseApi.initNotifications();
 
     runApp(
       ChangeNotifierProvider(
