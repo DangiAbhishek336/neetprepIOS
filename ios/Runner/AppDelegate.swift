@@ -27,30 +27,30 @@ import UserNotifications // Add this import
     }
     
     // Handle notifications when the app is in FOREGROUND
-    // override func userNotificationCenter(
-    //     _ center: UNUserNotificationCenter,
-    //     willPresent notification: UNNotification,
-    //     withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    // ) {
-    //     // Call CleverTap SDK to handle the notification
-    //     CleverTap.sharedInstance()?.recordNotificationViewedEvent(withData: notification.request.content.userInfo)
+    override func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        // Call CleverTap SDK to handle the notification
+        CleverTap.sharedInstance()?.recordNotificationViewedEvent(withData: notification.request.content.userInfo)
         
-    //     // Show the notification even in the foreground (with banner, sound, and badge)
-    //    if #available(iOS 14.0, *) {
-    //        completionHandler([.banner, .sound, .badge]) // Modern banner (iOS 14+)
-    //     } else {
-    //     completionHandler([.alert, .sound, .badge])  // Classic alert (iOS 10-13)
-    // }    }
+        // Show the notification even in the foreground (with banner, sound, and badge)
+       if #available(iOS 14.0, *) {
+           completionHandler([.banner, .sound, .badge]) // Modern banner (iOS 14+)
+        } else {
+        completionHandler([.alert, .sound, .badge])  // Classic alert (iOS 10-13)
+    }    }
     
-    // // Handle notification taps (when the user opens the notification)
-    // override func userNotificationCenter(
-    //     _ center: UNUserNotificationCenter,
-    //     didReceive response: UNNotificationResponse,
-    //     withCompletionHandler completionHandler: @escaping () -> Void
-    // ) {
-    //     // Call CleverTap SDK to handle the notification tap
-    //     CleverTap.sharedInstance()?.handleNotification(withData: response.notification.request.content.userInfo)
+    // Handle notification taps (when the user opens the notification)
+    override func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        // Call CleverTap SDK to handle the notification tap
+        CleverTap.sharedInstance()?.handleNotification(withData: response.notification.request.content.userInfo)
         
-    //     completionHandler()
-    // }
+        completionHandler()
+    }
 }
