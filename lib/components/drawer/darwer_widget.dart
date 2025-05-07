@@ -126,12 +126,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             24.0, 8.0, 0.0, 12.0),
                         child: InkWell(
                           onTap: () {
-                            context
-                                .pushNamed('flutterWebView', queryParameters: {
-                              'webUrl':
-                                  "${FFAppState().baseUrl}/newui/profilePage?embed=1&disable=home_btn&id_token=${FFAppState().subjectToken}",
-                              'title': "Profile Page "
-                            });
+                            // context
+                            //     .pushNamed('flutterWebView', queryParameters: {
+                            //   'webUrl':
+                            //       "${FFAppState().baseUrl}/newui/profilePage?embed=1&disable=home_btn&id_token=${FFAppState().subjectToken}",
+                            //   'title': "Profile Page "
+                            // });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

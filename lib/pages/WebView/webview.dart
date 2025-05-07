@@ -118,20 +118,42 @@ class _FlutterWebViewState extends State<FlutterWebView> {
   }
 
   Future<bool> checkIfAuthTokenExpired() async {
-    ApiCallResponse response = await SignupGroup
-        .loggedInUserInformationAndCourseAccessCheckingApiCall
-        .call(authToken: FFAppState().subjectToken, courseIdInt: 2135);
-
-    log("response = ${response.jsonBody}");
-
-    if ((response.statusCode == 200)) {
-      return true;
-    } else {
-      context.goNamedAuth(
-        'LoginPage',
-        context.mounted,
-        ignoreRedirect: true,
+    try {
+      ApiCallResponse response = await SignupGroup
+          .loggedInUserInformationAndCourseAccessCheckingApiCall
+          .call(
+        authToken: FFAppState().subjectToken,
+        courseIdInt: 2135,
       );
+
+      log("response = ${response.jsonBody}");
+
+      // Parse the response
+      final jsonBody = response.jsonBody;
+      final me = jsonBody['data']?['me'];
+
+      if (me != null) {
+        return true; // Valid token (me exists)
+      } else {
+        // me is null → token expired/invalid → go to login
+        if (context.mounted) {
+          context.goNamedAuth(
+            'LoginPage',
+            context.mounted,
+            ignoreRedirect: true,
+          );
+        }
+        return false;
+      }
+    } catch (e) {
+      log("Error checking auth token: $e");
+      if (context.mounted) {
+        context.goNamedAuth(
+          'LoginPage',
+          context.mounted,
+          ignoreRedirect: true,
+        );
+      }
       return false;
     }
   }
@@ -143,7 +165,6 @@ class _FlutterWebViewState extends State<FlutterWebView> {
       _setTokenCookieSafely();
     }
 
-    checkIfAuthTokenExpired();
     print("${widget.webUrl}?id_token=${FFAppState().subjectToken}");
     if (!kIsWeb) {
       WebViewCookieManager().clearCookies();
@@ -182,7 +203,9 @@ class _FlutterWebViewState extends State<FlutterWebView> {
             onPageStarted: (String url) {
               debugPrint('Page started loading: $url');
             },
-            onPageFinished: (String url) {
+            onPageFinished: (String url) async {
+              final isTokenValid = await checkIfAuthTokenExpired();
+              if (!isTokenValid) return; // Redirect handled inside the function
               debugPrint('Page finished loading: $url');
             },
             onWebResourceError: (Android.WebResourceError error) {
